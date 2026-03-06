@@ -45,6 +45,23 @@ header{
   font-size:14px;
 }
 
+.header-actions{
+  display:flex;
+  align-items:flex-start;
+  gap:10px;
+}
+
+.member-shortcut{
+  background:#dff2ff;
+  color:#111;
+  border:none;
+  border-radius:12px;
+  padding:10px 12px;
+  cursor:pointer;
+  font-weight:bold;
+  box-shadow:0 3px 8px rgba(0,0,0,0.15);
+}
+
 .account-box{
   background:#dff2ff;
   color:#111;
@@ -183,6 +200,27 @@ footer{
   color:#0b4f7d;
 }
 
+.preview-item{
+  text-align:left;
+  padding:12px 0;
+  border-top:1px solid #e5e7eb;
+}
+
+.preview-item:first-child{
+  border-top:none;
+}
+
+.preview-title{
+  margin:0 0 6px;
+  font-weight:bold;
+}
+
+.preview-meta{
+  color:#666;
+  font-size:14px;
+  margin:0 0 6px;
+}
+
 @media (max-width:700px){
   .header-inner{
     flex-direction:column;
@@ -198,6 +236,10 @@ footer{
     font-size:22px;
   }
 
+  .header-actions{
+    justify-content:center;
+  }
+
   .account-box{
     min-width:auto;
   }
@@ -210,29 +252,29 @@ footer{
   <div class="header-inner">
     <div class="brand-box">
       <h1>🔬 IRHOS 융합과학탐구동아리</h1>
-      <p>Exploration Archive · Science Lab Style</p>
+      <p>이로스는 탐구 기반 실험과 기록을 통해 과학적 사고를 확장하는 동아리입니다.</p>
     </div>
 
-    <div class="account-box">
-      <button onclick="toggleAccountPanel()">👤 계정 / 부원</button>
+    <div class="header-actions">
+      <button class="member-shortcut" onclick="showSection('membersSection')">👥 부원</button>
 
-      <div id="accountPanel" class="account-panel">
-        <div id="loggedOutBox">
-          <h3>로그인</h3>
-          <input id="studentId" placeholder="학번">
-          <input id="name" placeholder="이름">
-          <button onclick="login()">로그인</button>
-          <p id="loginMessage" class="login-message"></p>
-        </div>
+      <div class="account-box">
+        <button onclick="toggleAccountPanel()">🔐 로그인</button>
 
-        <div id="loggedInBox" class="hidden">
-          <h3>동아리 부원 목록</h3>
-          <div>
-            <span class="member">20602 김가은 (부장)</span>
-            <span class="member">00000 구자형 (지도교사)</span>
+        <div id="accountPanel" class="account-panel">
+          <div id="loggedOutBox">
+            <h3>로그인</h3>
+            <input id="studentId" placeholder="학번">
+            <input id="name" placeholder="이름">
+            <button onclick="login()">로그인</button>
+            <p id="loginMessage" class="login-message"></p>
           </div>
-          <p id="welcomeMessage" class="small-text"></p>
-          <button onclick="logout()">로그아웃</button>
+
+          <div id="loggedInBox" class="hidden">
+            <h3>로그인 상태</h3>
+            <p id="welcomeMessage" class="small-text"></p>
+            <button onclick="logout()">로그아웃</button>
+          </div>
         </div>
       </div>
     </div>
@@ -248,23 +290,23 @@ footer{
 <div class="container">
 
   <section id="homeSection" class="card">
-    <h2 class="section-title">IRHOS 메인 페이지</h2>
-    <p>
-      IRHOS는 탐구 기반 실험과 기록을 통해 과학적 사고를 확장하는
-      융합과학탐구동아리입니다.
-    </p>
-    <p>
-      이 사이트에서는 탐구 기록 열람, 연도별 정리, 탐구 검색, 실험 사진 확인이 가능합니다.
-    </p>
-    <p>
-      탐구 기록 작성은 로그인 후 사용할 수 있습니다.
-    </p>
+    <h2 class="section-title">메인 페이지</h2>
+    <p>최근 탐구 기록을 미리 볼 수 있어.</p>
+    <div id="homePreviewList"></div>
   </section>
 
   <section id="archiveSection" class="card hidden">
     <h2 class="section-title">📚 탐구 아카이브</h2>
     <input id="searchInput" placeholder="탐구 제목 또는 내용 검색" onkeyup="searchResearch()">
     <div id="researchList"></div>
+  </section>
+
+  <section id="membersSection" class="card hidden">
+    <h2 class="section-title">👥 동아리 부원 목록</h2>
+    <div>
+      <span class="member">20602 김가은 (부장)</span>
+      <span class="member">00000 구자형 (지도교사)</span>
+    </div>
   </section>
 
   <section id="writeSection" class="card hidden">
@@ -337,7 +379,7 @@ function updateLoginUI(){
 }
 
 window.showSection = function(sectionId){
-  const sections = ["homeSection", "archiveSection", "writeSection"];
+  const sections = ["homeSection", "archiveSection", "membersSection", "writeSection"];
   sections.forEach(id => {
     document.getElementById(id).classList.add("hidden");
   });
@@ -443,7 +485,9 @@ function clearForm(){
 
 async function loadResearch(){
   const list = document.getElementById("researchList");
+  const previewList = document.getElementById("homePreviewList");
   list.innerHTML = "";
+  previewList.innerHTML = "";
 
   const snapshot = await getDocs(collection(db, "research"));
   const items = [];
@@ -456,6 +500,7 @@ async function loadResearch(){
 
   if(items.length === 0){
     list.innerHTML = "<p>아직 등록된 탐구 기록이 없어.</p>";
+    previewList.innerHTML = "<p>아직 미리 볼 탐구 기록이 없어.</p>";
     return;
   }
 
@@ -475,6 +520,17 @@ async function loadResearch(){
         ${d.fileLink ? `<p><a href="${d.fileLink}" target="_blank">📄 보고서 보기</a></p>` : ""}
         ${d.feedback ? `<p><strong>💬 피드백:</strong> ${d.feedback}</p>` : ""}
         ${d.photo ? `<img src="${d.photo}" style="max-width:220px; border-radius:10px;">` : ""}
+      </div>
+    `;
+  });
+
+  const previewItems = items.slice(0, 3);
+  previewItems.forEach(d => {
+    previewList.innerHTML += `
+      <div class="preview-item">
+        <p class="preview-title">🧪 ${d.title}</p>
+        <p class="preview-meta">${d.year}년 · ${d.author || "-"}</p>
+        <p>${(d.content || "").slice(0, 80)}${(d.content || "").length > 80 ? "..." : ""}</p>
       </div>
     `;
   });
