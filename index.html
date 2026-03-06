@@ -2,114 +2,57 @@
 <html lang="ko">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>탐구 아카이브</title>
+<title>IRHOS Science Lab</title>
 
 <style>
 
 body{
+font-family: Arial;
+background:#0f172a;
+color:white;
 margin:0;
-font-family:"Noto Sans KR",sans-serif;
-background:#f4fbff;
-color:#222;
-display:flex;
-justify-content:center;
-align-items:center;
-height:100vh;
-}
-
-/* 로그인 */
-
-#loginBox{
-background:white;
-padding:40px;
-border-radius:15px;
-box-shadow:0 5px 20px rgba(0,0,0,0.1);
-text-align:center;
-width:90%;
-max-width:350px;
-}
-
-input, textarea{
-width:100%;
-padding:12px;
-margin:10px 0;
-border-radius:8px;
-border:1px solid #ccc;
-}
-
-button{
-padding:10px 15px;
-background:#7fd3ff;
-border:none;
-border-radius:8px;
-cursor:pointer;
-margin-top:5px;
-}
-
-button:hover{
-background:#5fc4ff;
-}
-
-/* 홈페이지 */
-
-#mainPage{
-display:none;
-width:100%;
-height:100vh;
-flex-direction:column;
 }
 
 header{
-background:#000;
-color:white;
-padding:15px;
+background:#020617;
+padding:20px;
+font-size:28px;
 text-align:center;
-font-size:22px;
-}
-
-nav{
-background:#eaf7ff;
-padding:10px;
-display:flex;
-justify-content:center;
-gap:20px;
-flex-wrap:wrap;
-}
-
-nav a{
-text-decoration:none;
-color:#000;
-font-weight:bold;
 }
 
 .container{
-padding:20px;
-text-align:center;
-overflow:auto;
+padding:30px;
+max-width:1000px;
+margin:auto;
+}
+
+input,textarea,select{
+width:100%;
+padding:10px;
+margin:8px 0;
+border-radius:6px;
+border:none;
+}
+
+button{
+padding:10px 20px;
+background:#3b82f6;
+color:white;
+border:none;
+border-radius:6px;
+cursor:pointer;
 }
 
 .card{
-background:white;
+background:#1e293b;
 padding:20px;
-margin:15px auto;
-border-radius:12px;
-max-width:600px;
-box-shadow:0 3px 10px rgba(0,0,0,0.1);
+margin-top:20px;
+border-radius:10px;
 }
 
-/* 게시글 */
-
-.post{
-border:1px solid #ddd;
-padding:10px;
+img{
+max-width:200px;
 margin-top:10px;
-border-radius:8px;
-text-align:left;
-}
-
-@media (max-width:600px){
-header{font-size:18px;}
 }
 
 </style>
@@ -118,195 +61,237 @@ header{font-size:18px;}
 
 <body>
 
-<!-- 로그인 -->
+<header>
+🔬 IRHOS Science Lab
+</header>
 
-<div id="loginBox">
-
-<h2>🔬 탐구 아카이브 로그인</h2>
-
-<input type="text" id="id" placeholder="아이디">
-
-<input type="password" id="pw" placeholder="비밀번호">
-
-<button onclick="login()">로그인</button>
-
-<p id="error" style="color:red;"></p>
-
-</div>
-
-
-
-<!-- 메인 -->
-
-<div id="mainPage">
-
-<header>🔬 탐구 아카이브</header>
-
-<nav>
-<a href="#">🏠 홈</a>
-<a href="#archive">📂 탐구 아카이브</a>
-<a href="#members">👨‍🔬 동아리 부원 목록</a>
-</nav>
 
 <div class="container">
 
-<div class="card">
-<h3>🔎 동아리 소개</h3>
-<p>과학 탐구 활동을 기록하고 공유하는 공간입니다.</p>
+<div id="loginBox">
+
+<h2>연구원 로그인</h2>
+
+<input id="studentId" placeholder="학번">
+<input id="name" placeholder="이름">
+
+<button onclick="login()">로그인</button>
+
 </div>
 
 
-<!-- 탐구 업로드 -->
+<div id="main" style="display:none;">
 
-<div class="card" id="archive">
-
-<h3>📂 탐구 자료 업로드</h3>
+<h2>탐구 작성</h2>
 
 <input id="title" placeholder="탐구 제목">
 
-<textarea id="content" rows="5" placeholder="탐구 내용을 작성하세요"></textarea>
+<select id="year">
+<option>2026</option>
+<option>2025</option>
+<option>2024</option>
+</select>
 
-<button onclick="addPost()">업로드</button>
+<textarea id="content" placeholder="탐구 내용"></textarea>
 
-<div id="postList"></div>
+<input id="fileLink" placeholder="PDF / 워드 / 한글 링크">
+
+<textarea id="feedback" placeholder="선생님 피드백"></textarea>
+
+<input type="file" id="photo">
+
+<button onclick="saveResearch()">저장</button>
+
+<hr>
+
+<h2>탐구 검색</h2>
+
+<input id="search" placeholder="검색어 입력" onkeyup="searchResearch()">
+
+<div id="researchList"></div>
+
+</div>
 
 </div>
 
 
 
-<!-- 부원 -->
+<script type="module">
 
-<div class="card" id="members">
-
-<h3>👨‍🔬 동아리 부원 목록</h3>
-
-<p>
-부장 : 김가은<br>
-지도교사 : 구자형
-</p>
-
-</div>
-
-</div>
-
-</div>
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import { getFirestore, collection, addDoc, getDocs } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 
-
-<script>
-
-/* 로그인 */
-
-const users = {
-"20602 김가은":"science20602",
-"00000 구자형":"teacher00000"
+const firebaseConfig = {
+  apiKey: "AIzaSyDXVVSPhvErz9JfjXKjMaZIBNYu6d3j8dg",
+  authDomain: "irhos-science-lab.firebaseapp.com",
+  projectId: "irhos-science-lab",
+  storageBucket: "irhos-science-lab.firebasestorage.app",
+  messagingSenderId: "54955251430",
+  appId: "1:54955251430:web:5396c836ccc33f981d4d27",
+  measurementId: "G-378MZ34JSE"
 };
 
-function login(){
 
-const id=document.getElementById("id").value;
-const pw=document.getElementById("pw").value;
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
 
-if(users[id] && users[id]===pw){
 
-document.getElementById("loginBox").style.display="none";
-document.getElementById("mainPage").style.display="flex";
 
-loadPosts();
+window.login = function(){
+
+let id = document.getElementById("studentId").value
+let name = document.getElementById("name").value
+
+if(id=="" || name==""){
+alert("학번과 이름 입력")
+return
+}
+
+localStorage.setItem("user", JSON.stringify({id,name}))
+
+showMain()
+
+}
+
+
+
+function showMain(){
+
+document.getElementById("loginBox").style.display="none"
+document.getElementById("main").style.display="block"
+
+loadResearch()
+
+}
+
+
+
+if(localStorage.getItem("user")){
+showMain()
+}
+
+
+
+window.saveResearch = async function(){
+
+let title = document.getElementById("title").value
+let content = document.getElementById("content").value
+let year = document.getElementById("year").value
+let fileLink = document.getElementById("fileLink").value
+let feedback = document.getElementById("feedback").value
+
+let photoInput = document.getElementById("photo")
+
+let photoData = ""
+
+if(photoInput.files[0]){
+
+let reader = new FileReader()
+
+reader.onload = async function(){
+
+photoData = reader.result
+
+await addDoc(collection(db,"research"),{
+title,
+content,
+year,
+fileLink,
+feedback,
+photo:photoData
+})
+
+alert("저장 완료")
+
+loadResearch()
+
+}
+
+reader.readAsDataURL(photoInput.files[0])
 
 }else{
 
-document.getElementById("error").innerText="아이디 또는 비밀번호 오류";
+await addDoc(collection(db,"research"),{
+title,
+content,
+year,
+fileLink,
+feedback,
+photo:""
+})
+
+alert("저장 완료")
+
+loadResearch()
 
 }
 
 }
 
 
-/* 게시글 저장 */
 
-function addPost(){
+async function loadResearch(){
 
-const title=document.getElementById("title").value;
-const content=document.getElementById("content").value;
+let list = document.getElementById("researchList")
 
-let posts=JSON.parse(localStorage.getItem("posts"))||[];
+list.innerHTML=""
 
-posts.push({title,content});
+let querySnapshot = await getDocs(collection(db,"research"))
 
-localStorage.setItem("posts",JSON.stringify(posts));
+querySnapshot.forEach((doc)=>{
 
-document.getElementById("title").value="";
-document.getElementById("content").value="";
+let d = doc.data()
 
-loadPosts();
+list.innerHTML += `
 
-}
+<div class="card">
 
+<h3>${d.title}</h3>
 
-/* 게시글 불러오기 */
+<p>연도 : ${d.year}</p>
 
-function loadPosts(){
+<p>${d.content}</p>
 
-let posts=JSON.parse(localStorage.getItem("posts"))||[];
+<a href="${d.fileLink}" target="_blank">보고서 보기</a>
 
-let list=document.getElementById("postList");
+<p>피드백 : ${d.feedback}</p>
 
-list.innerHTML="";
+${d.photo ? `<img src="${d.photo}">` : ""}
 
-posts.forEach((p,index)=>{
-
-list.innerHTML+=`
-<div class="post">
-<b>${p.title}</b>
-<p>${p.content}</p>
-
-<button onclick="editPost(${index})">수정</button>
-<button onclick="deletePost(${index})">삭제</button>
 </div>
-`;
 
-});
+`
 
-}
-
-
-/* 수정 */
-
-function editPost(i){
-
-let posts=JSON.parse(localStorage.getItem("posts"));
-
-let newTitle=prompt("제목 수정",posts[i].title);
-let newContent=prompt("내용 수정",posts[i].content);
-
-if(newTitle && newContent){
-
-posts[i].title=newTitle;
-posts[i].content=newContent;
-
-localStorage.setItem("posts",JSON.stringify(posts));
-
-loadPosts();
-
-}
+})
 
 }
 
 
-/* 삭제 */
 
-function deletePost(i){
+window.searchResearch = function(){
 
-let posts=JSON.parse(localStorage.getItem("posts"));
+let keyword = document.getElementById("search").value.toLowerCase()
 
-posts.splice(i,1);
+let cards = document.querySelectorAll(".card")
 
-localStorage.setItem("posts",JSON.stringify(posts));
+cards.forEach(c=>{
 
-loadPosts();
+if(c.innerText.toLowerCase().includes(keyword)){
+
+c.style.display="block"
+
+}else{
+
+c.style.display="none"
 
 }
+
+})
+
+}
+
+
 
 </script>
 
