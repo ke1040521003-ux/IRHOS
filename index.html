@@ -16,18 +16,75 @@ body{
 header{
   background:#000;
   color:#fff;
-  text-align:center;
-  padding:24px 16px;
+  padding:18px 16px;
 }
 
-header h1{
+.header-inner{
+  max-width:1100px;
+  margin:0 auto;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:14px;
+}
+
+.brand-box{
+  display:flex;
+  flex-direction:column;
+  align-items:flex-start;
+}
+
+.brand-box h1{
   margin:0;
   font-size:28px;
 }
 
-header p{
-  margin:8px 0 0;
+.brand-box p{
+  margin:6px 0 0;
   color:#bfe3ff;
+  font-size:14px;
+}
+
+.account-box{
+  background:#dff2ff;
+  color:#111;
+  border-radius:12px;
+  padding:10px 12px;
+  min-width:170px;
+  box-shadow:0 3px 8px rgba(0,0,0,0.15);
+}
+
+.account-box button{
+  width:100%;
+  border:none;
+  background:#fff;
+  padding:8px 10px;
+  border-radius:8px;
+  cursor:pointer;
+  font-weight:bold;
+}
+
+.account-panel{
+  margin-top:10px;
+  background:#fff;
+  border-radius:10px;
+  padding:10px;
+  display:none;
+}
+
+.account-panel.show{
+  display:block;
+}
+
+.account-panel h3{
+  margin:6px 0 10px;
+  font-size:15px;
+}
+
+.small-text{
+  font-size:13px;
+  color:#333;
+  margin:6px 0;
 }
 
 nav{
@@ -81,15 +138,6 @@ input, textarea, select{
   font-weight:bold;
 }
 
-.secondary-btn{
-  border:none;
-  background:#111;
-  color:#fff;
-  padding:8px 12px;
-  border-radius:8px;
-  cursor:pointer;
-}
-
 .post{
   border-top:1px solid #e5e7eb;
   padding:14px 0;
@@ -111,22 +159,47 @@ input, textarea, select{
   border-radius:999px;
 }
 
-#loginStatus{
-  text-align:center;
-  margin-top:10px;
-  font-weight:bold;
-  color:#0b4f7d;
-}
-
 footer{
   text-align:center;
   padding:24px 12px;
   color:#666;
 }
 
-@media (max-width:600px){
-  header h1{
+.section-title{
+  margin-top:0;
+}
+
+.year-divider{
+  margin-top:22px;
+  margin-bottom:10px;
+  padding-bottom:8px;
+  border-bottom:2px solid #d9efff;
+  color:#0b4f7d;
+}
+
+.login-message{
+  font-size:14px;
+  margin-top:8px;
+  color:#0b4f7d;
+}
+
+@media (max-width:700px){
+  .header-inner{
+    flex-direction:column;
+    align-items:stretch;
+  }
+
+  .brand-box{
+    align-items:center;
+    text-align:center;
+  }
+
+  .brand-box h1{
     font-size:22px;
+  }
+
+  .account-box{
+    min-width:auto;
   }
 }
 </style>
@@ -134,60 +207,68 @@ footer{
 <body>
 
 <header>
-  <h1>🔬 IRHOS 융합과학탐구동아리</h1>
-  <p>Exploration Archive · Science Lab Style</p>
+  <div class="header-inner">
+    <div class="brand-box">
+      <h1>🔬 IRHOS 융합과학탐구동아리</h1>
+      <p>Exploration Archive · Science Lab Style</p>
+    </div>
+
+    <div class="account-box">
+      <button onclick="toggleAccountPanel()">👤 계정 / 부원</button>
+
+      <div id="accountPanel" class="account-panel">
+        <div id="loggedOutBox">
+          <h3>로그인</h3>
+          <input id="studentId" placeholder="학번">
+          <input id="name" placeholder="이름">
+          <button onclick="login()">로그인</button>
+          <p id="loginMessage" class="login-message"></p>
+        </div>
+
+        <div id="loggedInBox" class="hidden">
+          <h3>동아리 부원 목록</h3>
+          <div>
+            <span class="member">20602 김가은 (부장)</span>
+            <span class="member">00000 구자형 (지도교사)</span>
+          </div>
+          <p id="welcomeMessage" class="small-text"></p>
+          <button onclick="logout()">로그아웃</button>
+        </div>
+      </div>
+    </div>
+  </div>
 </header>
 
 <nav>
-  <button onclick="showSection('homeSection')">🏠 홈</button>
+  <button onclick="showSection('homeSection')">메인</button>
   <button onclick="showSection('archiveSection')">📚 탐구 아카이브</button>
-  <button onclick="showSection('membersSection')">👥 동아리 부원 목록</button>
-  <button onclick="showSection('loginSection')">🔐 로그인</button>
   <button onclick="showSection('writeSection')">🧪 탐구 작성</button>
-  <button onclick="logout()">🚪 로그아웃</button>
 </nav>
 
 <div class="container">
-  <div id="loginStatus"></div>
 
-  <!-- 홈 -->
   <section id="homeSection" class="card">
-    <h2>🏠 홈</h2>
+    <h2 class="section-title">IRHOS 메인 페이지</h2>
     <p>
       IRHOS는 탐구 기반 실험과 기록을 통해 과학적 사고를 확장하는
       융합과학탐구동아리입니다.
     </p>
     <p>
-      이 사이트에서는 탐구 기록 열람, 연도별 정리, 검색, 부원 정보 확인이 가능합니다.
+      이 사이트에서는 탐구 기록 열람, 연도별 정리, 탐구 검색, 실험 사진 확인이 가능합니다.
+    </p>
+    <p>
+      탐구 기록 작성은 로그인 후 사용할 수 있습니다.
     </p>
   </section>
 
-  <!-- 탐구 아카이브 -->
   <section id="archiveSection" class="card hidden">
-    <h2>📚 탐구 아카이브</h2>
-    <input id="searchInput" placeholder="탐구 제목 검색" onkeyup="searchResearch()">
+    <h2 class="section-title">📚 탐구 아카이브</h2>
+    <input id="searchInput" placeholder="탐구 제목 또는 내용 검색" onkeyup="searchResearch()">
     <div id="researchList"></div>
   </section>
 
-  <!-- 부원 목록 -->
-  <section id="membersSection" class="card hidden">
-    <h2>👥 동아리 부원 목록</h2>
-    <div class="member">20602 김가은 (부장)</div>
-    <div class="member">00000 구자형 (지도교사)</div>
-  </section>
-
-  <!-- 로그인 -->
-  <section id="loginSection" class="card hidden">
-    <h2>🔐 로그인</h2>
-    <input id="studentId" placeholder="학번">
-    <input id="name" placeholder="이름">
-    <button class="primary-btn" onclick="login()">로그인</button>
-    <p id="loginMessage"></p>
-  </section>
-
-  <!-- 탐구 작성 -->
   <section id="writeSection" class="card hidden">
-    <h2>🧪 탐구 기록 작성</h2>
+    <h2 class="section-title">🧪 탐구 기록 작성</h2>
     <p id="writeNotice">로그인한 동아리원만 작성할 수 있습니다.</p>
 
     <div id="writeForm" class="hidden">
@@ -200,10 +281,11 @@ footer{
       <textarea id="content" rows="6" placeholder="탐구 내용을 작성하세요"></textarea>
       <input id="fileLink" placeholder="PDF / Word / 한글 파일 링크">
       <textarea id="feedback" rows="4" placeholder="선생님 피드백"></textarea>
-      <input type="file" id="photo">
+      <input type="file" id="photo" accept="image/*">
       <button class="primary-btn" onclick="saveResearch()">저장</button>
     </div>
   </section>
+
 </div>
 
 <footer>
@@ -227,38 +309,40 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
+window.toggleAccountPanel = function(){
+  document.getElementById("accountPanel").classList.toggle("show");
+};
+
 function updateLoginUI(){
   const user = JSON.parse(localStorage.getItem("user") || "null");
-  const status = document.getElementById("loginStatus");
   const writeForm = document.getElementById("writeForm");
   const writeNotice = document.getElementById("writeNotice");
+  const loggedOutBox = document.getElementById("loggedOutBox");
+  const loggedInBox = document.getElementById("loggedInBox");
+  const welcomeMessage = document.getElementById("welcomeMessage");
 
   if(user){
-    status.textContent = `현재 로그인: ${user.id} ${user.name}`;
     writeForm.classList.remove("hidden");
     writeNotice.textContent = "탐구 기록을 작성할 수 있습니다.";
+    loggedOutBox.classList.add("hidden");
+    loggedInBox.classList.remove("hidden");
+    welcomeMessage.textContent = `${user.id} ${user.name} 로그인 중`;
   }else{
-    status.textContent = "비로그인 상태입니다.";
     writeForm.classList.add("hidden");
     writeNotice.textContent = "로그인한 동아리원만 작성할 수 있습니다.";
+    loggedOutBox.classList.remove("hidden");
+    loggedInBox.classList.add("hidden");
+    welcomeMessage.textContent = "";
   }
 }
 
 window.showSection = function(sectionId){
-  const sections = [
-    "homeSection",
-    "archiveSection",
-    "membersSection",
-    "loginSection",
-    "writeSection"
-  ];
-
+  const sections = ["homeSection", "archiveSection", "writeSection"];
   sections.forEach(id => {
     document.getElementById(id).classList.add("hidden");
   });
-
   document.getElementById(sectionId).classList.remove("hidden");
-}
+};
 
 window.login = function(){
   const id = document.getElementById("studentId").value.trim();
@@ -269,7 +353,6 @@ window.login = function(){
     return;
   }
 
-  // 지금은 간단 인증
   if(
     (id === "20602" && name === "김가은") ||
     (id === "00000" && name === "구자형")
@@ -277,17 +360,19 @@ window.login = function(){
     localStorage.setItem("user", JSON.stringify({id, name}));
     document.getElementById("loginMessage").textContent = "로그인 성공!";
     updateLoginUI();
+    document.getElementById("accountPanel").classList.remove("show");
     showSection("writeSection");
   }else{
     document.getElementById("loginMessage").textContent = "등록된 계정이 아니야.";
   }
-}
+};
 
 window.logout = function(){
   localStorage.removeItem("user");
   updateLoginUI();
+  document.getElementById("accountPanel").classList.remove("show");
   showSection("homeSection");
-}
+};
 
 window.saveResearch = async function(){
   const user = JSON.parse(localStorage.getItem("user") || "null");
@@ -325,7 +410,7 @@ window.saveResearch = async function(){
         createdAt: new Date().toISOString()
       });
       clearForm();
-      loadResearch();
+      await loadResearch();
       showSection("archiveSection");
       alert("저장 완료!");
     };
@@ -342,11 +427,11 @@ window.saveResearch = async function(){
       createdAt: new Date().toISOString()
     });
     clearForm();
-    loadResearch();
+    await loadResearch();
     showSection("archiveSection");
     alert("저장 완료!");
   }
-}
+};
 
 function clearForm(){
   document.getElementById("title").value = "";
@@ -362,10 +447,12 @@ async function loadResearch(){
 
   const snapshot = await getDocs(collection(db, "research"));
   const items = [];
-
   snapshot.forEach(doc => items.push(doc.data()));
 
-  items.sort((a, b) => (b.createdAt || "").localeCompare(a.createdAt || ""));
+  items.sort((a, b) => {
+    if(a.year !== b.year) return Number(b.year) - Number(a.year);
+    return (b.createdAt || "").localeCompare(a.createdAt || "");
+  });
 
   if(items.length === 0){
     list.innerHTML = "<p>아직 등록된 탐구 기록이 없어.</p>";
@@ -377,7 +464,7 @@ async function loadResearch(){
   items.forEach(d => {
     if(d.year !== currentYear){
       currentYear = d.year;
-      list.innerHTML += `<h3 style="margin-top:20px;">📅 ${currentYear}년</h3>`;
+      list.innerHTML += `<h3 class="year-divider">📅 ${currentYear}년 탐구</h3>`;
     }
 
     list.innerHTML += `
@@ -400,7 +487,6 @@ window.searchResearch = async function(){
 
   const snapshot = await getDocs(collection(db, "research"));
   const items = [];
-
   snapshot.forEach(doc => items.push(doc.data()));
 
   const filtered = items.filter(item =>
@@ -408,19 +494,22 @@ window.searchResearch = async function(){
     (item.content || "").toLowerCase().includes(keyword)
   );
 
+  filtered.sort((a, b) => {
+    if(a.year !== b.year) return Number(b.year) - Number(a.year);
+    return (b.createdAt || "").localeCompare(a.createdAt || "");
+  });
+
   if(filtered.length === 0){
     list.innerHTML = "<p>검색 결과가 없어.</p>";
     return;
   }
-
-  filtered.sort((a, b) => (b.createdAt || "").localeCompare(a.createdAt || ""));
 
   let currentYear = "";
 
   filtered.forEach(d => {
     if(d.year !== currentYear){
       currentYear = d.year;
-      list.innerHTML += `<h3 style="margin-top:20px;">📅 ${currentYear}년</h3>`;
+      list.innerHTML += `<h3 class="year-divider">📅 ${currentYear}년 탐구</h3>`;
     }
 
     list.innerHTML += `
@@ -441,7 +530,5 @@ loadResearch();
 showSection("homeSection");
 </script>
 
-</body>
-</html>
 </body>
 </html>
