@@ -3,14 +3,13 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <title>탐구 아카이브</title>
 
 <style>
 
 body{
 margin:0;
-font-family: "Noto Sans KR", sans-serif;
+font-family:"Noto Sans KR",sans-serif;
 background:#f4fbff;
 color:#222;
 display:flex;
@@ -31,7 +30,7 @@ width:90%;
 max-width:350px;
 }
 
-input{
+input, textarea{
 width:100%;
 padding:12px;
 margin:10px 0;
@@ -40,13 +39,12 @@ border:1px solid #ccc;
 }
 
 button{
-width:100%;
-padding:12px;
+padding:10px 15px;
 background:#7fd3ff;
 border:none;
 border-radius:8px;
-font-size:16px;
 cursor:pointer;
+margin-top:5px;
 }
 
 button:hover{
@@ -88,6 +86,7 @@ font-weight:bold;
 .container{
 padding:20px;
 text-align:center;
+overflow:auto;
 }
 
 .card{
@@ -95,26 +94,22 @@ background:white;
 padding:20px;
 margin:15px auto;
 border-radius:12px;
-max-width:500px;
+max-width:600px;
 box-shadow:0 3px 10px rgba(0,0,0,0.1);
 }
 
-/* 모바일 대응 */
+/* 게시글 */
+
+.post{
+border:1px solid #ddd;
+padding:10px;
+margin-top:10px;
+border-radius:8px;
+text-align:left;
+}
 
 @media (max-width:600px){
-
-header{
-font-size:18px;
-}
-
-nav{
-gap:10px;
-}
-
-.card{
-margin:10px;
-}
-
+header{font-size:18px;}
 }
 
 </style>
@@ -123,15 +118,15 @@ margin:10px;
 
 <body>
 
-<!-- 로그인 화면 -->
+<!-- 로그인 -->
 
 <div id="loginBox">
 
 <h2>🔬 탐구 아카이브 로그인</h2>
 
-<input type="text" id="id" placeholder="아이디 입력">
+<input type="text" id="id" placeholder="아이디">
 
-<input type="password" id="pw" placeholder="비밀번호 입력">
+<input type="password" id="pw" placeholder="비밀번호">
 
 <button onclick="login()">로그인</button>
 
@@ -141,38 +136,55 @@ margin:10px;
 
 
 
-<!-- 메인 페이지 -->
+<!-- 메인 -->
 
 <div id="mainPage">
 
-<header>
-🔬 탐구 아카이브
-</header>
+<header>🔬 탐구 아카이브</header>
 
 <nav>
 <a href="#">🏠 홈</a>
-<a href="#">📂 탐구 아카이브</a>
-<a href="#">👨‍🔬 동아리 부원 목록</a>
+<a href="#archive">📂 탐구 아카이브</a>
+<a href="#members">👨‍🔬 동아리 부원 목록</a>
 </nav>
 
 <div class="container">
 
 <div class="card">
 <h3>🔎 동아리 소개</h3>
-<p>우리 동아리는 다양한 과학 탐구 활동을 기록하고 공유하는 공간입니다.</p>
+<p>과학 탐구 활동을 기록하고 공유하는 공간입니다.</p>
 </div>
 
-<div class="card">
-<h3>📂 탐구 아카이브</h3>
-<p>실험 기록과 연구 자료를 업로드할 수 있습니다.</p>
+
+<!-- 탐구 업로드 -->
+
+<div class="card" id="archive">
+
+<h3>📂 탐구 자료 업로드</h3>
+
+<input id="title" placeholder="탐구 제목">
+
+<textarea id="content" rows="5" placeholder="탐구 내용을 작성하세요"></textarea>
+
+<button onclick="addPost()">업로드</button>
+
+<div id="postList"></div>
+
 </div>
 
-<div class="card">
+
+
+<!-- 부원 -->
+
+<div class="card" id="members">
+
 <h3>👨‍🔬 동아리 부원 목록</h3>
+
 <p>
 부장 : 김가은<br>
 지도교사 : 구자형
 </p>
+
 </div>
 
 </div>
@@ -183,6 +195,8 @@ margin:10px;
 
 <script>
 
+/* 로그인 */
+
 const users = {
 "20602 김가은":"science20602",
 "00000 구자형":"teacher00000"
@@ -190,19 +204,107 @@ const users = {
 
 function login(){
 
-const id = document.getElementById("id").value;
-const pw = document.getElementById("pw").value;
+const id=document.getElementById("id").value;
+const pw=document.getElementById("pw").value;
 
-if(users[id] && users[id] === pw){
+if(users[id] && users[id]===pw){
 
 document.getElementById("loginBox").style.display="none";
 document.getElementById("mainPage").style.display="flex";
 
+loadPosts();
+
 }else{
 
-document.getElementById("error").innerText="아이디 또는 비밀번호가 틀렸습니다.";
+document.getElementById("error").innerText="아이디 또는 비밀번호 오류";
 
 }
+
+}
+
+
+/* 게시글 저장 */
+
+function addPost(){
+
+const title=document.getElementById("title").value;
+const content=document.getElementById("content").value;
+
+let posts=JSON.parse(localStorage.getItem("posts"))||[];
+
+posts.push({title,content});
+
+localStorage.setItem("posts",JSON.stringify(posts));
+
+document.getElementById("title").value="";
+document.getElementById("content").value="";
+
+loadPosts();
+
+}
+
+
+/* 게시글 불러오기 */
+
+function loadPosts(){
+
+let posts=JSON.parse(localStorage.getItem("posts"))||[];
+
+let list=document.getElementById("postList");
+
+list.innerHTML="";
+
+posts.forEach((p,index)=>{
+
+list.innerHTML+=`
+<div class="post">
+<b>${p.title}</b>
+<p>${p.content}</p>
+
+<button onclick="editPost(${index})">수정</button>
+<button onclick="deletePost(${index})">삭제</button>
+</div>
+`;
+
+});
+
+}
+
+
+/* 수정 */
+
+function editPost(i){
+
+let posts=JSON.parse(localStorage.getItem("posts"));
+
+let newTitle=prompt("제목 수정",posts[i].title);
+let newContent=prompt("내용 수정",posts[i].content);
+
+if(newTitle && newContent){
+
+posts[i].title=newTitle;
+posts[i].content=newContent;
+
+localStorage.setItem("posts",JSON.stringify(posts));
+
+loadPosts();
+
+}
+
+}
+
+
+/* 삭제 */
+
+function deletePost(i){
+
+let posts=JSON.parse(localStorage.getItem("posts"));
+
+posts.splice(i,1);
+
+localStorage.setItem("posts",JSON.stringify(posts));
+
+loadPosts();
 
 }
 
