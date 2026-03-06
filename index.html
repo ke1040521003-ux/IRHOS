@@ -2,125 +2,217 @@
 <html lang="ko">
 <head>
 <meta charset="UTF-8">
-<title>IRHOS Science Lab</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IRHOS 융합과학탐구동아리</title>
 
 <style>
-
 body{
-font-family: Arial;
-background:#0f172a;
-color:white;
-margin:0;
+  font-family: Arial, sans-serif;
+  margin:0;
+  background:#eef6fb;
+  color:#111;
 }
 
 header{
-background:#020617;
-padding:20px;
-font-size:28px;
-text-align:center;
+  background:#000;
+  color:#fff;
+  text-align:center;
+  padding:24px 16px;
+}
+
+header h1{
+  margin:0;
+  font-size:28px;
+}
+
+header p{
+  margin:8px 0 0;
+  color:#bfe3ff;
+}
+
+nav{
+  background:#d9efff;
+  display:flex;
+  justify-content:center;
+  flex-wrap:wrap;
+  gap:10px;
+  padding:12px;
+}
+
+nav button{
+  border:none;
+  background:#fff;
+  padding:10px 16px;
+  border-radius:10px;
+  cursor:pointer;
+  font-weight:bold;
 }
 
 .container{
-padding:30px;
-max-width:1000px;
-margin:auto;
-}
-
-input,textarea,select{
-width:100%;
-padding:10px;
-margin:8px 0;
-border-radius:6px;
-border:none;
-}
-
-button{
-padding:10px 20px;
-background:#3b82f6;
-color:white;
-border:none;
-border-radius:6px;
-cursor:pointer;
+  max-width:1000px;
+  margin:0 auto;
+  padding:20px;
 }
 
 .card{
-background:#1e293b;
-padding:20px;
-margin-top:20px;
-border-radius:10px;
+  background:#fff;
+  border-radius:14px;
+  padding:20px;
+  margin-bottom:18px;
+  box-shadow:0 4px 12px rgba(0,0,0,0.08);
 }
 
-img{
-max-width:200px;
-margin-top:10px;
+input, textarea, select{
+  width:100%;
+  box-sizing:border-box;
+  padding:10px;
+  margin:8px 0;
+  border:1px solid #cfd8e3;
+  border-radius:8px;
 }
 
+.primary-btn{
+  border:none;
+  background:#3ea6ff;
+  color:#fff;
+  padding:10px 16px;
+  border-radius:8px;
+  cursor:pointer;
+  font-weight:bold;
+}
+
+.secondary-btn{
+  border:none;
+  background:#111;
+  color:#fff;
+  padding:8px 12px;
+  border-radius:8px;
+  cursor:pointer;
+}
+
+.post{
+  border-top:1px solid #e5e7eb;
+  padding:14px 0;
+}
+
+.post:first-child{
+  border-top:none;
+}
+
+.hidden{
+  display:none;
+}
+
+.member{
+  display:inline-block;
+  background:#e9f6ff;
+  margin:6px;
+  padding:10px 14px;
+  border-radius:999px;
+}
+
+#loginStatus{
+  text-align:center;
+  margin-top:10px;
+  font-weight:bold;
+  color:#0b4f7d;
+}
+
+footer{
+  text-align:center;
+  padding:24px 12px;
+  color:#666;
+}
+
+@media (max-width:600px){
+  header h1{
+    font-size:22px;
+  }
+}
 </style>
 </head>
-
-
 <body>
 
 <header>
-🔬 IRHOS Science Lab
+  <h1>🔬 IRHOS 융합과학탐구동아리</h1>
+  <p>Exploration Archive · Science Lab Style</p>
 </header>
 
+<nav>
+  <button onclick="showSection('homeSection')">🏠 홈</button>
+  <button onclick="showSection('archiveSection')">📚 탐구 아카이브</button>
+  <button onclick="showSection('membersSection')">👥 동아리 부원 목록</button>
+  <button onclick="showSection('loginSection')">🔐 로그인</button>
+  <button onclick="showSection('writeSection')">🧪 탐구 작성</button>
+  <button onclick="logout()">🚪 로그아웃</button>
+</nav>
 
 <div class="container">
+  <div id="loginStatus"></div>
 
-<div id="loginBox">
+  <!-- 홈 -->
+  <section id="homeSection" class="card">
+    <h2>🏠 홈</h2>
+    <p>
+      IRHOS는 탐구 기반 실험과 기록을 통해 과학적 사고를 확장하는
+      융합과학탐구동아리입니다.
+    </p>
+    <p>
+      이 사이트에서는 탐구 기록 열람, 연도별 정리, 검색, 부원 정보 확인이 가능합니다.
+    </p>
+  </section>
 
-<h2>연구원 로그인</h2>
+  <!-- 탐구 아카이브 -->
+  <section id="archiveSection" class="card hidden">
+    <h2>📚 탐구 아카이브</h2>
+    <input id="searchInput" placeholder="탐구 제목 검색" onkeyup="searchResearch()">
+    <div id="researchList"></div>
+  </section>
 
-<input id="studentId" placeholder="학번">
-<input id="name" placeholder="이름">
+  <!-- 부원 목록 -->
+  <section id="membersSection" class="card hidden">
+    <h2>👥 동아리 부원 목록</h2>
+    <div class="member">20602 김가은 (부장)</div>
+    <div class="member">00000 구자형 (지도교사)</div>
+  </section>
 
-<button onclick="login()">로그인</button>
+  <!-- 로그인 -->
+  <section id="loginSection" class="card hidden">
+    <h2>🔐 로그인</h2>
+    <input id="studentId" placeholder="학번">
+    <input id="name" placeholder="이름">
+    <button class="primary-btn" onclick="login()">로그인</button>
+    <p id="loginMessage"></p>
+  </section>
 
+  <!-- 탐구 작성 -->
+  <section id="writeSection" class="card hidden">
+    <h2>🧪 탐구 기록 작성</h2>
+    <p id="writeNotice">로그인한 동아리원만 작성할 수 있습니다.</p>
+
+    <div id="writeForm" class="hidden">
+      <input id="title" placeholder="탐구 제목">
+      <select id="year">
+        <option value="2026">2026</option>
+        <option value="2025">2025</option>
+        <option value="2024">2024</option>
+      </select>
+      <textarea id="content" rows="6" placeholder="탐구 내용을 작성하세요"></textarea>
+      <input id="fileLink" placeholder="PDF / Word / 한글 파일 링크">
+      <textarea id="feedback" rows="4" placeholder="선생님 피드백"></textarea>
+      <input type="file" id="photo">
+      <button class="primary-btn" onclick="saveResearch()">저장</button>
+    </div>
+  </section>
 </div>
 
-
-<div id="main" style="display:none;">
-
-<h2>탐구 작성</h2>
-
-<input id="title" placeholder="탐구 제목">
-
-<select id="year">
-<option>2026</option>
-<option>2025</option>
-<option>2024</option>
-</select>
-
-<textarea id="content" placeholder="탐구 내용"></textarea>
-
-<input id="fileLink" placeholder="PDF / 워드 / 한글 링크">
-
-<textarea id="feedback" placeholder="선생님 피드백"></textarea>
-
-<input type="file" id="photo">
-
-<button onclick="saveResearch()">저장</button>
-
-<hr>
-
-<h2>탐구 검색</h2>
-
-<input id="search" placeholder="검색어 입력" onkeyup="searchResearch()">
-
-<div id="researchList"></div>
-
-</div>
-
-</div>
-
-
+<footer>
+  © IRHOS Science Lab
+</footer>
 
 <script type="module">
-
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 import { getFirestore, collection, addDoc, getDocs } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
-
 
 const firebaseConfig = {
   apiKey: "AIzaSyDXVVSPhvErz9JfjXKjMaZIBNYu6d3j8dg",
@@ -132,168 +224,224 @@ const firebaseConfig = {
   measurementId: "G-378MZ34JSE"
 };
 
-
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
+function updateLoginUI(){
+  const user = JSON.parse(localStorage.getItem("user") || "null");
+  const status = document.getElementById("loginStatus");
+  const writeForm = document.getElementById("writeForm");
+  const writeNotice = document.getElementById("writeNotice");
 
+  if(user){
+    status.textContent = `현재 로그인: ${user.id} ${user.name}`;
+    writeForm.classList.remove("hidden");
+    writeNotice.textContent = "탐구 기록을 작성할 수 있습니다.";
+  }else{
+    status.textContent = "비로그인 상태입니다.";
+    writeForm.classList.add("hidden");
+    writeNotice.textContent = "로그인한 동아리원만 작성할 수 있습니다.";
+  }
+}
+
+window.showSection = function(sectionId){
+  const sections = [
+    "homeSection",
+    "archiveSection",
+    "membersSection",
+    "loginSection",
+    "writeSection"
+  ];
+
+  sections.forEach(id => {
+    document.getElementById(id).classList.add("hidden");
+  });
+
+  document.getElementById(sectionId).classList.remove("hidden");
+}
 
 window.login = function(){
+  const id = document.getElementById("studentId").value.trim();
+  const name = document.getElementById("name").value.trim();
 
-let id = document.getElementById("studentId").value
-let name = document.getElementById("name").value
+  if(!id || !name){
+    document.getElementById("loginMessage").textContent = "학번과 이름을 입력해줘.";
+    return;
+  }
 
-if(id=="" || name==""){
-alert("학번과 이름 입력")
-return
+  // 지금은 간단 인증
+  if(
+    (id === "20602" && name === "김가은") ||
+    (id === "00000" && name === "구자형")
+  ){
+    localStorage.setItem("user", JSON.stringify({id, name}));
+    document.getElementById("loginMessage").textContent = "로그인 성공!";
+    updateLoginUI();
+    showSection("writeSection");
+  }else{
+    document.getElementById("loginMessage").textContent = "등록된 계정이 아니야.";
+  }
 }
 
-localStorage.setItem("user", JSON.stringify({id,name}))
-
-showMain()
-
+window.logout = function(){
+  localStorage.removeItem("user");
+  updateLoginUI();
+  showSection("homeSection");
 }
-
-
-
-function showMain(){
-
-document.getElementById("loginBox").style.display="none"
-document.getElementById("main").style.display="block"
-
-loadResearch()
-
-}
-
-
-
-if(localStorage.getItem("user")){
-showMain()
-}
-
-
 
 window.saveResearch = async function(){
+  const user = JSON.parse(localStorage.getItem("user") || "null");
+  if(!user){
+    alert("로그인 후 작성할 수 있어.");
+    return;
+  }
 
-let title = document.getElementById("title").value
-let content = document.getElementById("content").value
-let year = document.getElementById("year").value
-let fileLink = document.getElementById("fileLink").value
-let feedback = document.getElementById("feedback").value
+  const title = document.getElementById("title").value.trim();
+  const content = document.getElementById("content").value.trim();
+  const year = document.getElementById("year").value;
+  const fileLink = document.getElementById("fileLink").value.trim();
+  const feedback = document.getElementById("feedback").value.trim();
+  const photoInput = document.getElementById("photo");
 
-let photoInput = document.getElementById("photo")
+  if(!title || !content){
+    alert("제목과 내용을 입력해줘.");
+    return;
+  }
 
-let photoData = ""
+  let photoData = "";
 
-if(photoInput.files[0]){
-
-let reader = new FileReader()
-
-reader.onload = async function(){
-
-photoData = reader.result
-
-await addDoc(collection(db,"research"),{
-title,
-content,
-year,
-fileLink,
-feedback,
-photo:photoData
-})
-
-alert("저장 완료")
-
-loadResearch()
-
+  if(photoInput.files[0]){
+    const reader = new FileReader();
+    reader.onload = async function(){
+      photoData = reader.result;
+      await addDoc(collection(db, "research"), {
+        title,
+        content,
+        year,
+        fileLink,
+        feedback,
+        photo: photoData,
+        author: `${user.id} ${user.name}`,
+        createdAt: new Date().toISOString()
+      });
+      clearForm();
+      loadResearch();
+      showSection("archiveSection");
+      alert("저장 완료!");
+    };
+    reader.readAsDataURL(photoInput.files[0]);
+  } else {
+    await addDoc(collection(db, "research"), {
+      title,
+      content,
+      year,
+      fileLink,
+      feedback,
+      photo: "",
+      author: `${user.id} ${user.name}`,
+      createdAt: new Date().toISOString()
+    });
+    clearForm();
+    loadResearch();
+    showSection("archiveSection");
+    alert("저장 완료!");
+  }
 }
 
-reader.readAsDataURL(photoInput.files[0])
-
-}else{
-
-await addDoc(collection(db,"research"),{
-title,
-content,
-year,
-fileLink,
-feedback,
-photo:""
-})
-
-alert("저장 완료")
-
-loadResearch()
-
+function clearForm(){
+  document.getElementById("title").value = "";
+  document.getElementById("content").value = "";
+  document.getElementById("fileLink").value = "";
+  document.getElementById("feedback").value = "";
+  document.getElementById("photo").value = "";
 }
-
-}
-
-
 
 async function loadResearch(){
+  const list = document.getElementById("researchList");
+  list.innerHTML = "";
 
-let list = document.getElementById("researchList")
+  const snapshot = await getDocs(collection(db, "research"));
+  const items = [];
 
-list.innerHTML=""
+  snapshot.forEach(doc => items.push(doc.data()));
 
-let querySnapshot = await getDocs(collection(db,"research"))
+  items.sort((a, b) => (b.createdAt || "").localeCompare(a.createdAt || ""));
 
-querySnapshot.forEach((doc)=>{
+  if(items.length === 0){
+    list.innerHTML = "<p>아직 등록된 탐구 기록이 없어.</p>";
+    return;
+  }
 
-let d = doc.data()
+  let currentYear = "";
 
-list.innerHTML += `
+  items.forEach(d => {
+    if(d.year !== currentYear){
+      currentYear = d.year;
+      list.innerHTML += `<h3 style="margin-top:20px;">📅 ${currentYear}년</h3>`;
+    }
 
-<div class="card">
-
-<h3>${d.title}</h3>
-
-<p>연도 : ${d.year}</p>
-
-<p>${d.content}</p>
-
-<a href="${d.fileLink}" target="_blank">보고서 보기</a>
-
-<p>피드백 : ${d.feedback}</p>
-
-${d.photo ? `<img src="${d.photo}">` : ""}
-
-</div>
-
-`
-
-})
-
+    list.innerHTML += `
+      <div class="post">
+        <h3>${d.title}</h3>
+        <p><strong>작성자:</strong> ${d.author || "-"}</p>
+        <p>${d.content}</p>
+        ${d.fileLink ? `<p><a href="${d.fileLink}" target="_blank">📄 보고서 보기</a></p>` : ""}
+        ${d.feedback ? `<p><strong>💬 피드백:</strong> ${d.feedback}</p>` : ""}
+        ${d.photo ? `<img src="${d.photo}" style="max-width:220px; border-radius:10px;">` : ""}
+      </div>
+    `;
+  });
 }
 
+window.searchResearch = async function(){
+  const keyword = document.getElementById("searchInput").value.toLowerCase().trim();
+  const list = document.getElementById("researchList");
+  list.innerHTML = "";
 
+  const snapshot = await getDocs(collection(db, "research"));
+  const items = [];
 
-window.searchResearch = function(){
+  snapshot.forEach(doc => items.push(doc.data()));
 
-let keyword = document.getElementById("search").value.toLowerCase()
+  const filtered = items.filter(item =>
+    (item.title || "").toLowerCase().includes(keyword) ||
+    (item.content || "").toLowerCase().includes(keyword)
+  );
 
-let cards = document.querySelectorAll(".card")
+  if(filtered.length === 0){
+    list.innerHTML = "<p>검색 결과가 없어.</p>";
+    return;
+  }
 
-cards.forEach(c=>{
+  filtered.sort((a, b) => (b.createdAt || "").localeCompare(a.createdAt || ""));
 
-if(c.innerText.toLowerCase().includes(keyword)){
+  let currentYear = "";
 
-c.style.display="block"
+  filtered.forEach(d => {
+    if(d.year !== currentYear){
+      currentYear = d.year;
+      list.innerHTML += `<h3 style="margin-top:20px;">📅 ${currentYear}년</h3>`;
+    }
 
-}else{
-
-c.style.display="none"
-
+    list.innerHTML += `
+      <div class="post">
+        <h3>${d.title}</h3>
+        <p><strong>작성자:</strong> ${d.author || "-"}</p>
+        <p>${d.content}</p>
+        ${d.fileLink ? `<p><a href="${d.fileLink}" target="_blank">📄 보고서 보기</a></p>` : ""}
+        ${d.feedback ? `<p><strong>💬 피드백:</strong> ${d.feedback}</p>` : ""}
+        ${d.photo ? `<img src="${d.photo}" style="max-width:220px; border-radius:10px;">` : ""}
+      </div>
+    `;
+  });
 }
 
-})
-
-}
-
-
-
+updateLoginUI();
+loadResearch();
+showSection("homeSection");
 </script>
 
+</body>
+</html>
 </body>
 </html>
