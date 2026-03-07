@@ -13,9 +13,7 @@ a{color:#1d4ed8;text-decoration:none;}
 a:hover{text-decoration:underline;}
 .hidden{display:none !important;}
 
-.app{
-  min-height:100vh;
-}
+.app{min-height:100vh;}
 
 .sidebar{
   width:100%;
@@ -180,7 +178,7 @@ a:hover{text-decoration:underline;}
 .profile-menu{
   position:absolute;
   right:0;
-  min-width:180px;
+  min-width:190px;
   top:46px;
   background:#fff;
   color:#111;
@@ -191,9 +189,7 @@ a:hover{text-decoration:underline;}
   z-index:30;
 }
 
-.profile-menu.open{
-  display:block;
-}
+.profile-menu.open{display:block;}
 
 .profile-menu button{
   width:100%;
@@ -205,9 +201,7 @@ a:hover{text-decoration:underline;}
   cursor:pointer;
 }
 
-.profile-menu button:hover{
-  background:#f3f6fb;
-}
+.profile-menu button:hover{background:#f3f6fb;}
 
 .main{
   flex:1;
@@ -215,13 +209,8 @@ a:hover{text-decoration:underline;}
   min-width:0;
 }
 
-.page{
-  display:none;
-}
-
-.page.active{
-  display:block;
-}
+.page{display:none;}
+.page.active{display:block;}
 
 .card{
   background:#fff;
@@ -399,7 +388,6 @@ textarea{
   cursor:pointer;
   z-index:3;
 }
-
 .slider-nav.prev{left:14px;}
 .slider-nav.next{right:14px;}
 
@@ -421,9 +409,7 @@ textarea{
   cursor:pointer;
 }
 
-.slider-dot.active{
-  background:#fff;
-}
+.slider-dot.active{background:#fff;}
 
 .home-intro-box{
   background:#f8fafc;
@@ -441,10 +427,7 @@ textarea{
   min-height:180px;
 }
 
-.dictionary-box{
-  background:linear-gradient(135deg,#1d3557,#457b9d);
-}
-
+.dictionary-box{background:linear-gradient(135deg,#1d3557,#457b9d);}
 .today-photo-box{
   background:#1f2937;
   position:relative;
@@ -514,9 +497,7 @@ textarea{
   font-size:14px;
 }
 
-.thumb-content{
-  padding:14px;
-}
+.thumb-content{padding:14px;}
 
 .thumb-title{
   font-size:17px;
@@ -568,9 +549,7 @@ textarea{
   padding:14px 0;
 }
 
-.post:first-child{
-  border-top:none;
-}
+.post:first-child{border-top:none;}
 
 .tag{
   display:inline-block;
@@ -610,9 +589,7 @@ textarea{
   margin-bottom:8px;
 }
 
-.attach-manage-item.actions-2{
-  align-items:center;
-}
+.attach-manage-item.actions-2{align-items:center;}
 
 .attach-actions{
   display:flex;
@@ -662,9 +639,7 @@ textarea{
   padding:10px 0;
 }
 
-.comment-item:first-child{
-  border-top:none;
-}
+.comment-item:first-child{border-top:none;}
 
 .photo-limit-note{
   font-size:13px;
@@ -672,24 +647,52 @@ textarea{
   margin:8px 0 12px 0;
 }
 
+.member-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:16px;
+}
+
+.member-item{
+  border:1px solid #e5e7eb;
+  border-radius:12px;
+  padding:12px;
+  margin-bottom:10px;
+  background:#fff;
+}
+
+.member-item h4{
+  margin:0 0 8px 0;
+}
+
+.warn-box{
+  background:#fff8e6;
+  border:1px solid #f0d38a;
+  color:#7a5b00;
+  padding:12px 14px;
+  border-radius:12px;
+  margin-bottom:14px;
+}
+
 @media (max-width: 1100px){
   .sidebar{
     flex-wrap:wrap;
     align-items:stretch;
   }
-
-  .brand{
-    width:100%;
-  }
-
+  .brand{width:100%;}
   .side-nav{
     width:100%;
     grid-template-columns:repeat(5, minmax(0, 1fr));
   }
-
   .profile-wrap{
     width:100%;
     min-width:0;
+  }
+}
+
+@media (max-width: 900px){
+  .member-grid{
+    grid-template-columns:1fr;
   }
 }
 
@@ -697,39 +700,25 @@ textarea{
   .side-nav{
     grid-template-columns:repeat(3, minmax(0, 1fr));
   }
-
   .hero-slider,
   .intro-slider{
     height:300px;
   }
-
   .hero-text{
     left:18px;
     right:18px;
     bottom:22px;
   }
-
-  .hero-text h2{
-    font-size:24px;
-  }
-
-  .hero-text p{
-    font-size:14px;
-  }
-
-  .big-title{
-    font-size:22px;
-  }
+  .hero-text h2{font-size:24px;}
+  .hero-text p{font-size:14px;}
+  .big-title{font-size:22px;}
 }
 
 @media (max-width: 520px){
   .side-nav{
     grid-template-columns:repeat(2, minmax(0, 1fr));
   }
-
-  .nav-text small{
-    display:none;
-  }
+  .nav-text small{display:none;}
 }
 </style>
 </head>
@@ -779,6 +768,7 @@ textarea{
         <button onclick="toggleLogin()">로그인</button>
         <button onclick="logout()">로그아웃</button>
         <button onclick="openMyPosts()">내 글 관리</button>
+        <button id="adminMenuBtn" class="hidden" onclick="openAdminPage()">관리자 페이지</button>
       </div>
 
       <div class="profile-summary" onclick="toggleProfileMenu()">
@@ -801,10 +791,8 @@ textarea{
 
         <div class="hero-slider" id="heroSlider">
           <div id="heroSlidesWrap"></div>
-
           <button class="slider-nav prev" onclick="moveHeroSlide(-1)">❮</button>
           <button class="slider-nav next" onclick="moveHeroSlide(1)">❯</button>
-
           <div class="slider-dots" id="heroDotsWrap"></div>
         </div>
 
@@ -1033,6 +1021,66 @@ textarea{
       </div>
     </section>
 
+    <section id="page-admin" class="page">
+      <div class="card">
+        <h2>관리자 페이지</h2>
+        <div class="warn-box">
+          처음 실행할 때는 아래 seed 명단으로 members 컬렉션이 자동 생성됩니다. 실제 학번/이름/동아리/역할로 꼭 바꿔주세요.
+        </div>
+
+        <div class="member-grid">
+          <div class="col">
+            <div class="section-box">
+              <h3 style="margin-top:0;">명단 추가 / 수정</h3>
+
+              <input type="hidden" id="memberDocId">
+
+              <label>학번 / 코드</label>
+              <input id="memberIdInput" placeholder="예: 20601 또는 T001">
+
+              <label>이름</label>
+              <input id="memberNameInput" placeholder="이름">
+
+              <label>동아리</label>
+              <select id="memberClubInput">
+                <option value="융합과학탐구1">융합과학탐구1</option>
+                <option value="융합과학탐구2">융합과학탐구2</option>
+                <option value="생명과학">생명과학</option>
+                <option value="지구과학">지구과학</option>
+                <option value="전체">전체</option>
+              </select>
+
+              <label>역할</label>
+              <select id="memberRoleInput">
+                <option value="부원">부원</option>
+                <option value="차장">차장</option>
+                <option value="부장">부장</option>
+                <option value="선생님">선생님</option>
+              </select>
+
+              <label style="display:flex;align-items:center;gap:8px;margin:12px 0;">
+                <input type="checkbox" id="memberIsActiveInput" checked style="width:auto;">
+                재학 / 재직 중(활성 상태)
+              </label>
+
+              <div class="tool-row">
+                <button class="primary-btn" onclick="saveMember()">저장</button>
+                <button class="secondary-btn" onclick="resetMemberForm()">입력 초기화</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="col">
+            <div class="section-box">
+              <h3 style="margin-top:0;">명단 관리</h3>
+              <input id="memberSearchInput" placeholder="학번, 이름, 역할, 동아리 검색" onkeyup="renderMemberList()">
+              <div style="margin-top:12px;" id="memberList">불러오는 중...</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <section id="page-detail" class="page">
       <div class="card">
         <div class="tool-row" style="justify-content:space-between;">
@@ -1102,6 +1150,19 @@ const NOTICE_ALLOWED_ROLES = ["부장", "차장", "선생님"];
 const INTRO_ALLOWED_ROLES = ["부장"];
 const HIDDEN_RESEARCH_KEYWORDS = ["산염기", "산-염기", "코아세르베이트"];
 
+/* 실제 사용 전 반드시 이 seed 명단을 네 학교 명단으로 바꿔줘 */
+const MEMBER_SEED = [
+  { id: "20601", name: "김가은", club: "융합과학탐구1", role: "부장", isActive: true },
+  { id: "20702", name: "김희원", club: "융합과학탐구1", role: "차장", isActive: true },
+  { id: "20101", name: "학생1", club: "융합과학탐구2", role: "부원", isActive: true },
+  { id: "20102", name: "학생2", club: "융합과학탐구2", role: "부원", isActive: true },
+  { id: "20201", name: "학생3", club: "생명과학", role: "부원", isActive: true },
+  { id: "20202", name: "학생4", club: "생명과학", role: "부원", isActive: true },
+  { id: "20301", name: "학생5", club: "지구과학", role: "부원", isActive: true },
+  { id: "20302", name: "학생6", club: "지구과학", role: "부원", isActive: true },
+  { id: "T001", name: "지도교사", club: "전체", role: "선생님", isActive: true }
+];
+
 const DEFAULT_HERO_SLIDES = [
   {
     name: "기본 대표 사진",
@@ -1138,11 +1199,11 @@ let dictionaryItems = [];
 let dictionaryIndex = 0;
 let introDocId = null;
 let introPhotos = [];
-let heroSlides = [...DEFAULT_HERO_SLIDES];
 let heroIndex = 0;
 let heroInterval = null;
 let introIndex = 0;
 let introInterval = null;
+let memberItems = [];
 
 function escapeHtml(text = ""){
   return String(text)
@@ -1245,13 +1306,6 @@ document.addEventListener("click", (e) => {
 function renderHomeClubIntro(item){
   const box = document.getElementById("homeClubIntroBox");
   const content = document.getElementById("homeClubIntroContent");
-
-  if(isLeader()){
-    box.style.display = "none";
-    content.innerHTML = "";
-    return;
-  }
-
   box.style.display = "block";
 
   if(!item){
@@ -1296,6 +1350,7 @@ function updateProfileUI(){
   const name = document.getElementById("profileName");
   const role = document.getElementById("profileRole");
   const introNavBtn = document.getElementById("introNavBtn");
+  const adminMenuBtn = document.getElementById("adminMenuBtn");
 
   if(user){
     avatar.textContent = user.name?.[0] || "U";
@@ -1308,10 +1363,8 @@ function updateProfileUI(){
   }
 
   document.getElementById("editIntroBtn").style.display = canEditClubIntro() ? "inline-block" : "none";
-
-  if(introNavBtn){
-    introNavBtn.style.display = isLeader() ? "flex" : "none";
-  }
+  if(introNavBtn) introNavBtn.style.display = isLeader() ? "flex" : "none";
+  if(adminMenuBtn) adminMenuBtn.classList.toggle("hidden", !isLeader());
 }
 
 function setActiveNav(page){
@@ -1321,9 +1374,8 @@ function setActiveNav(page){
 }
 
 function showPage(page){
-  if(page === "intro" && !isLeader()){
-    page = "home";
-  }
+  if(page === "intro" && !isLeader()) page = "home";
+  if(page === "admin" && !isLeader()) page = "home";
 
   document.querySelectorAll(".page").forEach(el => el.classList.remove("active"));
   document.getElementById(`page-${page}`).classList.add("active");
@@ -1333,6 +1385,7 @@ function showPage(page){
   if(page === "intro") loadClubIntro();
   if(page === "archive") renderArchive();
   if(page === "myPosts") loadMyPosts();
+  if(page === "admin") loadMembers();
 }
 window.showPage = showPage;
 
@@ -1341,30 +1394,71 @@ window.openMyPosts = function(){
   document.getElementById("profileMenu").classList.remove("open");
 };
 
-window.toggleLogin = function(){
-  const id = prompt("학번을 입력하세요");
+window.openAdminPage = function(){
+  showPage("admin");
+  document.getElementById("profileMenu").classList.remove("open");
+};
+
+window.scrollToHomeClubIntro = function(){
+  showPage("home");
+  setTimeout(() => {
+    const target = document.getElementById("homeClubIntroBox");
+    if(!target) return;
+    target.scrollIntoView({ behavior:"smooth", block:"start" });
+  }, 120);
+};
+
+async function ensureMemberSeed(){
+  const snap = await getDocs(collection(db,"members"));
+  if(!snap.empty) return;
+  for(const member of MEMBER_SEED){
+    await addDoc(collection(db,"members"), member);
+  }
+}
+
+async function findMemberByIdAndName(id, name){
+  const q = query(collection(db,"members"), where("id","==", String(id).trim()));
+  const snap = await getDocs(q);
+  let found = null;
+  snap.forEach(docu => {
+    const data = docu.data();
+    if(
+      data.name === String(name).trim() &&
+      data.isActive !== false
+    ){
+      found = { docId: docu.id, ...data };
+    }
+  });
+  return found;
+}
+
+window.toggleLogin = async function(){
+  const id = prompt("학번(또는 교사용 코드)을 입력하세요");
   if(!id || !id.trim()) return;
 
   const name = prompt("이름을 입력하세요");
   if(!name || !name.trim()) return;
 
-  const club = prompt("동아리명을 입력하세요", "융합과학탐구1");
-  if(!club || !club.trim()) return;
+  await ensureMemberSeed();
+  const member = await findMemberByIdAndName(id, name);
 
-  const role = prompt("역할을 입력하세요\n예: 부원 / 부장 / 차장 / 선생님", "부원");
-  if(!role || !role.trim()) return;
+  if(!member){
+    alert("명단에서 일치하는 활성 사용자를 찾지 못했어요. 학번과 이름을 다시 확인해주세요.");
+    return;
+  }
 
   localStorage.setItem("user", JSON.stringify({
-    id:id.trim(),
-    name:name.trim(),
-    club:club.trim(),
-    role:role.trim()
+    id: member.id,
+    name: member.name,
+    club: member.club,
+    role: member.role,
+    memberDocId: member.docId
   }));
 
   updateProfileUI();
   document.getElementById("profileMenu").classList.remove("open");
-  loadClubIntro();
-  alert("로그인 성공");
+  await loadClubIntro();
+  alert(`${member.name}님 로그인 완료 (${member.role} · ${member.club})`);
 };
 
 window.logout = function(){
@@ -2073,7 +2167,6 @@ function renderHeroSlider(slides = []){
   clearInterval(heroInterval);
 
   const safeSlides = slides.length ? slides : DEFAULT_HERO_SLIDES;
-  heroSlides = safeSlides;
 
   safeSlides.forEach((slide, index) => {
     wrap.innerHTML += `
@@ -2086,7 +2179,7 @@ function renderHeroSlider(slides = []){
           <p>${escapeHtml(slide.desc || "실험과 탐구를 통해 과학적 사고를 확장하는 학생 연구 동아리")}</p>
           ${slide.buttons ? `
             <div class="hero-buttons">
-              <button class="primary-btn" onclick="showPage('intro')">동아리 소개 보기</button>
+              <button class="primary-btn" onclick="scrollToHomeClubIntro()">동아리 소개 보기</button>
               <button class="secondary-btn" onclick="showPage('archive')">탐구 아카이브 보기</button>
             </div>
           ` : ""}
@@ -2416,9 +2509,154 @@ function renderDictionaryHero(){
   dictionaryIndex++;
 }
 
+/* 관리자 명단 관리 */
+async function loadMembers(){
+  if(!isLeader()) return;
+  await ensureMemberSeed();
+
+  const snap = await getDocs(collection(db,"members"));
+  memberItems = [];
+  snap.forEach(docu => memberItems.push({ docId:docu.id, ...docu.data() }));
+
+  memberItems.sort((a,b) => {
+    const aRole = ["부장","차장","선생님","부원"].indexOf(a.role || "부원");
+    const bRole = ["부장","차장","선생님","부원"].indexOf(b.role || "부원");
+    if(aRole !== bRole) return aRole - bRole;
+    return String(a.id || "").localeCompare(String(b.id || ""));
+  });
+
+  renderMemberList();
+}
+
+window.renderMemberList = function(){
+  const list = document.getElementById("memberList");
+  const keyword = (document.getElementById("memberSearchInput").value || "").trim().toLowerCase();
+
+  const filtered = memberItems.filter(item => {
+    const text = [item.id, item.name, item.club, item.role, item.isActive === false ? "비활성" : "활성"].join(" ").toLowerCase();
+    return text.includes(keyword);
+  });
+
+  if(!filtered.length){
+    list.innerHTML = "<p>조건에 맞는 명단이 없습니다.</p>";
+    return;
+  }
+
+  list.innerHTML = filtered.map(item => `
+    <div class="member-item">
+      <h4>${escapeHtml(item.name || "-")} <span class="type-badge">${escapeHtml(item.role || "-")}</span> ${item.isActive === false ? '<span class="pinned-badge">비활성</span>' : '<span class="status-badge">활성</span>'}</h4>
+      <div class="meta">
+        학번/코드: ${escapeHtml(item.id || "-")}<br>
+        동아리: ${escapeHtml(item.club || "-")}
+      </div>
+      <div class="tool-row">
+        <button class="secondary-btn small" onclick="editMember('${item.docId}')">수정</button>
+        <button class="danger-btn small" onclick="deleteMember('${item.docId}')">삭제</button>
+      </div>
+    </div>
+  `).join("");
+};
+
+window.resetMemberForm = function(){
+  document.getElementById("memberDocId").value = "";
+  document.getElementById("memberIdInput").value = "";
+  document.getElementById("memberNameInput").value = "";
+  document.getElementById("memberClubInput").value = "융합과학탐구1";
+  document.getElementById("memberRoleInput").value = "부원";
+  document.getElementById("memberIsActiveInput").checked = true;
+};
+
+window.editMember = function(docId){
+  if(!isLeader()) return;
+  const item = memberItems.find(member => member.docId === docId);
+  if(!item) return;
+
+  document.getElementById("memberDocId").value = item.docId;
+  document.getElementById("memberIdInput").value = item.id || "";
+  document.getElementById("memberNameInput").value = item.name || "";
+  document.getElementById("memberClubInput").value = item.club || "융합과학탐구1";
+  document.getElementById("memberRoleInput").value = item.role || "부원";
+  document.getElementById("memberIsActiveInput").checked = item.isActive !== false;
+  window.scrollTo({ top: 0, behavior: "smooth" });
+};
+
+window.saveMember = async function(){
+  if(!isLeader()){
+    alert("부장만 명단을 관리할 수 있어요.");
+    return;
+  }
+
+  const docId = document.getElementById("memberDocId").value.trim();
+  const id = document.getElementById("memberIdInput").value.trim();
+  const name = document.getElementById("memberNameInput").value.trim();
+  const club = document.getElementById("memberClubInput").value;
+  const role = document.getElementById("memberRoleInput").value;
+  const isActive = document.getElementById("memberIsActiveInput").checked;
+
+  if(!id || !name){
+    alert("학번/코드와 이름을 입력해주세요.");
+    return;
+  }
+
+  const duplicate = memberItems.find(item =>
+    item.id === id &&
+    item.docId !== docId
+  );
+  if(duplicate){
+    alert("같은 학번/코드가 이미 등록되어 있어요.");
+    return;
+  }
+
+  const data = {
+    id,
+    name,
+    club,
+    role,
+    isActive
+  };
+
+  if(docId){
+    await updateDoc(doc(db,"members",docId), data);
+    alert("명단 수정 완료");
+  }else{
+    await addDoc(collection(db,"members"), data);
+    alert("명단 추가 완료");
+  }
+
+  resetMemberForm();
+  await loadMembers();
+};
+
+window.deleteMember = async function(docId){
+  if(!isLeader()){
+    alert("부장만 명단을 관리할 수 있어요.");
+    return;
+  }
+
+  const item = memberItems.find(member => member.docId === docId);
+  if(!item) return;
+
+  if(item.role === "부장"){
+    const leaderCount = memberItems.filter(member => member.role === "부장").length;
+    if(leaderCount <= 1){
+      alert("마지막 부장은 삭제할 수 없어요. 먼저 다른 부장을 등록하거나 역할을 변경해주세요.");
+      return;
+    }
+  }
+
+  const ok = confirm(`${item.name} (${item.id}) 명단을 정말 삭제할까요?\n졸업자라면 삭제 대신 비활성으로 바꾸는 것도 가능합니다.`);
+  if(!ok) return;
+
+  await deleteDoc(doc(db,"members",docId));
+  alert("명단 삭제 완료");
+  await loadMembers();
+};
+
 /* 초기 실행 */
 updateProfileUI();
 resetWriteForm();
+resetMemberForm();
+await ensureMemberSeed();
 await loadNotice();
 await loadResearch();
 await loadMyPosts();
