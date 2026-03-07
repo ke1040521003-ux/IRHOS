@@ -58,7 +58,7 @@ nav button{
 }
 
 .container{
-  max-width:1050px;
+  max-width:1120px;
   margin:auto;
   padding:20px;
 }
@@ -150,6 +150,8 @@ button{
 .section-actions{
   display:flex;
   justify-content:flex-end;
+  gap:8px;
+  flex-wrap:wrap;
 }
 
 .inline-info{
@@ -166,12 +168,34 @@ button{
   border-radius:6px;
   font-size:12px;
   margin-bottom:8px;
+  margin-right:6px;
+}
+
+.pinned-badge{
+  display:inline-block;
+  background:#fee4e2;
+  color:#b42318;
+  padding:4px 8px;
+  border-radius:6px;
+  font-size:12px;
+  margin-bottom:8px;
 }
 
 .type-badge{
   display:inline-block;
   background:#eef2ff;
   color:#344054;
+  padding:4px 8px;
+  border-radius:6px;
+  font-size:12px;
+  margin-bottom:8px;
+  margin-right:6px;
+}
+
+.status-badge{
+  display:inline-block;
+  background:#ecfdf3;
+  color:#027a48;
   padding:4px 8px;
   border-radius:6px;
   font-size:12px;
@@ -217,7 +241,7 @@ button{
 }
 
 .col{
-  flex:1 1 300px;
+  flex:1 1 320px;
 }
 
 hr{
@@ -250,10 +274,6 @@ a:hover{
   font-weight:600;
 }
 
-.term-note:hover{
-  opacity:0.8;
-}
-
 .term-popup{
   position:fixed;
   inset:0;
@@ -266,7 +286,7 @@ a:hover{
 
 .term-popup-box{
   background:white;
-  width:min(500px, 92vw);
+  width:min(520px, 92vw);
   border-radius:14px;
   padding:20px;
   box-shadow:0 10px 30px rgba(0,0,0,0.2);
@@ -285,20 +305,12 @@ a:hover{
   border-radius:8px;
 }
 
-.attachment-list{
-  margin-top:10px;
-}
-
 .attachment-image{
   width:100%;
-  max-width:320px;
+  max-width:360px;
   border-radius:10px;
   border:1px solid #ddd;
   display:block;
-  margin:8px 0;
-}
-
-.attachment-item{
   margin:8px 0;
 }
 
@@ -314,6 +326,159 @@ a:hover{
   gap:8px;
   flex-wrap:wrap;
   margin-bottom:10px;
+  align-items:center;
+}
+
+.filter-btn{
+  background:#edf2f7;
+  color:#1d3557;
+  padding:8px 12px;
+  border-radius:8px;
+}
+
+.filter-btn.active{
+  background:#1d3557;
+  color:white;
+}
+
+.thumb-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill, minmax(260px, 1fr));
+  gap:16px;
+}
+
+.thumb-card{
+  border:1px solid #e5e7eb;
+  border-radius:14px;
+  overflow:hidden;
+  background:white;
+  box-shadow:0 2px 10px rgba(0,0,0,0.05);
+  cursor:pointer;
+}
+
+.thumb-card:hover{
+  transform:translateY(-2px);
+  transition:0.2s;
+}
+
+.thumb-image-wrap{
+  width:100%;
+  height:180px;
+  background:#eef2f7;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  overflow:hidden;
+}
+
+.thumb-image-wrap img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+}
+
+.thumb-image-fallback{
+  color:#667085;
+  font-size:14px;
+}
+
+.thumb-content{
+  padding:14px;
+}
+
+.thumb-title{
+  font-size:17px;
+  font-weight:700;
+  margin-bottom:8px;
+  line-height:1.4;
+}
+
+.thumb-summary{
+  color:#475467;
+  font-size:14px;
+  line-height:1.5;
+  min-height:42px;
+}
+
+.comment-box{
+  border-top:1px solid #eee;
+  padding-top:12px;
+  margin-top:12px;
+}
+
+.comment-item{
+  border-top:1px solid #eee;
+  padding:10px 0;
+}
+
+.comment-item:first-child{
+  border-top:none;
+}
+
+.attach-manage-item{
+  display:flex;
+  justify-content:space-between;
+  gap:8px;
+  align-items:center;
+  border:1px solid #e5e7eb;
+  border-radius:8px;
+  padding:8px 10px;
+  margin-bottom:8px;
+}
+
+.checkbox-row{
+  display:flex;
+  gap:8px;
+  align-items:center;
+  margin:8px 0 14px 0;
+}
+
+.checkbox-row input{
+  width:auto;
+  margin:0;
+}
+
+.detail-header{
+  display:flex;
+  justify-content:space-between;
+  gap:12px;
+  flex-wrap:wrap;
+  align-items:flex-start;
+}
+
+.detail-actions{
+  display:flex;
+  gap:8px;
+  flex-wrap:wrap;
+}
+
+.draft-chip{
+  display:inline-block;
+  background:#f2f4f7;
+  color:#344054;
+  border-radius:999px;
+  padding:4px 10px;
+  font-size:12px;
+  margin-bottom:10px;
+}
+
+@media print{
+  body *{
+    visibility:hidden;
+  }
+  #detail, #detail *{
+    visibility:visible;
+  }
+  #detail{
+    position:absolute;
+    left:0;
+    top:0;
+    width:100%;
+    box-shadow:none;
+  }
+  nav, header{
+    display:none !important;
+  }
 }
 </style>
 </head>
@@ -339,6 +504,7 @@ a:hover{
 
 <div class="container">
 
+  <!-- 홈 -->
   <div id="home" class="card">
     <div class="slider">
       <div class="slide active"><img src="slide1.jpg" alt="슬라이드1"></div>
@@ -363,26 +529,48 @@ a:hover{
       </div>
       <div class="col">
         <h3>🧪 최근 탐구</h3>
-        <div id="recentResearch"></div>
+        <div id="recentResearch" class="thumb-grid"></div>
       </div>
     </div>
   </div>
 
+  <!-- 공지 -->
   <div id="notice" class="card hidden">
     <h2>공지</h2>
     <div id="noticeList"></div>
   </div>
 
+  <!-- 탐구 아카이브 -->
   <div id="archive" class="card hidden">
     <h2>탐구 아카이브</h2>
-    <input id="searchInput" placeholder="제목, 작성자, 태그, 동아리로 검색" onkeyup="searchResearch()">
-    <div id="researchList"></div>
+
+    <div class="tool-row">
+      <input id="searchInput" placeholder="제목, 작성자, 태그, 동아리로 검색" onkeyup="renderArchive()">
+
+      <select id="sortSelect" onchange="renderArchive()">
+        <option value="latest">최신순</option>
+        <option value="oldest">오래된순</option>
+        <option value="views">조회수순</option>
+      </select>
+    </div>
+
+    <div class="tool-row" id="clubFilterBar">
+      <button class="filter-btn active" data-club="전체" onclick="setClubFilter('전체')">전체</button>
+      <button class="filter-btn" data-club="융합과학탐구1" onclick="setClubFilter('융합과학탐구1')">융합과학탐구1</button>
+      <button class="filter-btn" data-club="융합과학탐구2" onclick="setClubFilter('융합과학탐구2')">융합과학탐구2</button>
+      <button class="filter-btn" data-club="생명과학" onclick="setClubFilter('생명과학')">생명과학</button>
+      <button class="filter-btn" data-club="지구과학" onclick="setClubFilter('지구과학')">지구과학</button>
+    </div>
+
+    <div id="researchList" class="thumb-grid"></div>
   </div>
 
+  <!-- 글 작성 -->
   <div id="write" class="card hidden">
     <h2 id="writeTitleText">글 작성</h2>
+    <div id="draftStatus" class="draft-chip hidden">임시저장됨</div>
     <p class="inline-info" id="editModeInfo">공지나 탐구 글을 작성할 수 있습니다.</p>
-    <p class="preview-note">단어 설명을 넣고 싶으면 <strong>[[단어|설명]]</strong> 형식으로 적으면 됩니다.</p>
+    <p class="preview-note">단어 설명은 <strong>[[단어|설명]]</strong> 형식으로 넣을 수 있습니다.</p>
 
     <label>글 종류</label>
     <select id="writeType" onchange="changeWriteForm()">
@@ -391,14 +579,21 @@ a:hover{
       <option value="project">장기 프로젝트</option>
     </select>
 
+    <!-- 공지 -->
     <div id="noticeForm">
       <label>공지 제목</label>
       <input id="noticeTitleWrite" placeholder="공지 제목">
 
       <label>공지 내용</label>
       <textarea id="noticeContentWrite" placeholder="공지 내용을 입력하세요"></textarea>
+
+      <div class="checkbox-row">
+        <input type="checkbox" id="noticePinned">
+        <label for="noticePinned">상단 고정 공지</label>
+      </div>
     </div>
 
+    <!-- 탐구 -->
     <div id="researchForm" class="hidden">
       <label>공개 범위 / 동아리</label>
       <select id="researchClub">
@@ -430,6 +625,13 @@ a:hover{
       </div>
 
       <div id="projectForm" class="hidden">
+        <label>프로젝트 상태</label>
+        <select id="projectStatus">
+          <option value="진행중">진행중</option>
+          <option value="완료">완료</option>
+          <option value="보류">보류</option>
+        </select>
+
         <label>연구 목적</label>
         <textarea id="projectPurpose" placeholder="이 프로젝트의 목적"></textarea>
 
@@ -450,17 +652,50 @@ a:hover{
       이미지(jpg, png, webp), 문서(pdf, ppt, doc, hwp)를 여러 개 첨부할 수 있습니다.
     </p>
 
-    <button class="primary-btn" onclick="submitWrite()" id="submitBtn">저장</button>
-    <button class="secondary-btn hidden" onclick="cancelEdit()" id="cancelEditBtn">수정 취소</button>
+    <div id="existingAttachmentsBox" class="hidden">
+      <h3>기존 첨부파일</h3>
+      <div id="existingAttachmentsList"></div>
+    </div>
+
+    <div class="tool-row">
+      <button class="primary-btn" onclick="submitWrite()" id="submitBtn">저장</button>
+      <button class="secondary-btn hidden" onclick="cancelEdit()" id="cancelEditBtn">수정 취소</button>
+      <button class="secondary-btn" onclick="clearDraft()">임시저장 삭제</button>
+    </div>
   </div>
 
+  <!-- 내 글 관리 -->
   <div id="myPosts" class="card hidden">
     <h2>내 글 관리</h2>
     <p class="inline-info">내가 작성한 공지와 탐구 글을 확인하고 수정하거나 삭제할 수 있습니다.</p>
-    <div class="tool-row">
-      <button class="danger-btn small" onclick="cleanupHiddenResearch()">산염기/코아세르베이트 완전 삭제</button>
-    </div>
     <div id="myPostList"></div>
+  </div>
+
+  <!-- 상세 -->
+  <div id="detail" class="card hidden">
+    <div class="detail-header">
+      <div>
+        <div id="detailBadges"></div>
+        <h2 id="detailTitle"></h2>
+        <div class="meta" id="detailMeta"></div>
+      </div>
+      <div class="detail-actions">
+        <button class="secondary-btn" onclick="showSection('archive')">아카이브로</button>
+        <button class="secondary-btn" onclick="window.print()">PDF 저장 / 인쇄</button>
+      </div>
+    </div>
+
+    <div id="detailBody"></div>
+
+    <div class="comment-box">
+      <h3>댓글</h3>
+      <div id="commentList"></div>
+
+      <div id="commentWriteBox">
+        <textarea id="commentInput" placeholder="댓글을 입력하세요"></textarea>
+        <button class="primary-btn" onclick="submitComment()">댓글 등록</button>
+      </div>
+    </div>
   </div>
 
 </div>
@@ -475,7 +710,10 @@ import {
   getDoc,
   doc,
   updateDoc,
-  deleteDoc
+  deleteDoc,
+  query,
+  where,
+  orderBy
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 import {
   getStorage,
@@ -489,20 +727,27 @@ const firebaseConfig = {
   authDomain: "irhos-science-lab.firebaseapp.com",
   projectId: "irhos-science-lab",
   storageBucket: "irhos-science-lab.firebasestorage.app"
-  // 혹시 업로드가 안 되면 Firebase 콘솔에 있는 storageBucket 값으로 바꿔주세요.
 };
 
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 const storage = getStorage(app);
 
-const HIDDEN_RESEARCH_KEYWORDS = ["산염기", "코아세르베이트"];
+const NOTICE_ALLOWED_ROLES = ["부장", "차장", "선생님"];
+const HIDDEN_RESEARCH_KEYWORDS = ["산염기", "산-염기", "코아세르베이트"];
 
 let editState = {
   isEditing: false,
   category: null,
   id: null
 };
+
+let archiveItems = [];
+let currentClubFilter = "전체";
+let currentDetail = null;
+let keptAttachments = [];
+
+const DRAFT_KEY = "irhos_write_draft_v2";
 
 function escapeHtml(text = ""){
   return String(text)
@@ -514,7 +759,10 @@ function escapeHtml(text = ""){
 }
 
 function normalizeTitle(title = ""){
-  return String(title).replace(/\s+/g, "").trim().toLowerCase();
+  return String(title)
+    .replace(/[\s\-–—_]/g, "")
+    .trim()
+    .toLowerCase();
 }
 
 function shouldHideResearch(title = ""){
@@ -531,20 +779,6 @@ function formatDate(dateString){
 
 function getUser(){
   return JSON.parse(localStorage.getItem("user") || "null");
-}
-
-function updateLoginUI(){
-  const user = getUser();
-  const loginInfo = document.getElementById("loginInfo");
-  const logoutBtn = document.getElementById("logoutBtn");
-
-  if(user){
-    loginInfo.textContent = `${user.name} (${user.id}, ${user.club})`;
-    logoutBtn.classList.remove("hidden");
-  }else{
-    loginInfo.textContent = "로그인 안 됨";
-    logoutBtn.classList.add("hidden");
-  }
 }
 
 function parseTags(raw){
@@ -567,14 +801,10 @@ function isImageFile(file = {}){
 
 function renderRichText(text = ""){
   const escaped = escapeHtml(text);
-
   const parsed = escaped.replace(
     /\[\[([^|\]]+)\|([^\]]+)\]\]/g,
-    (_, term, desc) => {
-      return `<span class="term-note" data-desc="${desc}" tabindex="0">${term}</span>`;
-    }
+    (_, term, desc) => `<span class="term-note" data-desc="${desc}" tabindex="0">${term}</span>`
   );
-
   return parsed.replaceAll("\n", "<br>");
 }
 
@@ -588,64 +818,61 @@ function openTermPopup(term, desc){
       <button type="button">닫기</button>
     </div>
   `;
-
   popup.addEventListener("click", (e) => {
-    if(e.target === popup){
-      popup.remove();
-    }
+    if(e.target === popup) popup.remove();
   });
-
-  popup.querySelector("button").addEventListener("click", () => {
-    popup.remove();
-  });
-
+  popup.querySelector("button").addEventListener("click", () => popup.remove());
   document.body.appendChild(popup);
 }
 
 document.addEventListener("click", (e) => {
   const target = e.target.closest(".term-note");
   if(!target) return;
-
-  const term = target.textContent || "";
-  const desc = target.dataset.desc || "";
-  openTermPopup(term, desc);
+  openTermPopup(target.textContent || "", target.dataset.desc || "");
 });
+
+function getThumbnailUrl(item){
+  const attachments = item.attachments || [];
+  const image = attachments.find(file => isImageFile(file));
+  return image ? image.url : "";
+}
+
+function getFirstSentence(item){
+  let source = "";
+
+  if(item.type === "experiment"){
+    source = item.reason || item.method || item.result || "";
+  }else if(item.type === "project"){
+    source = item.summary || item.purpose || ((item.sections || [])[0]?.content || "");
+  }else{
+    source = item.content || "";
+  }
+
+  const cleaned = source.replace(/\[\[([^|\]]+)\|([^\]]+)\]\]/g, "$1").trim();
+  const sentence = cleaned.split(/(?<=[.!?。]|다\.)\s+/)[0] || cleaned;
+  return sentence.slice(0, 90) + (sentence.length > 90 ? "..." : "");
+}
 
 function renderAttachments(files = []){
   if(!files || files.length === 0) return "";
 
-  const items = files.map(file => {
-    const safeName = escapeHtml(file.name || "첨부파일");
-    const safeUrl = file.url || "#";
-
-    if(isImageFile(file)){
-      return `
-        <div class="attachment-item">
-          <a href="${safeUrl}" target="_blank" rel="noopener noreferrer">${safeName}</a>
-          <img src="${safeUrl}" alt="${safeName}" class="attachment-image">
-        </div>
-      `;
-    }
-
-    return `
-      <li>
-        <a href="${safeUrl}" target="_blank" rel="noopener noreferrer">${safeName}</a>
-      </li>
-    `;
-  }).join("");
-
-  const hasNonImage = files.some(file => !isImageFile(file));
+  const docs = files.filter(file => !isImageFile(file));
+  const images = files.filter(file => isImageFile(file));
 
   return `
-    <div class="section-box attachment-list">
+    <div class="section-box">
       <strong>첨부파일</strong>
-      ${hasNonImage ? `<ul>${files.filter(file => !isImageFile(file)).map(file => `
-        <li>
-          <a href="${file.url}" target="_blank" rel="noopener noreferrer">${escapeHtml(file.name || "첨부파일")}</a>
-        </li>
-      `).join("")}</ul>` : ""}
-      ${files.filter(file => isImageFile(file)).map(file => `
-        <div class="attachment-item">
+      ${docs.length ? `
+        <ul>
+          ${docs.map(file => `
+            <li>
+              <a href="${file.url}" target="_blank" rel="noopener noreferrer">${escapeHtml(file.name || "첨부파일")}</a>
+            </li>
+          `).join("")}
+        </ul>
+      ` : ""}
+      ${images.map(file => `
+        <div>
           <a href="${file.url}" target="_blank" rel="noopener noreferrer">${escapeHtml(file.name || "이미지")}</a>
           <img src="${file.url}" alt="${escapeHtml(file.name || "이미지")}" class="attachment-image">
         </div>
@@ -660,7 +887,6 @@ async function uploadFiles(files, folder = "attachments"){
   for(const file of files){
     const fileName = `${Date.now()}_${Math.random().toString(36).slice(2)}_${file.name}`;
     const fileRef = ref(storage, `${folder}/${fileName}`);
-
     await uploadBytes(fileRef, file);
     const url = await getDownloadURL(fileRef);
 
@@ -693,6 +919,7 @@ function createProjectSectionElement(title = "", content = ""){
 
   wrapper.querySelector(".remove-section-btn").addEventListener("click", () => {
     wrapper.remove();
+    saveDraft();
   });
 
   return wrapper;
@@ -719,12 +946,126 @@ function collectProjectSections(){
   return sections;
 }
 
+function updateLoginUI(){
+  const user = getUser();
+  const loginInfo = document.getElementById("loginInfo");
+  const logoutBtn = document.getElementById("logoutBtn");
+
+  if(user){
+    loginInfo.textContent = `${user.name} (${user.id}, ${user.club}, ${user.role})`;
+    logoutBtn.classList.remove("hidden");
+  }else{
+    loginInfo.textContent = "로그인 안 됨";
+    logoutBtn.classList.add("hidden");
+  }
+}
+
+function updateNoticePermissionUI(){
+  const user = getUser();
+  const writeType = document.getElementById("writeType");
+  const noticeOption = writeType.querySelector('option[value="notice"]');
+
+  if(!user || !NOTICE_ALLOWED_ROLES.includes(user.role)){
+    noticeOption.textContent = "공지 (권한 필요)";
+  }else{
+    noticeOption.textContent = "공지";
+  }
+}
+
+function showDraftStatus(show = true){
+  const el = document.getElementById("draftStatus");
+  if(show) el.classList.remove("hidden");
+  else el.classList.add("hidden");
+}
+
+function getDraftData(){
+  return {
+    type: document.getElementById("writeType").value,
+    noticeTitle: document.getElementById("noticeTitleWrite").value,
+    noticeContent: document.getElementById("noticeContentWrite").value,
+    noticePinned: document.getElementById("noticePinned").checked,
+    researchClub: document.getElementById("researchClub").value,
+    title: document.getElementById("title").value,
+    tags: document.getElementById("tags").value,
+    reason: document.getElementById("reason").value,
+    prediction: document.getElementById("prediction").value,
+    method: document.getElementById("method").value,
+    result: document.getElementById("result").value,
+    projectStatus: document.getElementById("projectStatus").value,
+    projectPurpose: document.getElementById("projectPurpose").value,
+    projectSummary: document.getElementById("projectSummary").value,
+    sections: collectProjectSections()
+  };
+}
+
+function saveDraft(){
+  if(editState.isEditing) return;
+  localStorage.setItem(DRAFT_KEY, JSON.stringify(getDraftData()));
+  showDraftStatus(true);
+}
+
+function restoreDraft(){
+  if(editState.isEditing) return;
+
+  const raw = localStorage.getItem(DRAFT_KEY);
+  if(!raw) return;
+
+  try{
+    const draft = JSON.parse(raw);
+    document.getElementById("writeType").value = draft.type || "notice";
+    document.getElementById("noticeTitleWrite").value = draft.noticeTitle || "";
+    document.getElementById("noticeContentWrite").value = draft.noticeContent || "";
+    document.getElementById("noticePinned").checked = !!draft.noticePinned;
+
+    document.getElementById("researchClub").value = draft.researchClub || "전체";
+    document.getElementById("title").value = draft.title || "";
+    document.getElementById("tags").value = draft.tags || "";
+    document.getElementById("reason").value = draft.reason || "";
+    document.getElementById("prediction").value = draft.prediction || "";
+    document.getElementById("method").value = draft.method || "";
+    document.getElementById("result").value = draft.result || "";
+
+    document.getElementById("projectStatus").value = draft.projectStatus || "진행중";
+    document.getElementById("projectPurpose").value = draft.projectPurpose || "";
+    document.getElementById("projectSummary").value = draft.projectSummary || "";
+
+    const area = document.getElementById("projectSections");
+    area.innerHTML = "";
+    (draft.sections || []).forEach(section => addProjectSection(section.title, section.content));
+
+    changeWriteForm();
+    showDraftStatus(true);
+  }catch(error){
+    console.error(error);
+  }
+}
+
+window.clearDraft = function(){
+  localStorage.removeItem(DRAFT_KEY);
+  showDraftStatus(false);
+  if(!editState.isEditing) alert("임시저장을 삭제했어요.");
+};
+
+function bindDraftInputs(){
+  [
+    "writeType","noticeTitleWrite","noticeContentWrite","noticePinned","researchClub","title","tags",
+    "reason","prediction","method","result","projectStatus","projectPurpose","projectSummary"
+  ].forEach(id => {
+    document.getElementById(id).addEventListener("input", saveDraft);
+    document.getElementById(id).addEventListener("change", saveDraft);
+  });
+
+  document.getElementById("projectSections").addEventListener("input", saveDraft);
+}
+
 function resetWriteForm(){
   editState = {
     isEditing: false,
     category: null,
     id: null
   };
+
+  keptAttachments = [];
 
   document.getElementById("writeTitleText").textContent = "글 작성";
   document.getElementById("editModeInfo").textContent = "공지나 탐구 글을 작성할 수 있습니다.";
@@ -736,6 +1077,7 @@ function resetWriteForm(){
 
   document.getElementById("noticeTitleWrite").value = "";
   document.getElementById("noticeContentWrite").value = "";
+  document.getElementById("noticePinned").checked = false;
 
   document.getElementById("researchClub").value = "전체";
   document.getElementById("title").value = "";
@@ -744,16 +1086,22 @@ function resetWriteForm(){
   document.getElementById("prediction").value = "";
   document.getElementById("method").value = "";
   document.getElementById("result").value = "";
+  document.getElementById("projectStatus").value = "진행중";
   document.getElementById("projectPurpose").value = "";
   document.getElementById("projectSummary").value = "";
   document.getElementById("projectSections").innerHTML = "";
   document.getElementById("fileInput").value = "";
 
+  document.getElementById("existingAttachmentsBox").classList.add("hidden");
+  document.getElementById("existingAttachmentsList").innerHTML = "";
+
   changeWriteForm();
+  updateNoticePermissionUI();
 }
 
 window.cancelEdit = function(){
   resetWriteForm();
+  restoreDraft();
 };
 
 window.toggleLogin = function(){
@@ -766,13 +1114,18 @@ window.toggleLogin = function(){
   const club = prompt("동아리명을 입력하세요\n예: 융합과학탐구1");
   if(club === null || !club.trim()) return;
 
+  const role = prompt("역할을 입력하세요\n예: 부원 / 부장 / 차장 / 선생님", "부원");
+  if(role === null || !role.trim()) return;
+
   localStorage.setItem("user", JSON.stringify({
     id: id.trim(),
     name: name.trim(),
-    club: club.trim()
+    club: club.trim(),
+    role: role.trim()
   }));
 
   updateLoginUI();
+  updateNoticePermissionUI();
   loadMyPosts();
   alert("로그인 성공");
 };
@@ -780,12 +1133,13 @@ window.toggleLogin = function(){
 window.logout = function(){
   localStorage.removeItem("user");
   updateLoginUI();
+  updateNoticePermissionUI();
   loadMyPosts();
   alert("로그아웃 완료");
 };
 
 window.showSection = function(id){
-  ["home", "notice", "archive", "write", "myPosts"].forEach(sectionId => {
+  ["home", "notice", "archive", "write", "myPosts", "detail"].forEach(sectionId => {
     document.getElementById(sectionId).classList.add("hidden");
   });
   document.getElementById(id).classList.remove("hidden");
@@ -793,9 +1147,14 @@ window.showSection = function(id){
   if(id === "myPosts"){
     loadMyPosts();
   }
+
+  if(id === "write" && !editState.isEditing){
+    restoreDraft();
+  }
 };
 
 window.changeWriteForm = function(){
+  const user = getUser();
   const type = document.getElementById("writeType").value;
   const noticeForm = document.getElementById("noticeForm");
   const researchForm = document.getElementById("researchForm");
@@ -803,6 +1162,12 @@ window.changeWriteForm = function(){
   const projectForm = document.getElementById("projectForm");
 
   if(type === "notice"){
+    if(!user || !NOTICE_ALLOWED_ROLES.includes(user.role)){
+      alert("공지는 부장, 차장, 선생님만 작성할 수 있어요.");
+      document.getElementById("writeType").value = "experiment";
+      return changeWriteForm();
+    }
+
     noticeForm.classList.remove("hidden");
     researchForm.classList.add("hidden");
   }else{
@@ -818,6 +1183,33 @@ window.changeWriteForm = function(){
     }
   }
 };
+
+function renderExistingAttachments(){
+  const box = document.getElementById("existingAttachmentsBox");
+  const list = document.getElementById("existingAttachmentsList");
+  list.innerHTML = "";
+
+  if(keptAttachments.length === 0){
+    box.classList.add("hidden");
+    return;
+  }
+
+  box.classList.remove("hidden");
+
+  keptAttachments.forEach((file, index) => {
+    const div = document.createElement("div");
+    div.className = "attach-manage-item";
+    div.innerHTML = `
+      <span>${escapeHtml(file.name || "첨부파일")}</span>
+      <button type="button" class="danger-btn small">제거</button>
+    `;
+    div.querySelector("button").addEventListener("click", () => {
+      keptAttachments.splice(index, 1);
+      renderExistingAttachments();
+    });
+    list.appendChild(div);
+  });
+}
 
 window.submitWrite = async function(){
   const user = getUser();
@@ -837,30 +1229,29 @@ window.submitWrite = async function(){
       : [];
 
     if(type === "notice"){
+      if(!NOTICE_ALLOWED_ROLES.includes(user.role)){
+        alert("공지는 부장, 차장, 선생님만 작성할 수 있어요.");
+        return;
+      }
+
       const title = document.getElementById("noticeTitleWrite").value.trim();
       const content = document.getElementById("noticeContentWrite").value.trim();
+      const pinned = document.getElementById("noticePinned").checked;
 
       if(!title || !content){
         alert("공지 제목과 내용을 모두 입력해주세요.");
         return;
       }
 
-      let attachments = uploadedFiles;
-
-      if(editState.isEditing && editState.category === "notice"){
-        const oldDoc = await getDoc(doc(db, "notice", editState.id));
-        const oldData = oldDoc.exists() ? oldDoc.data() : {};
-        attachments = [...(oldData.attachments || []), ...uploadedFiles];
-      }
-
       const noticeData = {
         title,
         content,
+        pinned,
         author: user.name,
         authorId: user.id,
         club: user.club,
         date: new Date().toISOString(),
-        attachments
+        attachments: [...keptAttachments, ...uploadedFiles]
       };
 
       if(editState.isEditing && editState.category === "notice"){
@@ -900,7 +1291,7 @@ window.submitWrite = async function(){
         views: 0,
         viewUsers: [],
         createdAt: new Date().toISOString(),
-        attachments: uploadedFiles
+        attachments: [...keptAttachments, ...uploadedFiles]
       };
 
       if(editState.isEditing && editState.category === "research"){
@@ -908,7 +1299,6 @@ window.submitWrite = async function(){
         const oldData = oldDoc.exists() ? oldDoc.data() : {};
         researchData.views = oldData.views || 0;
         researchData.viewUsers = oldData.viewUsers || [];
-        researchData.attachments = [...(oldData.attachments || []), ...uploadedFiles];
         await updateDoc(doc(db, "research", editState.id), researchData);
         alert("실험 보고서 수정 완료");
       }else{
@@ -923,6 +1313,7 @@ window.submitWrite = async function(){
       const club = document.getElementById("researchClub").value;
       const purpose = document.getElementById("projectPurpose").value.trim();
       const summary = document.getElementById("projectSummary").value.trim();
+      const status = document.getElementById("projectStatus").value;
       const sections = collectProjectSections();
 
       if(!title){
@@ -937,13 +1328,14 @@ window.submitWrite = async function(){
         type: "project",
         purpose,
         summary,
+        status,
         sections,
         author: user.name,
         authorId: user.id,
         views: 0,
         viewUsers: [],
         createdAt: new Date().toISOString(),
-        attachments: uploadedFiles
+        attachments: [...keptAttachments, ...uploadedFiles]
       };
 
       if(editState.isEditing && editState.category === "research"){
@@ -951,7 +1343,6 @@ window.submitWrite = async function(){
         const oldData = oldDoc.exists() ? oldDoc.data() : {};
         projectData.views = oldData.views || 0;
         projectData.viewUsers = oldData.viewUsers || [];
-        projectData.attachments = [...(oldData.attachments || []), ...uploadedFiles];
         await updateDoc(doc(db, "research", editState.id), projectData);
         alert("장기 프로젝트 수정 완료");
       }else{
@@ -960,6 +1351,8 @@ window.submitWrite = async function(){
       }
     }
 
+    localStorage.removeItem(DRAFT_KEY);
+    showDraftStatus(false);
     resetWriteForm();
     await loadNotice();
     await loadResearch();
@@ -975,7 +1368,6 @@ window.submitWrite = async function(){
 async function loadNotice(){
   const list = document.getElementById("noticeList");
   const preview = document.getElementById("noticePreview");
-
   list.innerHTML = "";
   preview.innerHTML = "";
 
@@ -986,7 +1378,10 @@ async function loadNotice(){
     items.push({ id: docu.id, ...docu.data() });
   });
 
-  items.sort((a, b) => new Date(b.date) - new Date(a.date));
+  items.sort((a, b) => {
+    if(!!b.pinned !== !!a.pinned) return Number(b.pinned) - Number(a.pinned);
+    return new Date(b.date) - new Date(a.date);
+  });
 
   if(items.length === 0){
     list.innerHTML = "<p>등록된 공지가 없습니다.</p>";
@@ -997,7 +1392,10 @@ async function loadNotice(){
   items.forEach(item => {
     list.innerHTML += `
       <div class="post">
-        <div class="notice-badge">공지</div>
+        <div>
+          <span class="notice-badge">공지</span>
+          ${item.pinned ? `<span class="pinned-badge">상단 고정</span>` : ""}
+        </div>
         <h3>${escapeHtml(item.title)}</h3>
         <p>${renderRichText(item.content || "")}</p>
         ${renderAttachments(item.attachments || [])}
@@ -1006,9 +1404,12 @@ async function loadNotice(){
     `;
   });
 
-  items.slice(0, 3).forEach(item => {
+  items.slice(0, 4).forEach(item => {
     preview.innerHTML += `
       <div class="post">
+        <div>
+          ${item.pinned ? `<span class="pinned-badge">고정</span>` : ""}
+        </div>
         <h4>${escapeHtml(item.title)}</h4>
         <div class="meta">${formatDate(item.date)}</div>
       </div>
@@ -1017,12 +1418,6 @@ async function loadNotice(){
 }
 
 async function loadResearch(){
-  const list = document.getElementById("researchList");
-  const recentResearch = document.getElementById("recentResearch");
-
-  list.innerHTML = "";
-  recentResearch.innerHTML = "";
-
   const snap = await getDocs(collection(db, "research"));
   const items = [];
 
@@ -1036,73 +1431,168 @@ async function loadResearch(){
     items.push({ id: docu.id, ...data });
   });
 
-  items.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+  archiveItems = items;
+  renderArchive();
+  renderRecentResearch();
+}
+
+function setThumbCardContent(item){
+  const thumbUrl = getThumbnailUrl(item);
+  const summary = escapeHtml(getFirstSentence(item));
+  const typeLabel = item.type === "project" ? "장기 프로젝트" : "실험 보고서";
+
+  return `
+    <div class="thumb-card" onclick="openResearchDetail('${item.id}')">
+      <div class="thumb-image-wrap">
+        ${thumbUrl
+          ? `<img src="${thumbUrl}" alt="${escapeHtml(item.title)}">`
+          : `<div class="thumb-image-fallback">썸네일 없음</div>`}
+      </div>
+      <div class="thumb-content">
+        <div>
+          <span class="type-badge">${typeLabel}</span>
+          ${item.type === "project" ? `<span class="status-badge">${escapeHtml(item.status || "진행중")}</span>` : ""}
+        </div>
+        <div class="thumb-title">${escapeHtml(item.title)}</div>
+        <div class="meta">
+          작성자: ${escapeHtml(item.author || "-")}<br>
+          동아리: ${escapeHtml(item.club || "-")}<br>
+          작성일: ${formatDate(item.createdAt)}
+        </div>
+        <div class="thumb-summary">${summary || "내용 요약 없음"}</div>
+      </div>
+    </div>
+  `;
+}
+
+function renderRecentResearch(){
+  const recentResearch = document.getElementById("recentResearch");
+  recentResearch.innerHTML = "";
+
+  const items = [...archiveItems].sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt)).slice(0, 3);
 
   if(items.length === 0){
-    list.innerHTML = "<p>등록된 탐구 글이 없습니다.</p>";
     recentResearch.innerHTML = "<p>최근 탐구 글이 없습니다.</p>";
     return;
   }
 
   items.forEach(item => {
-    const tagHtml = (item.tags || []).map(tag => `<span class="tag">${escapeHtml(tag)}</span>`).join("");
+    recentResearch.innerHTML += setThumbCardContent(item);
+  });
+}
 
-    let detailHtml = "";
+window.setClubFilter = function(club){
+  currentClubFilter = club;
+  document.querySelectorAll("#clubFilterBar .filter-btn").forEach(btn => {
+    btn.classList.toggle("active", btn.dataset.club === club);
+  });
+  renderArchive();
+};
 
-    if(item.type === "experiment"){
-      detailHtml = `
-        <p><strong>실험 이유</strong><br>${renderRichText(item.reason || "")}</p>
-        <p><strong>결과 예측</strong><br>${renderRichText(item.prediction || "")}</p>
-        <p><strong>실험 과정</strong><br>${renderRichText(item.method || "")}</p>
-        <p><strong>실험 결과</strong><br>${renderRichText(item.result || "")}</p>
-        ${renderAttachments(item.attachments || [])}
-      `;
-    }
+window.renderArchive = function(){
+  const list = document.getElementById("researchList");
+  list.innerHTML = "";
 
-    if(item.type === "project"){
-      const sectionsHtml = (item.sections || []).map(section => `
+  const keyword = document.getElementById("searchInput").value.toLowerCase();
+  const sort = document.getElementById("sortSelect").value;
+
+  let items = [...archiveItems].filter(item => {
+    const searchable = [
+      item.title || "",
+      item.author || "",
+      item.club || "",
+      ...(item.tags || [])
+    ].join(" ").toLowerCase();
+
+    const keywordMatch = searchable.includes(keyword);
+    const clubMatch = currentClubFilter === "전체" || item.club === currentClubFilter;
+    return keywordMatch && clubMatch;
+  });
+
+  if(sort === "latest"){
+    items.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+  }
+  if(sort === "oldest"){
+    items.sort((a, b) => new Date(a.createdAt) - new Date(b.createdAt));
+  }
+  if(sort === "views"){
+    items.sort((a, b) => (b.views || 0) - (a.views || 0));
+  }
+
+  if(items.length === 0){
+    list.innerHTML = "<p>조건에 맞는 탐구 글이 없습니다.</p>";
+    return;
+  }
+
+  items.forEach(item => {
+    list.innerHTML += setThumbCardContent(item);
+  });
+};
+
+window.openResearchDetail = async function(id){
+  const snap = await getDoc(doc(db, "research", id));
+  if(!snap.exists()){
+    alert("글을 찾을 수 없습니다.");
+    return;
+  }
+
+  const data = { id: snap.id, ...snap.data() };
+  currentDetail = data;
+
+  const currentViews = data.views || 0;
+  await updateDoc(doc(db, "research", id), { views: currentViews + 1 });
+  data.views = currentViews + 1;
+
+  const detailBadges = document.getElementById("detailBadges");
+  const detailTitle = document.getElementById("detailTitle");
+  const detailMeta = document.getElementById("detailMeta");
+  const detailBody = document.getElementById("detailBody");
+
+  detailBadges.innerHTML = `
+    <span class="type-badge">${data.type === "project" ? "장기 프로젝트" : "실험 보고서"}</span>
+    ${data.type === "project" ? `<span class="status-badge">${escapeHtml(data.status || "진행중")}</span>` : ""}
+  `;
+
+  detailTitle.textContent = data.title || "";
+  detailMeta.innerHTML = `
+    작성자: ${escapeHtml(data.author || "-")} | 
+    동아리: ${escapeHtml(data.club || "-")} | 
+    작성일: ${formatDate(data.createdAt)} | 
+    조회수: ${data.views || 0}
+  `;
+
+  let bodyHtml = "";
+
+  if(data.type === "experiment"){
+    bodyHtml = `
+      <div>${(data.tags || []).map(tag => `<span class="tag">${escapeHtml(tag)}</span>`).join("")}</div>
+      <p><strong>실험 이유</strong><br>${renderRichText(data.reason || "")}</p>
+      <p><strong>결과 예측</strong><br>${renderRichText(data.prediction || "")}</p>
+      <p><strong>실험 과정</strong><br>${renderRichText(data.method || "")}</p>
+      <p><strong>실험 결과</strong><br>${renderRichText(data.result || "")}</p>
+      ${renderAttachments(data.attachments || [])}
+    `;
+  }
+
+  if(data.type === "project"){
+    bodyHtml = `
+      <div>${(data.tags || []).map(tag => `<span class="tag">${escapeHtml(tag)}</span>`).join("")}</div>
+      <p><strong>연구 목적</strong><br>${renderRichText(data.purpose || "")}</p>
+      <p><strong>프로젝트 요약</strong><br>${renderRichText(data.summary || "")}</p>
+      ${(data.sections || []).map(section => `
         <div class="section-box">
           <h4>${escapeHtml(section.title || "제목 없음")}</h4>
           <p>${renderRichText(section.content || "")}</p>
         </div>
-      `).join("");
-
-      detailHtml = `
-        <p><strong>연구 목적</strong><br>${renderRichText(item.purpose || "")}</p>
-        <p><strong>프로젝트 요약</strong><br>${renderRichText(item.summary || "")}</p>
-        ${sectionsHtml}
-        ${renderAttachments(item.attachments || [])}
-      `;
-    }
-
-    list.innerHTML += `
-      <div class="post">
-        <div class="type-badge">${item.type === "project" ? "장기 프로젝트" : "실험 보고서"}</div>
-        <h3>${escapeHtml(item.title)}</h3>
-        <div>${tagHtml}</div>
-        <div class="meta">작성자: ${escapeHtml(item.author || "-")} | 동아리: ${escapeHtml(item.club || "-")} | 작성일: ${formatDate(item.createdAt)}</div>
-        ${detailHtml}
-      </div>
+      `).join("")}
+      ${renderAttachments(data.attachments || [])}
     `;
-  });
+  }
 
-  items.slice(0, 3).forEach(item => {
-    recentResearch.innerHTML += `
-      <div class="post">
-        <h4>${escapeHtml(item.title)}</h4>
-        <div class="meta">${item.type === "project" ? "장기 프로젝트" : "실험 보고서"} · ${escapeHtml(item.author || "-")}</div>
-      </div>
-    `;
-  });
-}
-
-window.searchResearch = function(){
-  const keyword = document.getElementById("searchInput").value.toLowerCase();
-  const posts = document.querySelectorAll("#researchList .post");
-
-  posts.forEach(post => {
-    post.style.display = post.innerText.toLowerCase().includes(keyword) ? "block" : "none";
-  });
+  detailBody.innerHTML = bodyHtml;
+  await loadComments("research", id);
+  await loadResearch();
+  showSection("detail");
 };
 
 window.removePost = async function(category, id){
@@ -1117,6 +1607,10 @@ window.removePost = async function(category, id){
     await loadNotice();
     await loadResearch();
     await loadMyPosts();
+
+    if(currentDetail && currentDetail.id === id){
+      showSection("archive");
+    }
   }catch(error){
     console.error(error);
     alert("삭제 중 오류가 발생했어요.");
@@ -1141,10 +1635,13 @@ window.editPost = async function(category, id){
       id
     };
 
+    keptAttachments = [...(data.attachments || [])];
+
     document.getElementById("writeTitleText").textContent = "글 수정";
-    document.getElementById("editModeInfo").textContent = "수정 모드입니다. 새 첨부파일을 올리면 기존 첨부 뒤에 추가됩니다.";
+    document.getElementById("editModeInfo").textContent = "수정 모드입니다. 기존 첨부는 개별 제거할 수 있고, 새 파일은 추가로 업로드됩니다.";
     document.getElementById("submitBtn").textContent = "수정 저장";
     document.getElementById("cancelEditBtn").classList.remove("hidden");
+    showDraftStatus(false);
 
     if(category === "notice"){
       document.getElementById("writeType").value = "notice";
@@ -1152,6 +1649,7 @@ window.editPost = async function(category, id){
 
       document.getElementById("noticeTitleWrite").value = data.title || "";
       document.getElementById("noticeContentWrite").value = data.content || "";
+      document.getElementById("noticePinned").checked = !!data.pinned;
     }else{
       document.getElementById("writeType").value = data.type || "experiment";
       document.getElementById("writeType").disabled = true;
@@ -1168,6 +1666,7 @@ window.editPost = async function(category, id){
       }
 
       if(data.type === "project"){
+        document.getElementById("projectStatus").value = data.status || "진행중";
         document.getElementById("projectPurpose").value = data.purpose || "";
         document.getElementById("projectSummary").value = data.summary || "";
 
@@ -1175,15 +1674,14 @@ window.editPost = async function(category, id){
         sectionArea.innerHTML = "";
 
         if((data.sections || []).length > 0){
-          data.sections.forEach(section => {
-            addProjectSection(section.title || "", section.content || "");
-          });
+          data.sections.forEach(section => addProjectSection(section.title || "", section.content || ""));
         }else{
           addProjectSection();
         }
       }
     }
 
+    renderExistingAttachments();
     changeWriteForm();
     showSection("write");
 
@@ -1262,32 +1760,87 @@ async function loadMyPosts(){
   });
 }
 
-window.cleanupHiddenResearch = async function(){
-  const ok = confirm("산염기 / 코아세르베이트 관련 글을 정말 삭제할까요?");
-  if(!ok) return;
+async function submitComment(){
+  const user = getUser();
+
+  if(!user){
+    alert("먼저 로그인해주세요.");
+    return;
+  }
+
+  if(!currentDetail){
+    alert("댓글을 달 글을 먼저 열어주세요.");
+    return;
+  }
+
+  const input = document.getElementById("commentInput");
+  const content = input.value.trim();
+
+  if(!content){
+    alert("댓글 내용을 입력해주세요.");
+    return;
+  }
 
   try{
-    const snap = await getDocs(collection(db, "research"));
-    let deletedCount = 0;
+    await addDoc(collection(db, "comments"), {
+      postType: "research",
+      postId: currentDetail.id,
+      author: user.name,
+      authorId: user.id,
+      content,
+      createdAt: new Date().toISOString()
+    });
 
-    for(const docu of snap.docs){
-      const data = docu.data();
-      if(shouldHideResearch(data.title)){
-        await deleteDoc(doc(db, "research", docu.id));
-        deletedCount++;
-      }
-    }
-
-    alert(`삭제 완료: ${deletedCount}개`);
-    await loadResearch();
-    await loadMyPosts();
+    input.value = "";
+    await loadComments("research", currentDetail.id);
   }catch(error){
     console.error(error);
-    alert("정리 중 오류가 발생했어요.");
+    alert("댓글 저장 중 오류가 발생했어요.");
   }
-};
+}
 
+window.submitComment = submitComment;
+
+async function loadComments(postType, postId){
+  const list = document.getElementById("commentList");
+  list.innerHTML = "<p>불러오는 중...</p>";
+
+  try{
+    const q = query(
+      collection(db, "comments"),
+      where("postType", "==", postType),
+      where("postId", "==", postId)
+    );
+
+    const snap = await getDocs(q);
+    const items = [];
+
+    snap.forEach(docu => {
+      items.push({ id: docu.id, ...docu.data() });
+    });
+
+    items.sort((a, b) => new Date(a.createdAt) - new Date(b.createdAt));
+
+    if(items.length === 0){
+      list.innerHTML = "<p>아직 댓글이 없습니다.</p>";
+      return;
+    }
+
+    list.innerHTML = items.map(item => `
+      <div class="comment-item">
+        <div class="meta">${escapeHtml(item.author || "-")} · ${formatDate(item.createdAt)}</div>
+        <div>${renderRichText(item.content || "")}</div>
+      </div>
+    `).join("");
+  }catch(error){
+    console.error(error);
+    list.innerHTML = "<p>댓글을 불러오지 못했어요.</p>";
+  }
+}
+
+bindDraftInputs();
 updateLoginUI();
+updateNoticePermissionUI();
 resetWriteForm();
 await loadNotice();
 await loadResearch();
