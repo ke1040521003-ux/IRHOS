@@ -3,591 +3,411 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>IRHOS 융합과학탐구동아리</title>
 
 <style>
+
 body{
-  font-family: Arial, sans-serif;
-  margin:0;
-  background:#eef6fb;
-  color:#111;
+font-family:Arial;
+margin:0;
+background:#eef6fb;
 }
 
 header{
-  background:#000;
-  color:#fff;
-  padding:18px 16px;
-}
-
-.header-inner{
-  max-width:1100px;
-  margin:0 auto;
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  gap:14px;
-}
-
-.brand-box{
-  display:flex;
-  flex-direction:column;
-  align-items:flex-start;
-}
-
-.brand-box h1{
-  margin:0;
-  font-size:28px;
-}
-
-.brand-box p{
-  margin:6px 0 0;
-  color:#bfe3ff;
-  font-size:14px;
-}
-
-.header-actions{
-  position:relative;
-}
-
-.login-toggle{
-  border:none;
-  background:#fff;
-  color:#111;
-  padding:10px 14px;
-  border-radius:10px;
-  cursor:pointer;
-  font-weight:bold;
-  box-shadow:0 3px 8px rgba(0,0,0,0.2);
-}
-
-.account-panel{
-  position:absolute;
-  top:48px;
-  right:0;
-  width:260px;
-  background:#fff;
-  color:#111;
-  border-radius:12px;
-  padding:12px;
-  box-shadow:0 8px 20px rgba(0,0,0,0.2);
-  display:none;
-  z-index:100;
-}
-
-.account-panel.show{
-  display:block;
-}
-
-.account-panel h3{
-  margin:6px 0 10px;
-  font-size:15px;
-}
-
-.account-panel input{
-  width:100%;
-  box-sizing:border-box;
-  padding:10px;
-  margin:6px 0;
-  border:1px solid #cfd8e3;
-  border-radius:8px;
-}
-
-.account-panel button{
-  width:100%;
-  border:none;
-  background:#3ea6ff;
-  color:#fff;
-  padding:10px 12px;
-  border-radius:8px;
-  cursor:pointer;
-  font-weight:bold;
-  margin-top:6px;
-}
-
-.small-text{
-  font-size:13px;
-  color:#333;
-  margin:6px 0;
-}
-
-.member{
-  display:block;
-  background:#e9f6ff;
-  margin:6px 0;
-  padding:10px 12px;
-  border-radius:10px;
-  font-size:14px;
+background:#000;
+color:white;
+padding:18px;
+display:flex;
+justify-content:space-between;
+align-items:center;
 }
 
 nav{
-  background:#d9efff;
-  display:flex;
-  justify-content:center;
-  flex-wrap:wrap;
-  gap:10px;
-  padding:12px;
+background:#d9efff;
+padding:10px;
+text-align:center;
 }
 
 nav button{
-  border:none;
-  background:#fff;
-  padding:10px 16px;
-  border-radius:10px;
-  cursor:pointer;
-  font-weight:bold;
+margin:5px;
+padding:8px 15px;
+border:none;
+background:white;
+border-radius:10px;
+cursor:pointer;
 }
 
 .container{
-  max-width:1000px;
-  margin:0 auto;
-  padding:20px;
+max-width:1000px;
+margin:auto;
+padding:20px;
 }
 
 .card{
-  background:#fff;
-  border-radius:14px;
-  padding:20px;
-  margin-bottom:18px;
-  box-shadow:0 4px 12px rgba(0,0,0,0.08);
-}
-
-input, textarea, select{
-  width:100%;
-  box-sizing:border-box;
-  padding:10px;
-  margin:8px 0;
-  border:1px solid #cfd8e3;
-  border-radius:8px;
-}
-
-.primary-btn{
-  border:none;
-  background:#3ea6ff;
-  color:#fff;
-  padding:10px 16px;
-  border-radius:8px;
-  cursor:pointer;
-  font-weight:bold;
+background:white;
+padding:20px;
+border-radius:12px;
+margin-bottom:20px;
+box-shadow:0 3px 10px rgba(0,0,0,0.1);
 }
 
 .post{
-  border-top:1px solid #e5e7eb;
-  padding:14px 0;
+border-top:1px solid #ddd;
+padding:15px 0;
 }
 
-.post:first-child{
-  border-top:none;
+button{
+padding:6px 12px;
+border:none;
+background:#3ea6ff;
+color:white;
+border-radius:6px;
+cursor:pointer;
 }
 
-.hidden{
-  display:none;
+img{
+max-width:200px;
+margin:5px;
+border-radius:8px;
 }
 
-footer{
-  text-align:center;
-  padding:24px 12px;
-  color:#666;
-}
-
-.section-title{
-  margin-top:0;
-}
-
-.year-divider{
-  margin-top:22px;
-  margin-bottom:10px;
-  padding-bottom:8px;
-  border-bottom:2px solid #d9efff;
-  color:#0b4f7d;
-}
-
-.login-message{
-  font-size:14px;
-  margin-top:8px;
-  color:#0b4f7d;
-}
-
-.preview-item{
-  text-align:left;
-  padding:12px 0;
-  border-top:1px solid #e5e7eb;
-}
-
-.preview-item:first-child{
-  border-top:none;
-}
-
-.preview-title{
-  margin:0 0 6px;
-  font-weight:bold;
-}
-
-.preview-meta{
-  color:#666;
-  font-size:14px;
-  margin:0 0 6px;
-}
-
-@media (max-width:700px){
-  .header-inner{
-    flex-direction:column;
-    align-items:stretch;
-  }
-
-  .brand-box{
-    align-items:center;
-    text-align:center;
-  }
-
-  .brand-box h1{
-    font-size:22px;
-  }
-
-  .header-actions{
-    display:flex;
-    justify-content:center;
-  }
-
-  .account-panel{
-    right:auto;
-    left:50%;
-    transform:translateX(-50%);
-    width:min(260px, 90vw);
-  }
-}
 </style>
 </head>
+
 <body>
 
 <header>
-  <div class="header-inner">
-    <div class="brand-box">
-      <h1>🔬 IRHOS 융합과학탐구동아리</h1>
-      <p>이로스는 탐구 기반 실험과 기록을 통해 과학적 사고를 확장하는 동아리입니다.</p>
-    </div>
+<h2>🔬 IRHOS 융합과학탐구동아리</h2>
 
-    <div class="header-actions">
-      <button class="login-toggle" onclick="toggleAccountPanel()">🔐 로그인</button>
+<button onclick="toggleLogin()">로그인</button>
 
-      <div id="accountPanel" class="account-panel">
-        <div id="loggedOutBox">
-          <h3>로그인</h3>
-          <input id="studentId" placeholder="학번">
-          <input id="name" placeholder="이름">
-          <button onclick="login()">로그인</button>
-          <p id="loginMessage" class="login-message"></p>
-        </div>
-
-        <div id="loggedInBox" class="hidden">
-          <h3>로그인 상태</h3>
-          <p id="welcomeMessage" class="small-text"></p>
-
-          <h3>동아리 부원 목록</h3>
-          <div class="member">20602 김가은 (부장)</div>
-          <div class="member">00000 구자형 (지도교사)</div>
-
-          <button onclick="logout()">로그아웃</button>
-        </div>
-      </div>
-    </div>
-  </div>
 </header>
 
 <nav>
-  <button onclick="showSection('homeSection')">메인</button>
-  <button onclick="showSection('archiveSection')">📚 탐구 아카이브</button>
-  <button onclick="showSection('writeSection')">🧪 탐구 작성</button>
+
+<button onclick="showSection('home')">메인</button>
+<button onclick="showSection('archive')">탐구 아카이브</button>
+<button onclick="showSection('write')">탐구 작성</button>
+
 </nav>
+
 
 <div class="container">
 
-  <section id="homeSection" class="card">
-    <h2 class="section-title">메인 페이지</h2>
-    <p>최근 탐구 기록을 미리 볼 수 있어.</p>
-    <div id="homePreviewList"></div>
-  </section>
+<div id="home" class="card">
+<h3>최근 탐구</h3>
+<div id="homePreview"></div>
+</div>
 
-  <section id="archiveSection" class="card hidden">
-    <h2 class="section-title">📚 탐구 아카이브</h2>
-    <input id="searchInput" placeholder="탐구 제목 또는 내용 검색" onkeyup="searchResearch()">
-    <div id="researchList"></div>
-  </section>
 
-  <section id="writeSection" class="card hidden">
-    <h2 class="section-title">🧪 탐구 기록 작성</h2>
-    <p id="writeNotice">로그인한 동아리원만 작성할 수 있습니다.</p>
+<div id="archive" class="card hidden">
 
-    <div id="writeForm" class="hidden">
-      <input id="title" placeholder="탐구 제목">
-      <select id="year">
-        <option value="2026">2026</option>
-        <option value="2025">2025</option>
-        <option value="2024">2024</option>
-      </select>
-      <textarea id="content" rows="6" placeholder="탐구 내용을 작성하세요"></textarea>
-      <input id="fileLink" placeholder="PDF / Word / 한글 파일 링크">
-      <textarea id="feedback" rows="4" placeholder="선생님 피드백"></textarea>
-      <input type="file" id="photo" accept="image/*">
-      <button class="primary-btn" onclick="saveResearch()">저장</button>
-    </div>
-  </section>
+<h3>탐구 아카이브</h3>
+
+<input id="searchInput" placeholder="검색" onkeyup="searchResearch()">
+
+<select id="yearFilter" onchange="loadResearch()">
+<option value="">전체</option>
+<option>2026</option>
+<option>2025</option>
+<option>2024</option>
+</select>
+
+<div id="researchList"></div>
 
 </div>
 
-<footer>
-  © IRHOS Science Lab
-</footer>
+
+<div id="write" class="card hidden">
+
+<h3>탐구 작성</h3>
+
+<input id="title" placeholder="제목">
+
+<select id="year">
+<option>2026</option>
+<option>2025</option>
+<option>2024</option>
+</select>
+
+<textarea id="content" placeholder="내용"></textarea>
+
+<input id="fileLink" placeholder="PDF / Word / 한글 링크">
+
+<input type="file" id="photo" multiple>
+
+<label>
+<input type="checkbox" id="featured">
+대표 탐구
+</label>
+
+<button onclick="saveResearch()">저장</button>
+
+</div>
+
+</div>
+
+
 
 <script type="module">
+
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-import { getFirestore, collection, addDoc, getDocs } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+import { getFirestore, collection, addDoc, getDocs, doc, updateDoc, deleteDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
 
 const firebaseConfig = {
-  apiKey: "AIzaSyDXVVSPhvErz9JfjXKjMaZIBNYu6d3j8dg",
-  authDomain: "irhos-science-lab.firebaseapp.com",
-  projectId: "irhos-science-lab",
-  storageBucket: "irhos-science-lab.firebasestorage.app",
-  messagingSenderId: "54955251430",
-  appId: "1:54955251430:web:5396c836ccc33f981d4d27",
-  measurementId: "G-378MZ34JSE"
+apiKey: "AIzaSyDXVVSPhvErz9JfjXKjMaZIBNYu6d3j8dg",
+authDomain: "irhos-science-lab.firebaseapp.com",
+projectId: "irhos-science-lab",
+storageBucket: "irhos-science-lab.firebasestorage.app",
+messagingSenderId: "54955251430",
+appId: "1:54955251430:web:5396c836ccc33f981d4d27"
 };
+
 
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
-window.toggleAccountPanel = function(){
-  document.getElementById("accountPanel").classList.toggle("show");
-};
 
-function updateLoginUI(){
-  const user = JSON.parse(localStorage.getItem("user") || "null");
-  const writeForm = document.getElementById("writeForm");
-  const writeNotice = document.getElementById("writeNotice");
-  const loggedOutBox = document.getElementById("loggedOutBox");
-  const loggedInBox = document.getElementById("loggedInBox");
-  const welcomeMessage = document.getElementById("welcomeMessage");
-
-  if(user){
-    writeForm.classList.remove("hidden");
-    writeNotice.textContent = "탐구 기록을 작성할 수 있습니다.";
-    loggedOutBox.classList.add("hidden");
-    loggedInBox.classList.remove("hidden");
-    welcomeMessage.textContent = `${user.id} ${user.name} 로그인 중`;
-  }else{
-    writeForm.classList.add("hidden");
-    writeNotice.textContent = "로그인한 동아리원만 작성할 수 있습니다.";
-    loggedOutBox.classList.remove("hidden");
-    loggedInBox.classList.add("hidden");
-    welcomeMessage.textContent = "";
-  }
+function getUser(){
+return JSON.parse(localStorage.getItem("user") || "null");
 }
 
-window.showSection = function(sectionId){
-  const sections = ["homeSection", "archiveSection", "writeSection"];
-  sections.forEach(id => {
-    document.getElementById(id).classList.add("hidden");
-  });
-  document.getElementById(sectionId).classList.remove("hidden");
-};
-
-window.login = function(){
-  const id = document.getElementById("studentId").value.trim();
-  const name = document.getElementById("name").value.trim();
-
-  if(!id || !name){
-    document.getElementById("loginMessage").textContent = "학번과 이름을 입력해줘.";
-    return;
-  }
-
-  if(
-    (id === "20602" && name === "김가은") ||
-    (id === "00000" && name === "구자형")
-  ){
-    localStorage.setItem("user", JSON.stringify({id, name}));
-    document.getElementById("loginMessage").textContent = "로그인 성공!";
-    updateLoginUI();
-    document.getElementById("accountPanel").classList.remove("show");
-    showSection("writeSection");
-  }else{
-    document.getElementById("loginMessage").textContent = "등록된 계정이 아니야.";
-  }
-};
-
-window.logout = function(){
-  localStorage.removeItem("user");
-  updateLoginUI();
-  document.getElementById("accountPanel").classList.remove("show");
-  showSection("homeSection");
-};
-
-window.saveResearch = async function(){
-  const user = JSON.parse(localStorage.getItem("user") || "null");
-  if(!user){
-    alert("로그인 후 작성할 수 있어.");
-    return;
-  }
-
-  const title = document.getElementById("title").value.trim();
-  const content = document.getElementById("content").value.trim();
-  const year = document.getElementById("year").value;
-  const fileLink = document.getElementById("fileLink").value.trim();
-  const feedback = document.getElementById("feedback").value.trim();
-  const photoInput = document.getElementById("photo");
-
-  if(!title || !content){
-    alert("제목과 내용을 입력해줘.");
-    return;
-  }
-
-  let photoData = "";
-
-  if(photoInput.files[0]){
-    const reader = new FileReader();
-    reader.onload = async function(){
-      photoData = reader.result;
-      await addDoc(collection(db, "research"), {
-        title,
-        content,
-        year,
-        fileLink,
-        feedback,
-        photo: photoData,
-        author: `${user.id} ${user.name}`,
-        createdAt: new Date().toISOString()
-      });
-      clearForm();
-      await loadResearch();
-      showSection("archiveSection");
-      alert("저장 완료!");
-    };
-    reader.readAsDataURL(photoInput.files[0]);
-  } else {
-    await addDoc(collection(db, "research"), {
-      title,
-      content,
-      year,
-      fileLink,
-      feedback,
-      photo: "",
-      author: `${user.id} ${user.name}`,
-      createdAt: new Date().toISOString()
-    });
-    clearForm();
-    await loadResearch();
-    showSection("archiveSection");
-    alert("저장 완료!");
-  }
-};
-
-function clearForm(){
-  document.getElementById("title").value = "";
-  document.getElementById("content").value = "";
-  document.getElementById("fileLink").value = "";
-  document.getElementById("feedback").value = "";
-  document.getElementById("photo").value = "";
+function isLeader(){
+let u=getUser();
+return u && u.id==="20602";
 }
+
+function isTeacher(){
+let u=getUser();
+return u && u.id==="00000";
+}
+
+
+
+window.showSection=function(id){
+
+["home","archive","write"].forEach(s=>{
+document.getElementById(s).classList.add("hidden");
+});
+
+document.getElementById(id).classList.remove("hidden");
+
+}
+
+
+
+window.toggleLogin=function(){
+
+let id=prompt("학번 입력");
+
+let name=prompt("이름 입력");
+
+if(
+(id==="20602" && name==="김가은") ||
+(id==="00000" && name==="구자형")
+){
+
+localStorage.setItem("user",JSON.stringify({id,name}));
+
+alert("로그인 성공");
+
+}else{
+
+alert("계정 없음");
+
+}
+
+}
+
+
+
+window.saveResearch=async function(){
+
+if(!isLeader()){
+alert("부장만 작성 가능");
+return;
+}
+
+let title=document.getElementById("title").value;
+let content=document.getElementById("content").value;
+let year=document.getElementById("year").value;
+let fileLink=document.getElementById("fileLink").value;
+let featured=document.getElementById("featured").checked;
+
+let photoInput=document.getElementById("photo");
+
+let photos=[];
+
+for(let file of photoInput.files){
+
+let reader=new FileReader();
+
+await new Promise(resolve=>{
+
+reader.onload=()=>{
+photos.push(reader.result);
+resolve();
+};
+
+reader.readAsDataURL(file);
+
+});
+
+}
+
+await addDoc(collection(db,"research"),{
+
+title,
+content,
+year,
+fileLink,
+photos,
+featured,
+views:0,
+viewUsers:[],
+teacherFeedback:"",
+author:getUser().name,
+createdAt:new Date().toISOString()
+
+});
+
+alert("저장 완료");
+
+loadResearch();
+
+}
+
+
 
 async function loadResearch(){
-  const list = document.getElementById("researchList");
-  const previewList = document.getElementById("homePreviewList");
-  list.innerHTML = "";
-  previewList.innerHTML = "";
 
-  const snapshot = await getDocs(collection(db, "research"));
-  const items = [];
-  snapshot.forEach(doc => items.push(doc.data()));
+let list=document.getElementById("researchList");
 
-  items.sort((a, b) => {
-    if(a.year !== b.year) return Number(b.year) - Number(a.year);
-    return (b.createdAt || "").localeCompare(a.createdAt || "");
-  });
+list.innerHTML="";
 
-  if(items.length === 0){
-    list.innerHTML = "<p>아직 등록된 탐구 기록이 없어.</p>";
-    previewList.innerHTML = "<p>아직 미리 볼 탐구 기록이 없어.</p>";
-    return;
-  }
+let snapshot=await getDocs(collection(db,"research"));
 
-  let currentYear = "";
+let posts=[];
 
-  items.forEach(d => {
-    if(d.year !== currentYear){
-      currentYear = d.year;
-      list.innerHTML += `<h3 class="year-divider">📅 ${currentYear}년 탐구</h3>`;
-    }
+snapshot.forEach(doc=>{
 
-    list.innerHTML += `
-      <div class="post">
-        <h3>${d.title}</h3>
-        <p><strong>작성자:</strong> ${d.author || "-"}</p>
-        <p>${d.content}</p>
-        ${d.fileLink ? `<p><a href="${d.fileLink}" target="_blank">📄 보고서 보기</a></p>` : ""}
-        ${d.feedback ? `<p><strong>💬 피드백:</strong> ${d.feedback}</p>` : ""}
-        ${d.photo ? `<img src="${d.photo}" style="max-width:220px; border-radius:10px;">` : ""}
-      </div>
-    `;
-  });
+posts.push({
+id:doc.id,
+...doc.data()
+});
 
-  const previewItems = items.slice(0, 3);
-  previewItems.forEach(d => {
-    previewList.innerHTML += `
-      <div class="preview-item">
-        <p class="preview-title">🧪 ${d.title}</p>
-        <p class="preview-meta">${d.year}년 · ${d.author || "-"}</p>
-        <p>${(d.content || "").slice(0, 80)}${(d.content || "").length > 80 ? "..." : ""}</p>
-      </div>
-    `;
-  });
+});
+
+let filter=document.getElementById("yearFilter").value;
+
+if(filter){
+posts=posts.filter(p=>p.year===filter);
 }
 
-window.searchResearch = async function(){
-  const keyword = document.getElementById("searchInput").value.toLowerCase().trim();
-  const list = document.getElementById("researchList");
-  list.innerHTML = "";
+posts.sort((a,b)=>b.createdAt.localeCompare(a.createdAt));
 
-  const snapshot = await getDocs(collection(db, "research"));
-  const items = [];
-  snapshot.forEach(doc => items.push(doc.data()));
+for(let p of posts){
 
-  const filtered = items.filter(item =>
-    (item.title || "").toLowerCase().includes(keyword) ||
-    (item.content || "").toLowerCase().includes(keyword)
-  );
+list.innerHTML+=`
 
-  filtered.sort((a, b) => {
-    if(a.year !== b.year) return Number(b.year) - Number(a.year);
-    return (b.createdAt || "").localeCompare(a.createdAt || "");
-  });
+<div class="post">
 
-  if(filtered.length === 0){
-    list.innerHTML = "<p>검색 결과가 없어.</p>";
-    return;
-  }
+<h3>${p.featured?"⭐":""} ${p.title}</h3>
 
-  let currentYear = "";
+<p>${p.content}</p>
 
-  filtered.forEach(d => {
-    if(d.year !== currentYear){
-      currentYear = d.year;
-      list.innerHTML += `<h3 class="year-divider">📅 ${currentYear}년 탐구</h3>`;
-    }
+<p>연도 : ${p.year}</p>
 
-    list.innerHTML += `
-      <div class="post">
-        <h3>${d.title}</h3>
-        <p><strong>작성자:</strong> ${d.author || "-"}</p>
-        <p>${d.content}</p>
-        ${d.fileLink ? `<p><a href="${d.fileLink}" target="_blank">📄 보고서 보기</a></p>` : ""}
-        ${d.feedback ? `<p><strong>💬 피드백:</strong> ${d.feedback}</p>` : ""}
-        ${d.photo ? `<img src="${d.photo}" style="max-width:220px; border-radius:10px;">` : ""}
-      </div>
-    `;
-  });
+<p>조회수 : ${p.views}</p>
+
+<p>조회자 : ${p.viewUsers.join(", ")}</p>
+
+${p.fileLink?`<a href="${p.fileLink}" target="_blank">보고서</a>`:""}
+
+<div>
+${p.photos.map(img=>`<img src="${img}">`).join("")}
+</div>
+
+${p.teacherFeedback?`<p>💬 선생님 피드백 : ${p.teacherFeedback}</p>`:""}
+
+${isTeacher()?`
+
+<textarea id="feedback-${p.id}" placeholder="피드백"></textarea>
+<button onclick="saveFeedback('${p.id}')">피드백 저장</button>
+
+`:""}
+
+${getUser() && p.author===getUser().name?`
+
+<button onclick="deleteResearch('${p.id}')">삭제</button>
+
+`:""}
+
+</div>
+
+`;
+
 }
 
-updateLoginUI();
+}
+
+
+
+window.saveFeedback=async function(id){
+
+if(!isTeacher()) return;
+
+let text=document.getElementById("feedback-"+id).value;
+
+let ref=doc(db,"research",id);
+
+await updateDoc(ref,{
+teacherFeedback:text
+});
+
+alert("피드백 저장");
+
 loadResearch();
-showSection("homeSection");
+
+}
+
+
+
+window.deleteResearch=async function(id){
+
+if(!confirm("삭제할까?")) return;
+
+await deleteDoc(doc(db,"research",id));
+
+alert("삭제됨");
+
+loadResearch();
+
+}
+
+
+
+window.searchResearch=function(){
+
+let keyword=document.getElementById("searchInput").value.toLowerCase();
+
+let posts=document.querySelectorAll(".post");
+
+posts.forEach(p=>{
+
+p.style.display=p.innerText.toLowerCase().includes(keyword)
+?"block":"none";
+
+});
+
+}
+
+
+
+loadResearch();
+
 </script>
 
 </body>
