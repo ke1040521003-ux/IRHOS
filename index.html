@@ -6,17 +6,13 @@
 <title>IRHOS 과학동아리</title>
 
 <style>
-*{
-  box-sizing:border-box;
-}
-
+*{box-sizing:border-box;}
 body{
   margin:0;
   font-family:Arial, sans-serif;
   background:#f6f8fb;
   color:#111;
 }
-
 header{
   background:#1d3557;
   color:white;
@@ -27,26 +23,22 @@ header{
   gap:12px;
   flex-wrap:wrap;
 }
-
 header h1{
   margin:0;
   font-size:22px;
 }
-
 .header-right{
   display:flex;
   gap:8px;
   align-items:center;
   flex-wrap:wrap;
 }
-
 nav{
   background:white;
   border-bottom:1px solid #ddd;
   padding:10px;
   text-align:center;
 }
-
 nav button{
   margin:5px;
   padding:9px 16px;
@@ -56,13 +48,11 @@ nav button{
   border-radius:8px;
   cursor:pointer;
 }
-
 .container{
-  max-width:1120px;
+  max-width:1160px;
   margin:auto;
   padding:20px;
 }
-
 .card{
   background:white;
   padding:20px;
@@ -70,20 +60,12 @@ nav button{
   margin-bottom:20px;
   box-shadow:0 4px 14px rgba(0,0,0,0.08);
 }
-
-.hidden{
-  display:none !important;
-}
-
+.hidden{display:none !important;}
 .post{
   border-top:1px solid #ddd;
   padding:15px 0;
 }
-
-.post:first-child{
-  border-top:none;
-}
-
+.post:first-child{border-top:none;}
 .tag{
   display:inline-block;
   background:#e3e9f2;
@@ -93,7 +75,6 @@ nav button{
   border-radius:5px;
   font-size:12px;
 }
-
 textarea,input,select{
   width:100%;
   margin:6px 0 12px 0;
@@ -102,43 +83,36 @@ textarea,input,select{
   border:1px solid #ccc;
   font-size:14px;
 }
-
 textarea{
   min-height:100px;
   resize:vertical;
 }
-
 button{
   border:none;
   border-radius:8px;
   cursor:pointer;
 }
-
 .primary-btn{
   background:#1d3557;
   color:white;
   padding:10px 16px;
 }
-
 .secondary-btn{
   background:#dfe7f3;
   color:#1d3557;
   padding:10px 16px;
 }
-
 .danger-btn{
   background:#b42318;
   color:white;
   padding:8px 12px;
 }
-
 .small{
   padding:8px 12px;
   font-size:13px;
   margin-right:8px;
   margin-top:8px;
 }
-
 .section-box{
   border:1px solid #dbe2ea;
   border-radius:10px;
@@ -146,20 +120,11 @@ button{
   margin-bottom:14px;
   background:#fafcff;
 }
-
-.section-actions{
-  display:flex;
-  justify-content:flex-end;
-  gap:8px;
-  flex-wrap:wrap;
-}
-
 .inline-info{
   color:#555;
   font-size:14px;
   margin-bottom:10px;
 }
-
 .notice-badge{
   display:inline-block;
   background:#fff3cd;
@@ -170,7 +135,6 @@ button{
   margin-bottom:8px;
   margin-right:6px;
 }
-
 .pinned-badge{
   display:inline-block;
   background:#fee4e2;
@@ -180,7 +144,6 @@ button{
   font-size:12px;
   margin-bottom:8px;
 }
-
 .type-badge{
   display:inline-block;
   background:#eef2ff;
@@ -191,7 +154,6 @@ button{
   margin-bottom:8px;
   margin-right:6px;
 }
-
 .status-badge{
   display:inline-block;
   background:#ecfdf3;
@@ -201,13 +163,19 @@ button{
   font-size:12px;
   margin-bottom:8px;
 }
-
 .meta{
   color:#666;
   font-size:13px;
   margin:8px 0;
 }
-
+.row{
+  display:flex;
+  gap:12px;
+  flex-wrap:wrap;
+}
+.col{
+  flex:1 1 320px;
+}
 .slider{
   position:relative;
   height:300px;
@@ -215,7 +183,6 @@ button{
   border-radius:12px;
   margin-bottom:18px;
 }
-
 .slide{
   position:absolute;
   width:100%;
@@ -223,144 +190,51 @@ button{
   opacity:0;
   transition:opacity 1s;
 }
-
-.slide.active{
-  opacity:1;
-}
-
+.slide.active{opacity:1;}
 .slide img{
   width:100%;
   height:100%;
   object-fit:cover;
 }
-
-.row{
-  display:flex;
-  gap:12px;
-  flex-wrap:wrap;
-}
-
-.col{
-  flex:1 1 320px;
-}
-
-hr{
-  border:none;
-  border-top:1px solid #eee;
-  margin:18px 0;
-}
-
-ul{
-  padding-left:20px;
-}
-
-li{
-  margin:6px 0;
-}
-
-a{
-  color:#1d4ed8;
-  text-decoration:none;
-}
-
-a:hover{
-  text-decoration:underline;
-}
-
-.term-note{
-  color:#1d4ed8;
-  cursor:pointer;
-  text-decoration:underline dotted;
-  font-weight:600;
-}
-
-.term-popup{
-  position:fixed;
-  inset:0;
-  background:rgba(0,0,0,0.35);
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  z-index:9999;
-}
-
-.term-popup-box{
-  background:white;
-  width:min(520px, 92vw);
+.dictionary-hero{
+  margin-top:14px;
+  min-height:140px;
   border-radius:14px;
-  padding:20px;
-  box-shadow:0 10px 30px rgba(0,0,0,0.2);
-}
-
-.term-popup-box h3{
-  margin-top:0;
-}
-
-.term-popup-box button{
-  margin-top:12px;
-  background:#1d3557;
+  background:linear-gradient(135deg,#1d3557,#457b9d);
   color:white;
-  padding:8px 14px;
-  border:none;
-  border-radius:8px;
+  padding:22px;
+  position:relative;
+  overflow:hidden;
 }
-
-.attachment-image{
-  width:100%;
-  max-width:360px;
-  border-radius:10px;
-  border:1px solid #ddd;
-  display:block;
-  margin:8px 0;
+.dictionary-term{
+  font-size:28px;
+  font-weight:700;
+  margin-bottom:8px;
 }
-
-.preview-note{
-  font-size:13px;
-  color:#666;
-  margin-top:-6px;
-  margin-bottom:12px;
+.dictionary-desc{
+  font-size:15px;
+  line-height:1.7;
+  max-width:760px;
 }
-
 .tool-row{
   display:flex;
   gap:8px;
   flex-wrap:wrap;
-  margin-bottom:10px;
   align-items:center;
+  margin-bottom:10px;
 }
-
-.filter-btn{
-  background:#edf2f7;
-  color:#1d3557;
-  padding:8px 12px;
-  border-radius:8px;
-}
-
-.filter-btn.active{
-  background:#1d3557;
-  color:white;
-}
-
 .thumb-grid{
   display:grid;
   grid-template-columns:repeat(auto-fill, minmax(260px, 1fr));
   gap:16px;
 }
-
 .thumb-card{
   border:1px solid #e5e7eb;
   border-radius:14px;
   overflow:hidden;
   background:white;
   box-shadow:0 2px 10px rgba(0,0,0,0.05);
-  cursor:pointer;
 }
-
-.thumb-card:hover{
-  transform:translateY(-2px);
-  transition:0.2s;
-}
-
 .thumb-image-wrap{
   width:100%;
   height:180px;
@@ -370,51 +244,60 @@ a:hover{
   justify-content:center;
   overflow:hidden;
 }
-
 .thumb-image-wrap img{
   width:100%;
   height:100%;
   object-fit:cover;
 }
-
 .thumb-image-fallback{
   color:#667085;
   font-size:14px;
 }
-
 .thumb-content{
   padding:14px;
 }
-
 .thumb-title{
   font-size:17px;
   font-weight:700;
   margin-bottom:8px;
   line-height:1.4;
 }
-
 .thumb-summary{
   color:#475467;
   font-size:14px;
   line-height:1.5;
   min-height:42px;
 }
-
+.filter-btn{
+  background:#edf2f7;
+  color:#1d3557;
+  padding:8px 12px;
+  border-radius:8px;
+}
+.filter-btn.active{
+  background:#1d3557;
+  color:white;
+}
 .comment-box{
   border-top:1px solid #eee;
   padding-top:12px;
   margin-top:12px;
 }
-
 .comment-item{
   border-top:1px solid #eee;
   padding:10px 0;
 }
-
 .comment-item:first-child{
   border-top:none;
 }
-
+.attachment-image{
+  width:100%;
+  max-width:360px;
+  border-radius:10px;
+  border:1px solid #ddd;
+  display:block;
+  margin:8px 0;
+}
 .attach-manage-item{
   display:flex;
   justify-content:space-between;
@@ -425,19 +308,16 @@ a:hover{
   padding:8px 10px;
   margin-bottom:8px;
 }
-
 .checkbox-row{
   display:flex;
   gap:8px;
   align-items:center;
   margin:8px 0 14px 0;
 }
-
 .checkbox-row input{
   width:auto;
   margin:0;
 }
-
 .detail-header{
   display:flex;
   justify-content:space-between;
@@ -445,30 +325,77 @@ a:hover{
   flex-wrap:wrap;
   align-items:flex-start;
 }
-
 .detail-actions{
   display:flex;
   gap:8px;
   flex-wrap:wrap;
 }
-
-.draft-chip{
-  display:inline-block;
-  background:#f2f4f7;
-  color:#344054;
-  border-radius:999px;
-  padding:4px 10px;
-  font-size:12px;
-  margin-bottom:10px;
+.term-note{
+  color:#1d4ed8;
+  cursor:pointer;
+  text-decoration:underline dotted;
+  font-weight:600;
 }
-
+.term-popup{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,0.35);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  z-index:9999;
+}
+.term-popup-box{
+  background:white;
+  width:min(520px, 92vw);
+  border-radius:14px;
+  padding:20px;
+  box-shadow:0 10px 30px rgba(0,0,0,0.2);
+}
+.term-popup-box h3{
+  margin-top:0;
+}
+.term-popup-box button{
+  margin-top:12px;
+  background:#1d3557;
+  color:white;
+  padding:8px 14px;
+  border:none;
+  border-radius:8px;
+}
+.gallery-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill, minmax(260px, 1fr));
+  gap:16px;
+}
+.gallery-card{
+  border:1px solid #e5e7eb;
+  border-radius:14px;
+  overflow:hidden;
+  background:#fff;
+}
+.gallery-card img{
+  width:100%;
+  height:200px;
+  object-fit:cover;
+}
+.gallery-card-content{
+  padding:12px;
+}
+.preview-note{
+  font-size:13px;
+  color:#666;
+  margin-top:-6px;
+  margin-bottom:12px;
+}
+hr{
+  border:none;
+  border-top:1px solid #eee;
+  margin:18px 0;
+}
 @media print{
-  body *{
-    visibility:hidden;
-  }
-  #detail, #detail *{
-    visibility:visible;
-  }
+  body *{visibility:hidden;}
+  #detail, #detail *{visibility:visible;}
   #detail{
     position:absolute;
     left:0;
@@ -476,9 +403,7 @@ a:hover{
     width:100%;
     box-shadow:none;
   }
-  nav, header{
-    display:none !important;
-  }
+  nav, header{display:none !important;}
 }
 </style>
 </head>
@@ -496,33 +421,34 @@ a:hover{
 
 <nav>
   <button onclick="showSection('home')">홈</button>
+  <button onclick="showSection('intro')">동아리 소개</button>
   <button onclick="showSection('notice')">공지</button>
   <button onclick="showSection('archive')">탐구 아카이브</button>
+  <button onclick="showSection('materials')">연구 자료실</button>
+  <button onclick="showSection('schedule')">동아리 일정</button>
+  <button onclick="showSection('gallery')">실험 사진 갤러리</button>
   <button onclick="showSection('write')">글 작성</button>
   <button onclick="showSection('myPosts')">내 글 관리</button>
 </nav>
 
 <div class="container">
 
-  <!-- 홈 -->
   <div id="home" class="card">
     <div class="slider">
-     <div class="slide active"><img src="images/slide1.jpg" alt="동아리 대표 사진"></div>
-<div class="slide"><img src="images/slide2.jpg" alt="실험 활동 사진"></div>
-<div class="slide"><img src="images/slide3.jpg" alt="발표 사진"></div>
+      <div class="slide active"><img src="images/slide1.jpg" alt="슬라이드1"></div>
+      <div class="slide"><img src="images/slide2.jpg" alt="슬라이드2"></div>
+      <div class="slide"><img src="images/slide3.jpg" alt="슬라이드3"></div>
     </div>
 
     <h2>IRHOS 과학동아리</h2>
-    <p>
-      IRHOS 과학동아리는 탐구 기반 실험과 연구 기록을 통해
-      과학적 사고를 확장하는 학생 연구 동아리입니다.
-    </p>
-    <p>
-      본 사이트는 공지, 실험 기록, 장기 프로젝트,
-      탐구 아카이브를 체계적으로 관리하기 위해 제작되었습니다.
-    </p>
+    <p>IRHOS 과학동아리는 탐구 기반 실험과 연구 기록을 통해 과학적 사고를 확장하는 학생 연구 동아리입니다.</p>
 
-    <div class="row">
+    <div class="dictionary-hero">
+      <div class="dictionary-term" id="dictionaryHeroTerm">과학 용어 불러오는 중...</div>
+      <div class="dictionary-desc" id="dictionaryHeroDesc">잠시만 기다려주세요.</div>
+    </div>
+
+    <div class="row" style="margin-top:16px;">
       <div class="col">
         <h3>📢 최근 공지</h3>
         <div id="noticePreview"></div>
@@ -534,19 +460,51 @@ a:hover{
     </div>
   </div>
 
-  <!-- 공지 -->
+  <div id="intro" class="card hidden">
+    <div class="detail-header">
+      <div>
+        <h2>동아리 소개</h2>
+        <p class="inline-info">동아리 목표, 활동 내용, 주요 연구 분야, 활동 사진을 볼 수 있습니다.</p>
+      </div>
+      <div class="detail-actions">
+        <button class="secondary-btn hidden" id="editIntroBtn" onclick="toggleIntroEditor(true)">소개 수정</button>
+      </div>
+    </div>
+
+    <div id="introView"></div>
+
+    <div id="introEditor" class="hidden">
+      <label>동아리 목표</label>
+      <textarea id="introGoal"></textarea>
+
+      <label>활동 내용</label>
+      <textarea id="introActivities"></textarea>
+
+      <label>주요 연구 분야</label>
+      <textarea id="introFields" placeholder="예: 화학 실험 / 생명과학 탐구 / 지구과학 분석"></textarea>
+
+      <label>활동 사진</label>
+      <input id="introPhotoInput" type="file" accept=".jpg,.jpeg,.png,.webp" multiple>
+
+      <div id="introExistingPhotos" class="section-box hidden"></div>
+
+      <div class="tool-row">
+        <button class="primary-btn" onclick="saveClubIntro()">저장</button>
+        <button class="secondary-btn" onclick="toggleIntroEditor(false)">취소</button>
+      </div>
+    </div>
+  </div>
+
   <div id="notice" class="card hidden">
     <h2>공지</h2>
     <div id="noticeList"></div>
   </div>
 
-  <!-- 탐구 아카이브 -->
   <div id="archive" class="card hidden">
     <h2>탐구 아카이브</h2>
 
     <div class="tool-row">
       <input id="searchInput" placeholder="제목, 작성자, 태그, 동아리로 검색" onkeyup="renderArchive()">
-
       <select id="sortSelect" onchange="renderArchive()">
         <option value="latest">최신순</option>
         <option value="oldest">오래된순</option>
@@ -565,10 +523,98 @@ a:hover{
     <div id="researchList" class="thumb-grid"></div>
   </div>
 
-  <!-- 글 작성 -->
+  <div id="materials" class="card hidden">
+    <div class="detail-header">
+      <div>
+        <h2>연구 자료실</h2>
+        <p class="inline-info">PDF, PPT, DOC, HWP 등 자료를 올리고 관리할 수 있습니다.</p>
+      </div>
+      <div class="detail-actions">
+        <button class="secondary-btn hidden" id="openMaterialFormBtn" onclick="toggleMaterialForm(true)">자료 등록</button>
+      </div>
+    </div>
+
+    <div id="materialForm" class="hidden">
+      <label>자료 제목</label>
+      <input id="materialTitle">
+
+      <label>설명</label>
+      <textarea id="materialDesc"></textarea>
+
+      <label>자료 파일</label>
+      <input id="materialFile" type="file" accept=".pdf,.ppt,.pptx,.doc,.docx,.hwp">
+
+      <div class="tool-row">
+        <button class="primary-btn" onclick="saveMaterial()">등록</button>
+        <button class="secondary-btn" onclick="toggleMaterialForm(false)">취소</button>
+      </div>
+    </div>
+
+    <div id="materialList"></div>
+  </div>
+
+  <div id="schedule" class="card hidden">
+    <div class="detail-header">
+      <div>
+        <h2>동아리 일정</h2>
+        <p class="inline-info">예정된 실험, 발표, 준비 일정을 확인할 수 있습니다.</p>
+      </div>
+      <div class="detail-actions">
+        <button class="secondary-btn hidden" id="openScheduleFormBtn" onclick="toggleScheduleForm(true)">일정 등록</button>
+      </div>
+    </div>
+
+    <div id="scheduleForm" class="hidden">
+      <label>일정 제목</label>
+      <input id="scheduleTitle">
+
+      <label>날짜</label>
+      <input id="scheduleDate" type="date">
+
+      <label>설명</label>
+      <textarea id="scheduleDesc"></textarea>
+
+      <div class="tool-row">
+        <button class="primary-btn" onclick="saveSchedule()">등록</button>
+        <button class="secondary-btn" onclick="toggleScheduleForm(false)">취소</button>
+      </div>
+    </div>
+
+    <div id="scheduleList"></div>
+  </div>
+
+  <div id="gallery" class="card hidden">
+    <div class="detail-header">
+      <div>
+        <h2>실험 사진 갤러리</h2>
+        <p class="inline-info">실험 활동 사진과 설명을 모아 볼 수 있습니다.</p>
+      </div>
+      <div class="detail-actions">
+        <button class="secondary-btn hidden" id="openGalleryFormBtn" onclick="toggleGalleryForm(true)">사진 등록</button>
+      </div>
+    </div>
+
+    <div id="galleryForm" class="hidden">
+      <label>사진 제목</label>
+      <input id="galleryTitle">
+
+      <label>설명</label>
+      <textarea id="galleryDesc"></textarea>
+
+      <label>사진 파일</label>
+      <input id="galleryFiles" type="file" accept=".jpg,.jpeg,.png,.webp" multiple>
+
+      <div class="tool-row">
+        <button class="primary-btn" onclick="saveGalleryItem()">등록</button>
+        <button class="secondary-btn" onclick="toggleGalleryForm(false)">취소</button>
+      </div>
+    </div>
+
+    <div id="galleryList" class="gallery-grid"></div>
+  </div>
+
   <div id="write" class="card hidden">
     <h2 id="writeTitleText">글 작성</h2>
-    <div id="draftStatus" class="draft-chip hidden">임시저장됨</div>
     <p class="inline-info" id="editModeInfo">공지나 탐구 글을 작성할 수 있습니다.</p>
     <p class="preview-note">단어 설명은 <strong>[[단어|설명]]</strong> 형식으로 넣을 수 있습니다.</p>
 
@@ -579,21 +625,17 @@ a:hover{
       <option value="project">장기 프로젝트</option>
     </select>
 
-    <!-- 공지 -->
     <div id="noticeForm">
       <label>공지 제목</label>
-      <input id="noticeTitleWrite" placeholder="공지 제목">
-
+      <input id="noticeTitleWrite">
       <label>공지 내용</label>
-      <textarea id="noticeContentWrite" placeholder="공지 내용을 입력하세요"></textarea>
-
+      <textarea id="noticeContentWrite"></textarea>
       <div class="checkbox-row">
         <input type="checkbox" id="noticePinned">
         <label for="noticePinned">상단 고정 공지</label>
       </div>
     </div>
 
-    <!-- 탐구 -->
     <div id="researchForm" class="hidden">
       <label>공개 범위 / 동아리</label>
       <select id="researchClub">
@@ -605,23 +647,23 @@ a:hover{
       </select>
 
       <label>제목</label>
-      <input id="title" placeholder="제목">
+      <input id="title">
 
       <label>태그</label>
-      <input id="tags" placeholder="#화학 #생명과학 #실험">
+      <input id="tags">
 
       <div id="experimentForm">
         <label>실험 이유</label>
-        <textarea id="reason" placeholder="왜 이 실험을 진행했는지"></textarea>
+        <textarea id="reason"></textarea>
 
         <label>결과 예측</label>
-        <textarea id="prediction" placeholder="예상한 결과"></textarea>
+        <textarea id="prediction"></textarea>
 
         <label>실험 과정</label>
-        <textarea id="method" placeholder="실험 방법과 절차"></textarea>
+        <textarea id="method"></textarea>
 
         <label>실험 결과</label>
-        <textarea id="result" placeholder="실험 결과를 입력하세요"></textarea>
+        <textarea id="result"></textarea>
       </div>
 
       <div id="projectForm" class="hidden">
@@ -633,10 +675,10 @@ a:hover{
         </select>
 
         <label>연구 목적</label>
-        <textarea id="projectPurpose" placeholder="이 프로젝트의 목적"></textarea>
+        <textarea id="projectPurpose"></textarea>
 
         <label>프로젝트 요약</label>
-        <textarea id="projectSummary" placeholder="프로젝트 전체 요약"></textarea>
+        <textarea id="projectSummary"></textarea>
 
         <h3>세부 기록 섹션</h3>
         <div id="projectSections"></div>
@@ -648,9 +690,7 @@ a:hover{
 
     <label>첨부파일</label>
     <input id="fileInput" type="file" multiple accept=".jpg,.jpeg,.png,.webp,.pdf,.ppt,.pptx,.doc,.docx,.hwp">
-    <p class="inline-info">
-      이미지(jpg, png, webp), 문서(pdf, ppt, doc, hwp)를 여러 개 첨부할 수 있습니다.
-    </p>
+    <p class="inline-info">이미지와 문서를 여러 개 첨부할 수 있습니다.</p>
 
     <div id="existingAttachmentsBox" class="hidden">
       <h3>기존 첨부파일</h3>
@@ -660,18 +700,14 @@ a:hover{
     <div class="tool-row">
       <button class="primary-btn" onclick="submitWrite()" id="submitBtn">저장</button>
       <button class="secondary-btn hidden" onclick="cancelEdit()" id="cancelEditBtn">수정 취소</button>
-      <button class="secondary-btn" onclick="clearDraft()">임시저장 삭제</button>
     </div>
   </div>
 
-  <!-- 내 글 관리 -->
   <div id="myPosts" class="card hidden">
     <h2>내 글 관리</h2>
-    <p class="inline-info">내가 작성한 공지와 탐구 글을 확인하고 수정하거나 삭제할 수 있습니다.</p>
     <div id="myPostList"></div>
   </div>
 
-  <!-- 상세 -->
   <div id="detail" class="card hidden">
     <div class="detail-header">
       <div>
@@ -690,11 +726,8 @@ a:hover{
     <div class="comment-box">
       <h3>댓글</h3>
       <div id="commentList"></div>
-
-      <div id="commentWriteBox">
-        <textarea id="commentInput" placeholder="댓글을 입력하세요"></textarea>
-        <button class="primary-btn" onclick="submitComment()">댓글 등록</button>
-      </div>
+      <textarea id="commentInput" placeholder="댓글을 입력하세요"></textarea>
+      <button class="primary-btn" onclick="submitComment()">댓글 등록</button>
     </div>
   </div>
 
@@ -712,8 +745,7 @@ import {
   updateDoc,
   deleteDoc,
   query,
-  where,
-  orderBy
+  where
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 import {
   getStorage,
@@ -734,20 +766,18 @@ const db = getFirestore(app);
 const storage = getStorage(app);
 
 const NOTICE_ALLOWED_ROLES = ["부장", "차장", "선생님"];
+const MANAGE_ALLOWED_ROLES = ["부장", "차장"];
 const HIDDEN_RESEARCH_KEYWORDS = ["산염기", "산-염기", "코아세르베이트"];
 
-let editState = {
-  isEditing: false,
-  category: null,
-  id: null
-};
-
+let editState = { isEditing:false, category:null, id:null };
 let archiveItems = [];
 let currentClubFilter = "전체";
 let currentDetail = null;
 let keptAttachments = [];
-
-const DRAFT_KEY = "irhos_write_draft_v2";
+let dictionaryItems = [];
+let dictionaryIndex = 0;
+let introDocId = null;
+let introPhotos = [];
 
 function escapeHtml(text = ""){
   return String(text)
@@ -759,10 +789,7 @@ function escapeHtml(text = ""){
 }
 
 function normalizeTitle(title = ""){
-  return String(title)
-    .replace(/[\s\-–—_]/g, "")
-    .trim()
-    .toLowerCase();
+  return String(title).replace(/[\s\-–—_]/g, "").trim().toLowerCase();
 }
 
 function shouldHideResearch(title = ""){
@@ -781,31 +808,33 @@ function getUser(){
   return JSON.parse(localStorage.getItem("user") || "null");
 }
 
+function canManageClubPages(){
+  const user = getUser();
+  return !!user && MANAGE_ALLOWED_ROLES.includes(user.role);
+}
+
+function canWriteNotice(){
+  const user = getUser();
+  return !!user && NOTICE_ALLOWED_ROLES.includes(user.role);
+}
+
 function parseTags(raw){
   if(!raw.trim()) return [];
-  return raw
-    .split(/\s+/)
-    .map(tag => tag.trim())
-    .filter(tag => tag.length > 0);
+  return raw.split(/\s+/).map(t => t.trim()).filter(Boolean);
 }
 
 function isImageFile(file = {}){
   const name = (file.name || "").toLowerCase();
   const type = (file.type || "").toLowerCase();
-  return type.startsWith("image/") ||
-    name.endsWith(".jpg") ||
-    name.endsWith(".jpeg") ||
-    name.endsWith(".png") ||
-    name.endsWith(".webp");
+  return type.startsWith("image/") || [".jpg",".jpeg",".png",".webp"].some(ext => name.endsWith(ext));
 }
 
 function renderRichText(text = ""){
   const escaped = escapeHtml(text);
-  const parsed = escaped.replace(
-    /\[\[([^|\]]+)\|([^\]]+)\]\]/g,
+  const parsed = escaped.replace(/\[\[([^|\]]+)\|([^\]]+)\]\]/g,
     (_, term, desc) => `<span class="term-note" data-desc="${desc}" tabindex="0">${term}</span>`
   );
-  return parsed.replaceAll("\n", "<br>");
+  return parsed.replaceAll("\n","<br>");
 }
 
 function openTermPopup(term, desc){
@@ -818,9 +847,7 @@ function openTermPopup(term, desc){
       <button type="button">닫기</button>
     </div>
   `;
-  popup.addEventListener("click", (e) => {
-    if(e.target === popup) popup.remove();
-  });
+  popup.addEventListener("click", e => { if(e.target === popup) popup.remove(); });
   popup.querySelector("button").addEventListener("click", () => popup.remove());
   document.body.appendChild(popup);
 }
@@ -830,121 +857,6 @@ document.addEventListener("click", (e) => {
   if(!target) return;
   openTermPopup(target.textContent || "", target.dataset.desc || "");
 });
-
-function getThumbnailUrl(item){
-  const attachments = item.attachments || [];
-  const image = attachments.find(file => isImageFile(file));
-  return image ? image.url : "";
-}
-
-function getFirstSentence(item){
-  let source = "";
-
-  if(item.type === "experiment"){
-    source = item.reason || item.method || item.result || "";
-  }else if(item.type === "project"){
-    source = item.summary || item.purpose || ((item.sections || [])[0]?.content || "");
-  }else{
-    source = item.content || "";
-  }
-
-  const cleaned = source.replace(/\[\[([^|\]]+)\|([^\]]+)\]\]/g, "$1").trim();
-  const sentence = cleaned.split(/(?<=[.!?。]|다\.)\s+/)[0] || cleaned;
-  return sentence.slice(0, 90) + (sentence.length > 90 ? "..." : "");
-}
-
-function renderAttachments(files = []){
-  if(!files || files.length === 0) return "";
-
-  const docs = files.filter(file => !isImageFile(file));
-  const images = files.filter(file => isImageFile(file));
-
-  return `
-    <div class="section-box">
-      <strong>첨부파일</strong>
-      ${docs.length ? `
-        <ul>
-          ${docs.map(file => `
-            <li>
-              <a href="${file.url}" target="_blank" rel="noopener noreferrer">${escapeHtml(file.name || "첨부파일")}</a>
-            </li>
-          `).join("")}
-        </ul>
-      ` : ""}
-      ${images.map(file => `
-        <div>
-          <a href="${file.url}" target="_blank" rel="noopener noreferrer">${escapeHtml(file.name || "이미지")}</a>
-          <img src="${file.url}" alt="${escapeHtml(file.name || "이미지")}" class="attachment-image">
-        </div>
-      `).join("")}
-    </div>
-  `;
-}
-
-async function uploadFiles(files, folder = "attachments"){
-  const uploaded = [];
-
-  for(const file of files){
-    const fileName = `${Date.now()}_${Math.random().toString(36).slice(2)}_${file.name}`;
-    const fileRef = ref(storage, `${folder}/${fileName}`);
-    await uploadBytes(fileRef, file);
-    const url = await getDownloadURL(fileRef);
-
-    uploaded.push({
-      name: file.name,
-      url,
-      type: file.type || "",
-      size: file.size || 0
-    });
-  }
-
-  return uploaded;
-}
-
-function createProjectSectionElement(title = "", content = ""){
-  const wrapper = document.createElement("div");
-  wrapper.className = "section-box project-section-item";
-
-  wrapper.innerHTML = `
-    <label>섹션 제목</label>
-    <input class="section-title" placeholder="예: 1차 실험 / 결과 분석 / 다음 계획" value="${escapeHtml(title)}">
-
-    <label>섹션 내용</label>
-    <textarea class="section-content" placeholder="섹션 내용을 입력하세요">${escapeHtml(content)}</textarea>
-
-    <div class="section-actions">
-      <button type="button" class="danger-btn small remove-section-btn">섹션 삭제</button>
-    </div>
-  `;
-
-  wrapper.querySelector(".remove-section-btn").addEventListener("click", () => {
-    wrapper.remove();
-    saveDraft();
-  });
-
-  return wrapper;
-}
-
-window.addProjectSection = function(title = "", content = ""){
-  const area = document.getElementById("projectSections");
-  area.appendChild(createProjectSectionElement(title, content));
-};
-
-function collectProjectSections(){
-  const items = document.querySelectorAll(".project-section-item");
-  const sections = [];
-
-  items.forEach(item => {
-    const title = item.querySelector(".section-title").value.trim();
-    const content = item.querySelector(".section-content").value.trim();
-
-    if(title || content){
-      sections.push({ title, content });
-    }
-  });
-
-  return sections;
-}
 
 function updateLoginUI(){
   const user = getUser();
@@ -958,113 +870,409 @@ function updateLoginUI(){
     loginInfo.textContent = "로그인 안 됨";
     logoutBtn.classList.add("hidden");
   }
+
+  document.getElementById("editIntroBtn").classList.toggle("hidden", !canManageClubPages());
+  document.getElementById("openMaterialFormBtn").classList.toggle("hidden", !canManageClubPages());
+  document.getElementById("openScheduleFormBtn").classList.toggle("hidden", !canManageClubPages());
+  document.getElementById("openGalleryFormBtn").classList.toggle("hidden", !canManageClubPages());
 }
 
-function updateNoticePermissionUI(){
-  const user = getUser();
-  const writeType = document.getElementById("writeType");
-  const noticeOption = writeType.querySelector('option[value="notice"]');
+window.toggleLogin = function(){
+  const id = prompt("학번을 입력하세요");
+  if(!id || !id.trim()) return;
 
-  if(!user || !NOTICE_ALLOWED_ROLES.includes(user.role)){
-    noticeOption.textContent = "공지 (권한 필요)";
-  }else{
-    noticeOption.textContent = "공지";
-  }
-}
+  const name = prompt("이름을 입력하세요");
+  if(!name || !name.trim()) return;
 
-function showDraftStatus(show = true){
-  const el = document.getElementById("draftStatus");
-  if(show) el.classList.remove("hidden");
-  else el.classList.add("hidden");
-}
+  const club = prompt("동아리명을 입력하세요", "융합과학탐구1");
+  if(!club || !club.trim()) return;
 
-function getDraftData(){
-  return {
-    type: document.getElementById("writeType").value,
-    noticeTitle: document.getElementById("noticeTitleWrite").value,
-    noticeContent: document.getElementById("noticeContentWrite").value,
-    noticePinned: document.getElementById("noticePinned").checked,
-    researchClub: document.getElementById("researchClub").value,
-    title: document.getElementById("title").value,
-    tags: document.getElementById("tags").value,
-    reason: document.getElementById("reason").value,
-    prediction: document.getElementById("prediction").value,
-    method: document.getElementById("method").value,
-    result: document.getElementById("result").value,
-    projectStatus: document.getElementById("projectStatus").value,
-    projectPurpose: document.getElementById("projectPurpose").value,
-    projectSummary: document.getElementById("projectSummary").value,
-    sections: collectProjectSections()
-  };
-}
+  const role = prompt("역할을 입력하세요\n예: 부원 / 부장 / 차장 / 선생님", "부원");
+  if(!role || !role.trim()) return;
 
-function saveDraft(){
-  if(editState.isEditing) return;
-  localStorage.setItem(DRAFT_KEY, JSON.stringify(getDraftData()));
-  showDraftStatus(true);
-}
+  localStorage.setItem("user", JSON.stringify({
+    id:id.trim(),
+    name:name.trim(),
+    club:club.trim(),
+    role:role.trim()
+  }));
 
-function restoreDraft(){
-  if(editState.isEditing) return;
-
-  const raw = localStorage.getItem(DRAFT_KEY);
-  if(!raw) return;
-
-  try{
-    const draft = JSON.parse(raw);
-    document.getElementById("writeType").value = draft.type || "notice";
-    document.getElementById("noticeTitleWrite").value = draft.noticeTitle || "";
-    document.getElementById("noticeContentWrite").value = draft.noticeContent || "";
-    document.getElementById("noticePinned").checked = !!draft.noticePinned;
-
-    document.getElementById("researchClub").value = draft.researchClub || "전체";
-    document.getElementById("title").value = draft.title || "";
-    document.getElementById("tags").value = draft.tags || "";
-    document.getElementById("reason").value = draft.reason || "";
-    document.getElementById("prediction").value = draft.prediction || "";
-    document.getElementById("method").value = draft.method || "";
-    document.getElementById("result").value = draft.result || "";
-
-    document.getElementById("projectStatus").value = draft.projectStatus || "진행중";
-    document.getElementById("projectPurpose").value = draft.projectPurpose || "";
-    document.getElementById("projectSummary").value = draft.projectSummary || "";
-
-    const area = document.getElementById("projectSections");
-    area.innerHTML = "";
-    (draft.sections || []).forEach(section => addProjectSection(section.title, section.content));
-
-    changeWriteForm();
-    showDraftStatus(true);
-  }catch(error){
-    console.error(error);
-  }
-}
-
-window.clearDraft = function(){
-  localStorage.removeItem(DRAFT_KEY);
-  showDraftStatus(false);
-  if(!editState.isEditing) alert("임시저장을 삭제했어요.");
+  updateLoginUI();
+  loadMyPosts();
+  alert("로그인 성공");
 };
 
-function bindDraftInputs(){
-  [
-    "writeType","noticeTitleWrite","noticeContentWrite","noticePinned","researchClub","title","tags",
-    "reason","prediction","method","result","projectStatus","projectPurpose","projectSummary"
-  ].forEach(id => {
-    document.getElementById(id).addEventListener("input", saveDraft);
-    document.getElementById(id).addEventListener("change", saveDraft);
+window.logout = function(){
+  localStorage.removeItem("user");
+  updateLoginUI();
+  loadMyPosts();
+  alert("로그아웃 완료");
+};
+
+window.showSection = function(id){
+  ["home","intro","notice","archive","materials","schedule","gallery","write","myPosts","detail"].forEach(sectionId=>{
+    document.getElementById(sectionId).classList.add("hidden");
+  });
+  document.getElementById(id).classList.remove("hidden");
+
+  if(id === "myPosts") loadMyPosts();
+  if(id === "intro") loadClubIntro();
+  if(id === "materials") loadMaterials();
+  if(id === "schedule") loadSchedules();
+  if(id === "gallery") loadGallery();
+};
+
+window.changeWriteForm = function(){
+  const type = document.getElementById("writeType").value;
+  const noticeForm = document.getElementById("noticeForm");
+  const researchForm = document.getElementById("researchForm");
+  const experimentForm = document.getElementById("experimentForm");
+  const projectForm = document.getElementById("projectForm");
+
+  if(type === "notice"){
+    if(!canWriteNotice()){
+      alert("공지는 부장, 차장, 선생님만 작성할 수 있어요.");
+      document.getElementById("writeType").value = "experiment";
+      return changeWriteForm();
+    }
+    noticeForm.classList.remove("hidden");
+    researchForm.classList.add("hidden");
+  }else{
+    noticeForm.classList.add("hidden");
+    researchForm.classList.remove("hidden");
+
+    if(type === "experiment"){
+      experimentForm.classList.remove("hidden");
+      projectForm.classList.add("hidden");
+    }else{
+      experimentForm.classList.add("hidden");
+      projectForm.classList.remove("hidden");
+    }
+  }
+};
+
+function createProjectSectionElement(title = "", content = ""){
+  const wrapper = document.createElement("div");
+  wrapper.className = "section-box project-section-item";
+  wrapper.innerHTML = `
+    <label>섹션 제목</label>
+    <input class="section-title" value="${escapeHtml(title)}">
+    <label>섹션 내용</label>
+    <textarea class="section-content">${escapeHtml(content)}</textarea>
+    <button type="button" class="danger-btn small remove-section-btn">섹션 삭제</button>
+  `;
+  wrapper.querySelector(".remove-section-btn").addEventListener("click", ()=>wrapper.remove());
+  return wrapper;
+}
+
+window.addProjectSection = function(title = "", content = ""){
+  document.getElementById("projectSections").appendChild(createProjectSectionElement(title, content));
+};
+
+function collectProjectSections(){
+  return [...document.querySelectorAll(".project-section-item")].map(item => ({
+    title:item.querySelector(".section-title").value.trim(),
+    content:item.querySelector(".section-content").value.trim()
+  })).filter(s => s.title || s.content);
+}
+
+async function uploadFiles(files, folder = "attachments"){
+  const uploaded = [];
+  for(const file of files){
+    const fileName = `${Date.now()}_${Math.random().toString(36).slice(2)}_${file.name}`;
+    const fileRef = ref(storage, `${folder}/${fileName}`);
+    await uploadBytes(fileRef, file);
+    const url = await getDownloadURL(fileRef);
+    uploaded.push({ name:file.name, url, type:file.type || "", size:file.size || 0 });
+  }
+  return uploaded;
+}
+
+function renderAttachments(files = []){
+  if(!files.length) return "";
+  const docs = files.filter(file => !isImageFile(file));
+  const images = files.filter(file => isImageFile(file));
+
+  return `
+    <div class="section-box">
+      <strong>첨부파일</strong>
+      ${docs.length ? `<ul>${docs.map(file => `
+        <li><a href="${file.url}" target="_blank" rel="noopener noreferrer">${escapeHtml(file.name)}</a></li>
+      `).join("")}</ul>` : ""}
+      ${images.map(file => `
+        <div>
+          <a href="${file.url}" target="_blank" rel="noopener noreferrer">${escapeHtml(file.name)}</a>
+          <img src="${file.url}" alt="${escapeHtml(file.name)}" class="attachment-image">
+        </div>
+      `).join("")}
+    </div>
+  `;
+}
+
+function getThumbnailUrl(item){
+  const attachments = item.attachments || [];
+  const image = attachments.find(file => isImageFile(file));
+  return image ? image.url : "";
+}
+
+function getFirstSentence(item){
+  let source = "";
+  if(item.type === "experiment") source = item.reason || item.method || item.result || "";
+  else if(item.type === "project") source = item.summary || item.purpose || ((item.sections || [])[0]?.content || "");
+  else source = item.content || item.desc || "";
+
+  const cleaned = source.replace(/\[\[([^|\]]+)\|([^\]]+)\]\]/g, "$1").trim();
+  const sentence = cleaned.split(/(?<=[.!?。]|다\.)\s+/)[0] || cleaned;
+  return sentence.length > 90 ? sentence.slice(0,90) + "..." : sentence;
+}
+
+function setThumbCardContent(item){
+  const thumbUrl = getThumbnailUrl(item);
+  const summary = escapeHtml(getFirstSentence(item));
+  const typeLabel = item.type === "project" ? "장기 프로젝트" : "실험 보고서";
+
+  return `
+    <div class="thumb-card" onclick="openResearchDetail('${item.id}')">
+      <div class="thumb-image-wrap">
+        ${thumbUrl ? `<img src="${thumbUrl}" alt="${escapeHtml(item.title)}">` : `<div class="thumb-image-fallback">썸네일 없음</div>`}
+      </div>
+      <div class="thumb-content">
+        <div>
+          <span class="type-badge">${typeLabel}</span>
+          ${item.type === "project" ? `<span class="status-badge">${escapeHtml(item.status || "진행중")}</span>` : ""}
+        </div>
+        <div class="thumb-title">${escapeHtml(item.title)}</div>
+        <div class="meta">
+          작성자: ${escapeHtml(item.author || "-")}<br>
+          동아리: ${escapeHtml(item.club || "-")}<br>
+          작성일: ${formatDate(item.createdAt)}
+        </div>
+        <div class="thumb-summary">${summary || "내용 요약 없음"}</div>
+      </div>
+    </div>
+  `;
+}
+
+window.setClubFilter = function(club){
+  currentClubFilter = club;
+  document.querySelectorAll("#clubFilterBar .filter-btn").forEach(btn=>{
+    btn.classList.toggle("active", btn.dataset.club === club);
+  });
+  renderArchive();
+};
+
+window.renderArchive = function(){
+  const list = document.getElementById("researchList");
+  list.innerHTML = "";
+
+  const keyword = document.getElementById("searchInput").value.toLowerCase();
+  const sort = document.getElementById("sortSelect").value;
+
+  let items = [...archiveItems].filter(item => {
+    const searchable = [item.title || "", item.author || "", item.club || "", ...(item.tags || [])].join(" ").toLowerCase();
+    return searchable.includes(keyword) && (currentClubFilter === "전체" || item.club === currentClubFilter);
   });
 
-  document.getElementById("projectSections").addEventListener("input", saveDraft);
+  if(sort === "latest") items.sort((a,b)=>new Date(b.createdAt)-new Date(a.createdAt));
+  if(sort === "oldest") items.sort((a,b)=>new Date(a.createdAt)-new Date(b.createdAt));
+  if(sort === "views") items.sort((a,b)=>(b.views||0)-(a.views||0));
+
+  if(!items.length){
+    list.innerHTML = "<p>조건에 맞는 탐구 글이 없습니다.</p>";
+    return;
+  }
+
+  items.forEach(item => list.innerHTML += setThumbCardContent(item));
+};
+
+function renderRecentResearch(){
+  const recentResearch = document.getElementById("recentResearch");
+  recentResearch.innerHTML = "";
+  const items = [...archiveItems].sort((a,b)=>new Date(b.createdAt)-new Date(a.createdAt)).slice(0,3);
+  if(!items.length){
+    recentResearch.innerHTML = "<p>최근 탐구 글이 없습니다.</p>";
+    return;
+  }
+  items.forEach(item => recentResearch.innerHTML += setThumbCardContent(item));
+}
+
+async function loadNotice(){
+  const list = document.getElementById("noticeList");
+  const preview = document.getElementById("noticePreview");
+  list.innerHTML = "";
+  preview.innerHTML = "";
+
+  const snap = await getDocs(collection(db,"notice"));
+  const items = [];
+  snap.forEach(docu => items.push({ id:docu.id, ...docu.data() }));
+
+  items.sort((a,b)=>{
+    if(!!b.pinned !== !!a.pinned) return Number(b.pinned)-Number(a.pinned);
+    return new Date(b.date)-new Date(a.date);
+  });
+
+  if(!items.length){
+    list.innerHTML = "<p>등록된 공지가 없습니다.</p>";
+    preview.innerHTML = "<p>최근 공지가 없습니다.</p>";
+    return;
+  }
+
+  items.forEach(item => {
+    list.innerHTML += `
+      <div class="post">
+        <div>
+          <span class="notice-badge">공지</span>
+          ${item.pinned ? `<span class="pinned-badge">상단 고정</span>` : ""}
+        </div>
+        <h3>${escapeHtml(item.title)}</h3>
+        <p>${renderRichText(item.content || "")}</p>
+        ${renderAttachments(item.attachments || [])}
+        <div class="meta">작성자: ${escapeHtml(item.author || "-")} | 작성일: ${formatDate(item.date)}</div>
+      </div>
+    `;
+  });
+
+  items.slice(0,4).forEach(item => {
+    preview.innerHTML += `
+      <div class="post">
+        ${item.pinned ? `<span class="pinned-badge">고정</span>` : ""}
+        <h4>${escapeHtml(item.title)}</h4>
+        <div class="meta">${formatDate(item.date)}</div>
+      </div>
+    `;
+  });
+}
+
+async function loadResearch(){
+  const snap = await getDocs(collection(db,"research"));
+  archiveItems = [];
+  snap.forEach(docu => {
+    const data = docu.data();
+    if(shouldHideResearch(data.title)) return;
+    archiveItems.push({ id:docu.id, ...data });
+  });
+  renderArchive();
+  renderRecentResearch();
+}
+
+window.openResearchDetail = async function(id){
+  const snap = await getDoc(doc(db,"research",id));
+  if(!snap.exists()){
+    alert("글을 찾을 수 없습니다.");
+    return;
+  }
+
+  const data = { id:snap.id, ...snap.data() };
+  currentDetail = data;
+
+  const currentViews = data.views || 0;
+  await updateDoc(doc(db,"research",id), { views: currentViews + 1 });
+  data.views = currentViews + 1;
+
+  document.getElementById("detailBadges").innerHTML = `
+    <span class="type-badge">${data.type === "project" ? "장기 프로젝트" : "실험 보고서"}</span>
+    ${data.type === "project" ? `<span class="status-badge">${escapeHtml(data.status || "진행중")}</span>` : ""}
+  `;
+  document.getElementById("detailTitle").textContent = data.title || "";
+  document.getElementById("detailMeta").innerHTML = `
+    작성자: ${escapeHtml(data.author || "-")} |
+    동아리: ${escapeHtml(data.club || "-")} |
+    작성일: ${formatDate(data.createdAt)} |
+    조회수: ${data.views || 0}
+  `;
+
+  let bodyHtml = "";
+  if(data.type === "experiment"){
+    bodyHtml = `
+      <div>${(data.tags || []).map(tag => `<span class="tag">${escapeHtml(tag)}</span>`).join("")}</div>
+      <p><strong>실험 이유</strong><br>${renderRichText(data.reason || "")}</p>
+      <p><strong>결과 예측</strong><br>${renderRichText(data.prediction || "")}</p>
+      <p><strong>실험 과정</strong><br>${renderRichText(data.method || "")}</p>
+      <p><strong>실험 결과</strong><br>${renderRichText(data.result || "")}</p>
+      ${renderAttachments(data.attachments || [])}
+    `;
+  }
+  if(data.type === "project"){
+    bodyHtml = `
+      <div>${(data.tags || []).map(tag => `<span class="tag">${escapeHtml(tag)}</span>`).join("")}</div>
+      <p><strong>연구 목적</strong><br>${renderRichText(data.purpose || "")}</p>
+      <p><strong>프로젝트 요약</strong><br>${renderRichText(data.summary || "")}</p>
+      ${(data.sections || []).map(section => `
+        <div class="section-box">
+          <h4>${escapeHtml(section.title || "제목 없음")}</h4>
+          <p>${renderRichText(section.content || "")}</p>
+        </div>
+      `).join("")}
+      ${renderAttachments(data.attachments || [])}
+    `;
+  }
+
+  document.getElementById("detailBody").innerHTML = bodyHtml;
+  await loadComments("research", id);
+  await loadResearch();
+  showSection("detail");
+};
+
+window.submitComment = async function(){
+  const user = getUser();
+  if(!user){
+    alert("먼저 로그인해주세요.");
+    return;
+  }
+  if(!currentDetail){
+    alert("글을 먼저 열어주세요.");
+    return;
+  }
+
+  const content = document.getElementById("commentInput").value.trim();
+  if(!content){
+    alert("댓글 내용을 입력해주세요.");
+    return;
+  }
+
+  await addDoc(collection(db,"comments"), {
+    postType:"research",
+    postId:currentDetail.id,
+    author:user.name,
+    authorId:user.id,
+    content,
+    createdAt:new Date().toISOString()
+  });
+
+  document.getElementById("commentInput").value = "";
+  await loadComments("research", currentDetail.id);
+};
+
+async function loadComments(postType, postId){
+  const list = document.getElementById("commentList");
+  list.innerHTML = "<p>불러오는 중...</p>";
+
+  const q = query(
+    collection(db,"comments"),
+    where("postType","==",postType),
+    where("postId","==",postId)
+  );
+
+  const snap = await getDocs(q);
+  const items = [];
+  snap.forEach(docu => items.push({ id:docu.id, ...docu.data() }));
+  items.sort((a,b)=>new Date(a.createdAt)-new Date(b.createdAt));
+
+  if(!items.length){
+    list.innerHTML = "<p>아직 댓글이 없습니다.</p>";
+    return;
+  }
+
+  list.innerHTML = items.map(item => `
+    <div class="comment-item">
+      <div class="meta">${escapeHtml(item.author || "-")} · ${formatDate(item.createdAt)}</div>
+      <div>${renderRichText(item.content || "")}</div>
+    </div>
+  `).join("");
 }
 
 function resetWriteForm(){
-  editState = {
-    isEditing: false,
-    category: null,
-    id: null
-  };
-
+  editState = { isEditing:false, category:null, id:null };
   keptAttachments = [];
 
   document.getElementById("writeTitleText").textContent = "글 작성";
@@ -1096,92 +1304,10 @@ function resetWriteForm(){
   document.getElementById("existingAttachmentsList").innerHTML = "";
 
   changeWriteForm();
-  updateNoticePermissionUI();
 }
 
 window.cancelEdit = function(){
   resetWriteForm();
-  restoreDraft();
-};
-
-window.toggleLogin = function(){
-  const id = prompt("학번을 입력하세요");
-  if(id === null || !id.trim()) return;
-
-  const name = prompt("이름을 입력하세요");
-  if(name === null || !name.trim()) return;
-
-  const club = prompt("동아리명을 입력하세요\n예: 융합과학탐구1");
-  if(club === null || !club.trim()) return;
-
-  const role = prompt("역할을 입력하세요\n예: 부원 / 부장 / 차장 / 선생님", "부원");
-  if(role === null || !role.trim()) return;
-
-  localStorage.setItem("user", JSON.stringify({
-    id: id.trim(),
-    name: name.trim(),
-    club: club.trim(),
-    role: role.trim()
-  }));
-
-  updateLoginUI();
-  updateNoticePermissionUI();
-  loadMyPosts();
-  alert("로그인 성공");
-};
-
-window.logout = function(){
-  localStorage.removeItem("user");
-  updateLoginUI();
-  updateNoticePermissionUI();
-  loadMyPosts();
-  alert("로그아웃 완료");
-};
-
-window.showSection = function(id){
-  ["home", "notice", "archive", "write", "myPosts", "detail"].forEach(sectionId => {
-    document.getElementById(sectionId).classList.add("hidden");
-  });
-  document.getElementById(id).classList.remove("hidden");
-
-  if(id === "myPosts"){
-    loadMyPosts();
-  }
-
-  if(id === "write" && !editState.isEditing){
-    restoreDraft();
-  }
-};
-
-window.changeWriteForm = function(){
-  const user = getUser();
-  const type = document.getElementById("writeType").value;
-  const noticeForm = document.getElementById("noticeForm");
-  const researchForm = document.getElementById("researchForm");
-  const experimentForm = document.getElementById("experimentForm");
-  const projectForm = document.getElementById("projectForm");
-
-  if(type === "notice"){
-    if(!user || !NOTICE_ALLOWED_ROLES.includes(user.role)){
-      alert("공지는 부장, 차장, 선생님만 작성할 수 있어요.");
-      document.getElementById("writeType").value = "experiment";
-      return changeWriteForm();
-    }
-
-    noticeForm.classList.remove("hidden");
-    researchForm.classList.add("hidden");
-  }else{
-    noticeForm.classList.add("hidden");
-    researchForm.classList.remove("hidden");
-
-    if(type === "experiment"){
-      experimentForm.classList.remove("hidden");
-      projectForm.classList.add("hidden");
-    }else{
-      experimentForm.classList.add("hidden");
-      projectForm.classList.remove("hidden");
-    }
-  }
 };
 
 function renderExistingAttachments(){
@@ -1189,13 +1315,12 @@ function renderExistingAttachments(){
   const list = document.getElementById("existingAttachmentsList");
   list.innerHTML = "";
 
-  if(keptAttachments.length === 0){
+  if(!keptAttachments.length){
     box.classList.add("hidden");
     return;
   }
 
   box.classList.remove("hidden");
-
   keptAttachments.forEach((file, index) => {
     const div = document.createElement("div");
     div.className = "attach-manage-item";
@@ -1203,8 +1328,8 @@ function renderExistingAttachments(){
       <span>${escapeHtml(file.name || "첨부파일")}</span>
       <button type="button" class="danger-btn small">제거</button>
     `;
-    div.querySelector("button").addEventListener("click", () => {
-      keptAttachments.splice(index, 1);
+    div.querySelector("button").addEventListener("click", ()=>{
+      keptAttachments.splice(index,1);
       renderExistingAttachments();
     });
     list.appendChild(div);
@@ -1213,482 +1338,183 @@ function renderExistingAttachments(){
 
 window.submitWrite = async function(){
   const user = getUser();
-
   if(!user){
     alert("먼저 로그인해주세요.");
     return;
   }
 
   const type = document.getElementById("writeType").value;
-  const fileInput = document.getElementById("fileInput");
-  const files = Array.from(fileInput.files || []);
+  const uploadedFiles = await uploadFiles(Array.from(document.getElementById("fileInput").files || []), "irhos-posts");
 
-  try{
-    const uploadedFiles = files.length > 0
-      ? await uploadFiles(files, "irhos-posts")
-      : [];
-
-    if(type === "notice"){
-      if(!NOTICE_ALLOWED_ROLES.includes(user.role)){
-        alert("공지는 부장, 차장, 선생님만 작성할 수 있어요.");
-        return;
-      }
-
-      const title = document.getElementById("noticeTitleWrite").value.trim();
-      const content = document.getElementById("noticeContentWrite").value.trim();
-      const pinned = document.getElementById("noticePinned").checked;
-
-      if(!title || !content){
-        alert("공지 제목과 내용을 모두 입력해주세요.");
-        return;
-      }
-
-      const noticeData = {
-        title,
-        content,
-        pinned,
-        author: user.name,
-        authorId: user.id,
-        club: user.club,
-        date: new Date().toISOString(),
-        attachments: [...keptAttachments, ...uploadedFiles]
-      };
-
-      if(editState.isEditing && editState.category === "notice"){
-        await updateDoc(doc(db, "notice", editState.id), noticeData);
-        alert("공지 수정 완료");
-      }else{
-        await addDoc(collection(db, "notice"), noticeData);
-        alert("공지 등록 완료");
-      }
-    }
-
-    if(type === "experiment"){
-      const title = document.getElementById("title").value.trim();
-      const tags = parseTags(document.getElementById("tags").value);
-      const club = document.getElementById("researchClub").value;
-      const reason = document.getElementById("reason").value.trim();
-      const prediction = document.getElementById("prediction").value.trim();
-      const method = document.getElementById("method").value.trim();
-      const result = document.getElementById("result").value.trim();
-
-      if(!title){
-        alert("제목을 입력해주세요.");
-        return;
-      }
-
-      let researchData = {
-        title,
-        tags,
-        club,
-        type: "experiment",
-        reason,
-        prediction,
-        method,
-        result,
-        author: user.name,
-        authorId: user.id,
-        views: 0,
-        viewUsers: [],
-        createdAt: new Date().toISOString(),
-        attachments: [...keptAttachments, ...uploadedFiles]
-      };
-
-      if(editState.isEditing && editState.category === "research"){
-        const oldDoc = await getDoc(doc(db, "research", editState.id));
-        const oldData = oldDoc.exists() ? oldDoc.data() : {};
-        researchData.views = oldData.views || 0;
-        researchData.viewUsers = oldData.viewUsers || [];
-        await updateDoc(doc(db, "research", editState.id), researchData);
-        alert("실험 보고서 수정 완료");
-      }else{
-        await addDoc(collection(db, "research"), researchData);
-        alert("실험 보고서 저장 완료");
-      }
-    }
-
-    if(type === "project"){
-      const title = document.getElementById("title").value.trim();
-      const tags = parseTags(document.getElementById("tags").value);
-      const club = document.getElementById("researchClub").value;
-      const purpose = document.getElementById("projectPurpose").value.trim();
-      const summary = document.getElementById("projectSummary").value.trim();
-      const status = document.getElementById("projectStatus").value;
-      const sections = collectProjectSections();
-
-      if(!title){
-        alert("제목을 입력해주세요.");
-        return;
-      }
-
-      let projectData = {
-        title,
-        tags,
-        club,
-        type: "project",
-        purpose,
-        summary,
-        status,
-        sections,
-        author: user.name,
-        authorId: user.id,
-        views: 0,
-        viewUsers: [],
-        createdAt: new Date().toISOString(),
-        attachments: [...keptAttachments, ...uploadedFiles]
-      };
-
-      if(editState.isEditing && editState.category === "research"){
-        const oldDoc = await getDoc(doc(db, "research", editState.id));
-        const oldData = oldDoc.exists() ? oldDoc.data() : {};
-        projectData.views = oldData.views || 0;
-        projectData.viewUsers = oldData.viewUsers || [];
-        await updateDoc(doc(db, "research", editState.id), projectData);
-        alert("장기 프로젝트 수정 완료");
-      }else{
-        await addDoc(collection(db, "research"), projectData);
-        alert("장기 프로젝트 저장 완료");
-      }
-    }
-
-    localStorage.removeItem(DRAFT_KEY);
-    showDraftStatus(false);
-    resetWriteForm();
-    await loadNotice();
-    await loadResearch();
-    await loadMyPosts();
-    showSection("home");
-
-  }catch(error){
-    console.error(error);
-    alert("저장 중 오류가 발생했어요. storageBucket 설정과 Storage 규칙도 확인해보세요.");
-  }
-};
-
-async function loadNotice(){
-  const list = document.getElementById("noticeList");
-  const preview = document.getElementById("noticePreview");
-  list.innerHTML = "";
-  preview.innerHTML = "";
-
-  const snap = await getDocs(collection(db, "notice"));
-  const items = [];
-
-  snap.forEach(docu => {
-    items.push({ id: docu.id, ...docu.data() });
-  });
-
-  items.sort((a, b) => {
-    if(!!b.pinned !== !!a.pinned) return Number(b.pinned) - Number(a.pinned);
-    return new Date(b.date) - new Date(a.date);
-  });
-
-  if(items.length === 0){
-    list.innerHTML = "<p>등록된 공지가 없습니다.</p>";
-    preview.innerHTML = "<p>최근 공지가 없습니다.</p>";
-    return;
-  }
-
-  items.forEach(item => {
-    list.innerHTML += `
-      <div class="post">
-        <div>
-          <span class="notice-badge">공지</span>
-          ${item.pinned ? `<span class="pinned-badge">상단 고정</span>` : ""}
-        </div>
-        <h3>${escapeHtml(item.title)}</h3>
-        <p>${renderRichText(item.content || "")}</p>
-        ${renderAttachments(item.attachments || [])}
-        <div class="meta">작성자: ${escapeHtml(item.author || "-")} | 작성일: ${formatDate(item.date)}</div>
-      </div>
-    `;
-  });
-
-  items.slice(0, 4).forEach(item => {
-    preview.innerHTML += `
-      <div class="post">
-        <div>
-          ${item.pinned ? `<span class="pinned-badge">고정</span>` : ""}
-        </div>
-        <h4>${escapeHtml(item.title)}</h4>
-        <div class="meta">${formatDate(item.date)}</div>
-      </div>
-    `;
-  });
-}
-
-async function loadResearch(){
-  const snap = await getDocs(collection(db, "research"));
-  const items = [];
-
-  snap.forEach(docu => {
-    const data = docu.data();
-
-    if(shouldHideResearch(data.title)){
+  if(type === "notice"){
+    if(!canWriteNotice()){
+      alert("공지는 부장, 차장, 선생님만 작성할 수 있어요.");
       return;
     }
 
-    items.push({ id: docu.id, ...data });
-  });
+    const noticeData = {
+      title:document.getElementById("noticeTitleWrite").value.trim(),
+      content:document.getElementById("noticeContentWrite").value.trim(),
+      pinned:document.getElementById("noticePinned").checked,
+      author:user.name,
+      authorId:user.id,
+      club:user.club,
+      date:new Date().toISOString(),
+      attachments:[...keptAttachments, ...uploadedFiles]
+    };
 
-  archiveItems = items;
-  renderArchive();
-  renderRecentResearch();
-}
+    if(!noticeData.title || !noticeData.content){
+      alert("공지 제목과 내용을 모두 입력해주세요.");
+      return;
+    }
 
-function setThumbCardContent(item){
-  const thumbUrl = getThumbnailUrl(item);
-  const summary = escapeHtml(getFirstSentence(item));
-  const typeLabel = item.type === "project" ? "장기 프로젝트" : "실험 보고서";
-
-  return `
-    <div class="thumb-card" onclick="openResearchDetail('${item.id}')">
-      <div class="thumb-image-wrap">
-        ${thumbUrl
-          ? `<img src="${thumbUrl}" alt="${escapeHtml(item.title)}">`
-          : `<div class="thumb-image-fallback">썸네일 없음</div>`}
-      </div>
-      <div class="thumb-content">
-        <div>
-          <span class="type-badge">${typeLabel}</span>
-          ${item.type === "project" ? `<span class="status-badge">${escapeHtml(item.status || "진행중")}</span>` : ""}
-        </div>
-        <div class="thumb-title">${escapeHtml(item.title)}</div>
-        <div class="meta">
-          작성자: ${escapeHtml(item.author || "-")}<br>
-          동아리: ${escapeHtml(item.club || "-")}<br>
-          작성일: ${formatDate(item.createdAt)}
-        </div>
-        <div class="thumb-summary">${summary || "내용 요약 없음"}</div>
-      </div>
-    </div>
-  `;
-}
-
-function renderRecentResearch(){
-  const recentResearch = document.getElementById("recentResearch");
-  recentResearch.innerHTML = "";
-
-  const items = [...archiveItems].sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt)).slice(0, 3);
-
-  if(items.length === 0){
-    recentResearch.innerHTML = "<p>최근 탐구 글이 없습니다.</p>";
-    return;
+    if(editState.isEditing && editState.category === "notice"){
+      await updateDoc(doc(db,"notice",editState.id), noticeData);
+      alert("공지 수정 완료");
+    }else{
+      await addDoc(collection(db,"notice"), noticeData);
+      alert("공지 등록 완료");
+    }
   }
 
-  items.forEach(item => {
-    recentResearch.innerHTML += setThumbCardContent(item);
-  });
-}
+  if(type === "experiment"){
+    const researchData = {
+      title:document.getElementById("title").value.trim(),
+      tags:parseTags(document.getElementById("tags").value),
+      club:document.getElementById("researchClub").value,
+      type:"experiment",
+      reason:document.getElementById("reason").value.trim(),
+      prediction:document.getElementById("prediction").value.trim(),
+      method:document.getElementById("method").value.trim(),
+      result:document.getElementById("result").value.trim(),
+      author:user.name,
+      authorId:user.id,
+      views:0,
+      viewUsers:[],
+      createdAt:new Date().toISOString(),
+      attachments:[...keptAttachments, ...uploadedFiles]
+    };
 
-window.setClubFilter = function(club){
-  currentClubFilter = club;
-  document.querySelectorAll("#clubFilterBar .filter-btn").forEach(btn => {
-    btn.classList.toggle("active", btn.dataset.club === club);
-  });
-  renderArchive();
+    if(!researchData.title){
+      alert("제목을 입력해주세요.");
+      return;
+    }
+
+    if(editState.isEditing && editState.category === "research"){
+      const oldSnap = await getDoc(doc(db,"research",editState.id));
+      const oldData = oldSnap.exists() ? oldSnap.data() : {};
+      researchData.views = oldData.views || 0;
+      researchData.viewUsers = oldData.viewUsers || [];
+      await updateDoc(doc(db,"research",editState.id), researchData);
+      alert("실험 보고서 수정 완료");
+    }else{
+      await addDoc(collection(db,"research"), researchData);
+      alert("실험 보고서 저장 완료");
+    }
+  }
+
+  if(type === "project"){
+    const projectData = {
+      title:document.getElementById("title").value.trim(),
+      tags:parseTags(document.getElementById("tags").value),
+      club:document.getElementById("researchClub").value,
+      type:"project",
+      purpose:document.getElementById("projectPurpose").value.trim(),
+      summary:document.getElementById("projectSummary").value.trim(),
+      status:document.getElementById("projectStatus").value,
+      sections:collectProjectSections(),
+      author:user.name,
+      authorId:user.id,
+      views:0,
+      viewUsers:[],
+      createdAt:new Date().toISOString(),
+      attachments:[...keptAttachments, ...uploadedFiles]
+    };
+
+    if(!projectData.title){
+      alert("제목을 입력해주세요.");
+      return;
+    }
+
+    if(editState.isEditing && editState.category === "research"){
+      const oldSnap = await getDoc(doc(db,"research",editState.id));
+      const oldData = oldSnap.exists() ? oldSnap.data() : {};
+      projectData.views = oldData.views || 0;
+      projectData.viewUsers = oldData.viewUsers || [];
+      await updateDoc(doc(db,"research",editState.id), projectData);
+      alert("장기 프로젝트 수정 완료");
+    }else{
+      await addDoc(collection(db,"research"), projectData);
+      alert("장기 프로젝트 저장 완료");
+    }
+  }
+
+  resetWriteForm();
+  await loadNotice();
+  await loadResearch();
+  await loadMyPosts();
+  showSection("home");
 };
 
-window.renderArchive = function(){
-  const list = document.getElementById("researchList");
-  list.innerHTML = "";
-
-  const keyword = document.getElementById("searchInput").value.toLowerCase();
-  const sort = document.getElementById("sortSelect").value;
-
-  let items = [...archiveItems].filter(item => {
-    const searchable = [
-      item.title || "",
-      item.author || "",
-      item.club || "",
-      ...(item.tags || [])
-    ].join(" ").toLowerCase();
-
-    const keywordMatch = searchable.includes(keyword);
-    const clubMatch = currentClubFilter === "전체" || item.club === currentClubFilter;
-    return keywordMatch && clubMatch;
-  });
-
-  if(sort === "latest"){
-    items.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
-  }
-  if(sort === "oldest"){
-    items.sort((a, b) => new Date(a.createdAt) - new Date(b.createdAt));
-  }
-  if(sort === "views"){
-    items.sort((a, b) => (b.views || 0) - (a.views || 0));
-  }
-
-  if(items.length === 0){
-    list.innerHTML = "<p>조건에 맞는 탐구 글이 없습니다.</p>";
-    return;
-  }
-
-  items.forEach(item => {
-    list.innerHTML += setThumbCardContent(item);
-  });
+window.removePost = async function(category, id){
+  if(!confirm("정말 삭제할까요?")) return;
+  const collectionName = category === "notice" ? "notice" : "research";
+  await deleteDoc(doc(db, collectionName, id));
+  await loadNotice();
+  await loadResearch();
+  await loadMyPosts();
+  alert("삭제 완료");
 };
 
-window.openResearchDetail = async function(id){
-  const snap = await getDoc(doc(db, "research", id));
+window.editPost = async function(category, id){
+  const collectionName = category === "notice" ? "notice" : "research";
+  const snap = await getDoc(doc(db, collectionName, id));
   if(!snap.exists()){
     alert("글을 찾을 수 없습니다.");
     return;
   }
 
-  const data = { id: snap.id, ...snap.data() };
-  currentDetail = data;
+  const data = snap.data();
+  editState = { isEditing:true, category, id };
+  keptAttachments = [...(data.attachments || [])];
 
-  const currentViews = data.views || 0;
-  await updateDoc(doc(db, "research", id), { views: currentViews + 1 });
-  data.views = currentViews + 1;
+  document.getElementById("writeTitleText").textContent = "글 수정";
+  document.getElementById("editModeInfo").textContent = "수정 모드입니다.";
+  document.getElementById("submitBtn").textContent = "수정 저장";
+  document.getElementById("cancelEditBtn").classList.remove("hidden");
 
-  const detailBadges = document.getElementById("detailBadges");
-  const detailTitle = document.getElementById("detailTitle");
-  const detailMeta = document.getElementById("detailMeta");
-  const detailBody = document.getElementById("detailBody");
+  if(category === "notice"){
+    document.getElementById("writeType").value = "notice";
+    document.getElementById("writeType").disabled = true;
+    document.getElementById("noticeTitleWrite").value = data.title || "";
+    document.getElementById("noticeContentWrite").value = data.content || "";
+    document.getElementById("noticePinned").checked = !!data.pinned;
+  }else{
+    document.getElementById("writeType").value = data.type || "experiment";
+    document.getElementById("writeType").disabled = true;
+    document.getElementById("researchClub").value = data.club || "전체";
+    document.getElementById("title").value = data.title || "";
+    document.getElementById("tags").value = (data.tags || []).join(" ");
 
-  detailBadges.innerHTML = `
-    <span class="type-badge">${data.type === "project" ? "장기 프로젝트" : "실험 보고서"}</span>
-    ${data.type === "project" ? `<span class="status-badge">${escapeHtml(data.status || "진행중")}</span>` : ""}
-  `;
-
-  detailTitle.textContent = data.title || "";
-  detailMeta.innerHTML = `
-    작성자: ${escapeHtml(data.author || "-")} | 
-    동아리: ${escapeHtml(data.club || "-")} | 
-    작성일: ${formatDate(data.createdAt)} | 
-    조회수: ${data.views || 0}
-  `;
-
-  let bodyHtml = "";
-
-  if(data.type === "experiment"){
-    bodyHtml = `
-      <div>${(data.tags || []).map(tag => `<span class="tag">${escapeHtml(tag)}</span>`).join("")}</div>
-      <p><strong>실험 이유</strong><br>${renderRichText(data.reason || "")}</p>
-      <p><strong>결과 예측</strong><br>${renderRichText(data.prediction || "")}</p>
-      <p><strong>실험 과정</strong><br>${renderRichText(data.method || "")}</p>
-      <p><strong>실험 결과</strong><br>${renderRichText(data.result || "")}</p>
-      ${renderAttachments(data.attachments || [])}
-    `;
-  }
-
-  if(data.type === "project"){
-    bodyHtml = `
-      <div>${(data.tags || []).map(tag => `<span class="tag">${escapeHtml(tag)}</span>`).join("")}</div>
-      <p><strong>연구 목적</strong><br>${renderRichText(data.purpose || "")}</p>
-      <p><strong>프로젝트 요약</strong><br>${renderRichText(data.summary || "")}</p>
-      ${(data.sections || []).map(section => `
-        <div class="section-box">
-          <h4>${escapeHtml(section.title || "제목 없음")}</h4>
-          <p>${renderRichText(section.content || "")}</p>
-        </div>
-      `).join("")}
-      ${renderAttachments(data.attachments || [])}
-    `;
-  }
-
-  detailBody.innerHTML = bodyHtml;
-  await loadComments("research", id);
-  await loadResearch();
-  showSection("detail");
-};
-
-window.removePost = async function(category, id){
-  const ok = confirm("정말 삭제할까요?");
-  if(!ok) return;
-
-  try{
-    const collectionName = category === "notice" ? "notice" : "research";
-    await deleteDoc(doc(db, collectionName, id));
-
-    alert("삭제 완료");
-    await loadNotice();
-    await loadResearch();
-    await loadMyPosts();
-
-    if(currentDetail && currentDetail.id === id){
-      showSection("archive");
-    }
-  }catch(error){
-    console.error(error);
-    alert("삭제 중 오류가 발생했어요.");
-  }
-};
-
-window.editPost = async function(category, id){
-  try{
-    const collectionName = category === "notice" ? "notice" : "research";
-    const snap = await getDoc(doc(db, collectionName, id));
-
-    if(!snap.exists()){
-      alert("글을 찾을 수 없습니다.");
-      return;
+    if(data.type === "experiment"){
+      document.getElementById("reason").value = data.reason || "";
+      document.getElementById("prediction").value = data.prediction || "";
+      document.getElementById("method").value = data.method || "";
+      document.getElementById("result").value = data.result || "";
     }
 
-    const data = snap.data();
-
-    editState = {
-      isEditing: true,
-      category,
-      id
-    };
-
-    keptAttachments = [...(data.attachments || [])];
-
-    document.getElementById("writeTitleText").textContent = "글 수정";
-    document.getElementById("editModeInfo").textContent = "수정 모드입니다. 기존 첨부는 개별 제거할 수 있고, 새 파일은 추가로 업로드됩니다.";
-    document.getElementById("submitBtn").textContent = "수정 저장";
-    document.getElementById("cancelEditBtn").classList.remove("hidden");
-    showDraftStatus(false);
-
-    if(category === "notice"){
-      document.getElementById("writeType").value = "notice";
-      document.getElementById("writeType").disabled = true;
-
-      document.getElementById("noticeTitleWrite").value = data.title || "";
-      document.getElementById("noticeContentWrite").value = data.content || "";
-      document.getElementById("noticePinned").checked = !!data.pinned;
-    }else{
-      document.getElementById("writeType").value = data.type || "experiment";
-      document.getElementById("writeType").disabled = true;
-
-      document.getElementById("researchClub").value = data.club || "전체";
-      document.getElementById("title").value = data.title || "";
-      document.getElementById("tags").value = (data.tags || []).join(" ");
-
-      if(data.type === "experiment"){
-        document.getElementById("reason").value = data.reason || "";
-        document.getElementById("prediction").value = data.prediction || "";
-        document.getElementById("method").value = data.method || "";
-        document.getElementById("result").value = data.result || "";
-      }
-
-      if(data.type === "project"){
-        document.getElementById("projectStatus").value = data.status || "진행중";
-        document.getElementById("projectPurpose").value = data.purpose || "";
-        document.getElementById("projectSummary").value = data.summary || "";
-
-        const sectionArea = document.getElementById("projectSections");
-        sectionArea.innerHTML = "";
-
-        if((data.sections || []).length > 0){
-          data.sections.forEach(section => addProjectSection(section.title || "", section.content || ""));
-        }else{
-          addProjectSection();
-        }
-      }
+    if(data.type === "project"){
+      document.getElementById("projectStatus").value = data.status || "진행중";
+      document.getElementById("projectPurpose").value = data.purpose || "";
+      document.getElementById("projectSummary").value = data.summary || "";
+      document.getElementById("projectSections").innerHTML = "";
+      (data.sections || []).forEach(section => addProjectSection(section.title || "", section.content || ""));
     }
-
-    renderExistingAttachments();
-    changeWriteForm();
-    showSection("write");
-
-  }catch(error){
-    console.error(error);
-    alert("수정 불러오기 중 오류가 발생했어요.");
   }
+
+  renderExistingAttachments();
+  changeWriteForm();
+  showSection("write");
 };
 
 async function loadMyPosts(){
@@ -1703,46 +1529,42 @@ async function loadMyPosts(){
 
   const allItems = [];
 
-  const noticeSnap = await getDocs(collection(db, "notice"));
+  const noticeSnap = await getDocs(collection(db,"notice"));
   noticeSnap.forEach(docu => {
     const data = docu.data();
     if(data.authorId === user.id){
       allItems.push({
-        id: docu.id,
-        category: "notice",
-        title: data.title,
-        typeLabel: "공지",
-        createdAt: data.date,
-        club: data.club || "-",
-        author: data.author || "-"
+        id:docu.id,
+        category:"notice",
+        title:data.title,
+        typeLabel:"공지",
+        createdAt:data.date,
+        club:data.club || "-",
+        author:data.author || "-"
       });
     }
   });
 
-  const researchSnap = await getDocs(collection(db, "research"));
+  const researchSnap = await getDocs(collection(db,"research"));
   researchSnap.forEach(docu => {
     const data = docu.data();
-
-    if(shouldHideResearch(data.title)){
-      return;
-    }
-
+    if(shouldHideResearch(data.title)) return;
     if(data.authorId === user.id){
       allItems.push({
-        id: docu.id,
-        category: "research",
-        title: data.title,
-        typeLabel: data.type === "project" ? "장기 프로젝트" : "실험 보고서",
-        createdAt: data.createdAt,
-        club: data.club || "-",
-        author: data.author || "-"
+        id:docu.id,
+        category:"research",
+        title:data.title,
+        typeLabel:data.type === "project" ? "장기 프로젝트" : "실험 보고서",
+        createdAt:data.createdAt,
+        club:data.club || "-",
+        author:data.author || "-"
       });
     }
   });
 
-  allItems.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+  allItems.sort((a,b)=>new Date(b.createdAt)-new Date(a.createdAt));
 
-  if(allItems.length === 0){
+  if(!allItems.length){
     list.innerHTML = "<p>작성한 글이 없습니다.</p>";
     return;
   }
@@ -1753,108 +1575,374 @@ async function loadMyPosts(){
         <div class="type-badge">${escapeHtml(item.typeLabel)}</div>
         <h3>${escapeHtml(item.title)}</h3>
         <div class="meta">작성자: ${escapeHtml(item.author)} | 동아리: ${escapeHtml(item.club)} | 작성일: ${formatDate(item.createdAt)}</div>
-        <button class="secondary-btn small" onclick="editPost('${item.category}', '${item.id}')">수정</button>
-        <button class="danger-btn small" onclick="removePost('${item.category}', '${item.id}')">삭제</button>
+        <button class="secondary-btn small" onclick="editPost('${item.category}','${item.id}')">수정</button>
+        <button class="danger-btn small" onclick="removePost('${item.category}','${item.id}')">삭제</button>
       </div>
     `;
   });
 }
 
-async function submitComment(){
-  const user = getUser();
+/* 동아리 소개 */
+window.toggleIntroEditor = function(show){
+  if(!canManageClubPages()) return;
+  document.getElementById("introEditor").classList.toggle("hidden", !show);
+};
 
-  if(!user){
-    alert("먼저 로그인해주세요.");
-    return;
-  }
+async function loadClubIntro(){
+  const view = document.getElementById("introView");
+  const snap = await getDocs(collection(db,"clubIntro"));
+  let item = null;
 
-  if(!currentDetail){
-    alert("댓글을 달 글을 먼저 열어주세요.");
-    return;
-  }
-
-  const input = document.getElementById("commentInput");
-  const content = input.value.trim();
-
-  if(!content){
-    alert("댓글 내용을 입력해주세요.");
-    return;
-  }
-
-  try{
-    await addDoc(collection(db, "comments"), {
-      postType: "research",
-      postId: currentDetail.id,
-      author: user.name,
-      authorId: user.id,
-      content,
-      createdAt: new Date().toISOString()
-    });
-
-    input.value = "";
-    await loadComments("research", currentDetail.id);
-  }catch(error){
-    console.error(error);
-    alert("댓글 저장 중 오류가 발생했어요.");
-  }
-}
-
-window.submitComment = submitComment;
-
-async function loadComments(postType, postId){
-  const list = document.getElementById("commentList");
-  list.innerHTML = "<p>불러오는 중...</p>";
-
-  try{
-    const q = query(
-      collection(db, "comments"),
-      where("postType", "==", postType),
-      where("postId", "==", postId)
-    );
-
-    const snap = await getDocs(q);
-    const items = [];
-
-    snap.forEach(docu => {
-      items.push({ id: docu.id, ...docu.data() });
-    });
-
-    items.sort((a, b) => new Date(a.createdAt) - new Date(b.createdAt));
-
-    if(items.length === 0){
-      list.innerHTML = "<p>아직 댓글이 없습니다.</p>";
-      return;
+  snap.forEach(docu => {
+    if(!item){
+      introDocId = docu.id;
+      item = { id:docu.id, ...docu.data() };
     }
+  });
 
-    list.innerHTML = items.map(item => `
-      <div class="comment-item">
-        <div class="meta">${escapeHtml(item.author || "-")} · ${formatDate(item.createdAt)}</div>
-        <div>${renderRichText(item.content || "")}</div>
+  if(!item){
+    view.innerHTML = `
+      <div class="section-box">
+        <h3>동아리 목표</h3>
+        <p>아직 등록되지 않았습니다.</p>
       </div>
-    `).join("");
-  }catch(error){
-    console.error(error);
-    list.innerHTML = "<p>댓글을 불러오지 못했어요.</p>";
+    `;
+    introPhotos = [];
+    document.getElementById("introGoal").value = "";
+    document.getElementById("introActivities").value = "";
+    document.getElementById("introFields").value = "";
+    document.getElementById("introExistingPhotos").classList.add("hidden");
+    return;
+  }
+
+  introPhotos = [...(item.photos || [])];
+
+  view.innerHTML = `
+    <div class="section-box">
+      <h3>동아리 목표</h3>
+      <p>${renderRichText(item.goal || "")}</p>
+    </div>
+    <div class="section-box">
+      <h3>활동 내용</h3>
+      <p>${renderRichText(item.activities || "")}</p>
+    </div>
+    <div class="section-box">
+      <h3>주요 연구 분야</h3>
+      <p>${renderRichText(item.fields || "")}</p>
+    </div>
+    <div class="section-box">
+      <h3>활동 사진</h3>
+      ${(item.photos || []).length ? item.photos.map(photo => `
+        <img src="${photo.url}" alt="${escapeHtml(photo.name || "활동 사진")}" class="attachment-image">
+      `).join("") : "<p>등록된 사진이 없습니다.</p>"}
+    </div>
+  `;
+
+  document.getElementById("introGoal").value = item.goal || "";
+  document.getElementById("introActivities").value = item.activities || "";
+  document.getElementById("introFields").value = item.fields || "";
+  renderIntroExistingPhotos();
+}
+
+function renderIntroExistingPhotos(){
+  const box = document.getElementById("introExistingPhotos");
+  if(!introPhotos.length){
+    box.classList.add("hidden");
+    box.innerHTML = "";
+    return;
+  }
+  box.classList.remove("hidden");
+  box.innerHTML = "<strong>기존 활동 사진</strong>" + introPhotos.map((photo, index) => `
+    <div class="attach-manage-item">
+      <span>${escapeHtml(photo.name || "사진")}</span>
+      <button type="button" class="danger-btn small" onclick="removeIntroPhoto(${index})">제거</button>
+    </div>
+  `).join("");
+}
+
+window.removeIntroPhoto = function(index){
+  introPhotos.splice(index,1);
+  renderIntroExistingPhotos();
+};
+
+window.saveClubIntro = async function(){
+  if(!canManageClubPages()){
+    alert("부장/차장만 수정할 수 있어요.");
+    return;
+  }
+
+  const photos = await uploadFiles(Array.from(document.getElementById("introPhotoInput").files || []), "club-intro");
+  const data = {
+    goal:document.getElementById("introGoal").value.trim(),
+    activities:document.getElementById("introActivities").value.trim(),
+    fields:document.getElementById("introFields").value.trim(),
+    photos:[...introPhotos, ...photos],
+    updatedAt:new Date().toISOString()
+  };
+
+  if(introDocId){
+    await updateDoc(doc(db,"clubIntro",introDocId), data);
+  }else{
+    const docRef = await addDoc(collection(db,"clubIntro"), data);
+    introDocId = docRef.id;
+  }
+
+  document.getElementById("introPhotoInput").value = "";
+  await loadClubIntro();
+  toggleIntroEditor(false);
+  alert("동아리 소개 저장 완료");
+};
+
+/* 과학 용어 사전 */
+async function ensureDictionarySeed(){
+  const snap = await getDocs(collection(db,"dictionary"));
+  if(!snap.empty) return;
+
+  const seed = [
+    { term:"중화반응", desc:"산과 염기가 반응하여 물과 염을 생성하는 반응입니다." },
+    { term:"종말점", desc:"지시약의 색 변화가 끝났다고 관찰되는 시점입니다." },
+    { term:"당량점", desc:"산과 염기가 화학량론적으로 정확히 반응한 지점입니다." },
+    { term:"코아세르베이트", desc:"액체 속에서 형성되는 미세한 액적 구조로, 생명 기원 연구에서 자주 언급됩니다." }
+  ];
+
+  for(const item of seed){
+    await addDoc(collection(db,"dictionary"), item);
   }
 }
 
-bindDraftInputs();
+async function loadDictionary(){
+  await ensureDictionarySeed();
+
+  const snap = await getDocs(collection(db,"dictionary"));
+  dictionaryItems = [];
+  snap.forEach(docu => dictionaryItems.push({ id:docu.id, ...docu.data() }));
+
+  if(!dictionaryItems.length){
+    document.getElementById("dictionaryHeroTerm").textContent = "과학 용어가 없습니다.";
+    document.getElementById("dictionaryHeroDesc").textContent = "";
+    return;
+  }
+
+  renderDictionaryHero();
+}
+
+function renderDictionaryHero(){
+  if(!dictionaryItems.length) return;
+  const item = dictionaryItems[dictionaryIndex % dictionaryItems.length];
+  document.getElementById("dictionaryHeroTerm").textContent = item.term || "";
+  document.getElementById("dictionaryHeroDesc").textContent = item.desc || "";
+  dictionaryIndex++;
+}
+
+/* 연구 자료실 */
+window.toggleMaterialForm = function(show){
+  if(!canManageClubPages()) return;
+  document.getElementById("materialForm").classList.toggle("hidden", !show);
+};
+
+window.saveMaterial = async function(){
+  if(!canManageClubPages()){
+    alert("부장/차장만 등록할 수 있어요.");
+    return;
+  }
+
+  const title = document.getElementById("materialTitle").value.trim();
+  const desc = document.getElementById("materialDesc").value.trim();
+  const files = Array.from(document.getElementById("materialFile").files || []);
+
+  if(!title || !files.length){
+    alert("자료 제목과 파일을 입력해주세요.");
+    return;
+  }
+
+  const uploaded = await uploadFiles(files, "materials");
+  await addDoc(collection(db,"materials"), {
+    title,
+    desc,
+    file:uploaded[0],
+    createdAt:new Date().toISOString()
+  });
+
+  document.getElementById("materialTitle").value = "";
+  document.getElementById("materialDesc").value = "";
+  document.getElementById("materialFile").value = "";
+  toggleMaterialForm(false);
+  await loadMaterials();
+};
+
+async function loadMaterials(){
+  const list = document.getElementById("materialList");
+  list.innerHTML = "";
+  const snap = await getDocs(collection(db,"materials"));
+  const items = [];
+  snap.forEach(docu => items.push({ id:docu.id, ...docu.data() }));
+  items.sort((a,b)=>new Date(b.createdAt)-new Date(a.createdAt));
+
+  if(!items.length){
+    list.innerHTML = "<p>등록된 자료가 없습니다.</p>";
+    return;
+  }
+
+  items.forEach(item => {
+    list.innerHTML += `
+      <div class="post">
+        <h3>${escapeHtml(item.title)}</h3>
+        <p>${renderRichText(item.desc || "")}</p>
+        <div><a href="${item.file?.url || "#"}" target="_blank" rel="noopener noreferrer">${escapeHtml(item.file?.name || "자료 열기")}</a></div>
+        <div class="meta">등록일: ${formatDate(item.createdAt)}</div>
+      </div>
+    `;
+  });
+}
+
+/* 일정 */
+window.toggleScheduleForm = function(show){
+  if(!canManageClubPages()) return;
+  document.getElementById("scheduleForm").classList.toggle("hidden", !show);
+};
+
+window.saveSchedule = async function(){
+  if(!canManageClubPages()){
+    alert("부장/차장만 등록할 수 있어요.");
+    return;
+  }
+
+  const title = document.getElementById("scheduleTitle").value.trim();
+  const date = document.getElementById("scheduleDate").value;
+  const desc = document.getElementById("scheduleDesc").value.trim();
+
+  if(!title || !date){
+    alert("일정 제목과 날짜를 입력해주세요.");
+    return;
+  }
+
+  await addDoc(collection(db,"schedules"), {
+    title,
+    date,
+    desc,
+    createdAt:new Date().toISOString()
+  });
+
+  document.getElementById("scheduleTitle").value = "";
+  document.getElementById("scheduleDate").value = "";
+  document.getElementById("scheduleDesc").value = "";
+  toggleScheduleForm(false);
+  await loadSchedules();
+};
+
+async function loadSchedules(){
+  const list = document.getElementById("scheduleList");
+  list.innerHTML = "";
+  const snap = await getDocs(collection(db,"schedules"));
+  const items = [];
+  snap.forEach(docu => items.push({ id:docu.id, ...docu.data() }));
+  items.sort((a,b)=>new Date(a.date)-new Date(b.date));
+
+  if(!items.length){
+    list.innerHTML = "<p>등록된 일정이 없습니다.</p>";
+    return;
+  }
+
+  items.forEach(item => {
+    list.innerHTML += `
+      <div class="post">
+        <h3>${escapeHtml(item.title)}</h3>
+        <div class="meta">${item.date}</div>
+        <p>${renderRichText(item.desc || "")}</p>
+      </div>
+    `;
+  });
+}
+
+/* 갤러리 */
+window.toggleGalleryForm = function(show){
+  if(!canManageClubPages()) return;
+  document.getElementById("galleryForm").classList.toggle("hidden", !show);
+};
+
+window.saveGalleryItem = async function(){
+  if(!canManageClubPages()){
+    alert("부장/차장만 등록할 수 있어요.");
+    return;
+  }
+
+  const title = document.getElementById("galleryTitle").value.trim();
+  const desc = document.getElementById("galleryDesc").value.trim();
+  const files = Array.from(document.getElementById("galleryFiles").files || []);
+
+  if(!title || !files.length){
+    alert("사진 제목과 이미지를 입력해주세요.");
+    return;
+  }
+
+  const uploaded = await uploadFiles(files, "gallery");
+  await addDoc(collection(db,"gallery"), {
+    title,
+    desc,
+    images:uploaded,
+    createdAt:new Date().toISOString()
+  });
+
+  document.getElementById("galleryTitle").value = "";
+  document.getElementById("galleryDesc").value = "";
+  document.getElementById("galleryFiles").value = "";
+  toggleGalleryForm(false);
+  await loadGallery();
+};
+
+async function loadGallery(){
+  const list = document.getElementById("galleryList");
+  list.innerHTML = "";
+  const snap = await getDocs(collection(db,"gallery"));
+  const items = [];
+  snap.forEach(docu => items.push({ id:docu.id, ...docu.data() }));
+  items.sort((a,b)=>new Date(b.createdAt)-new Date(a.createdAt));
+
+  if(!items.length){
+    list.innerHTML = "<p>등록된 사진이 없습니다.</p>";
+    return;
+  }
+
+  items.forEach(item => {
+    list.innerHTML += `
+      <div class="gallery-card">
+        ${item.images?.[0]?.url ? `<img src="${item.images[0].url}" alt="${escapeHtml(item.title)}">` : ""}
+        <div class="gallery-card-content">
+          <h3>${escapeHtml(item.title)}</h3>
+          <p>${renderRichText(item.desc || "")}</p>
+          <div class="meta">등록일: ${formatDate(item.createdAt)}</div>
+        </div>
+      </div>
+    `;
+  });
+}
+
+/* 초기 실행 */
 updateLoginUI();
-updateNoticePermissionUI();
 resetWriteForm();
 await loadNotice();
 await loadResearch();
 await loadMyPosts();
+await loadClubIntro();
+await loadDictionary();
+await loadMaterials();
+await loadSchedules();
+await loadGallery();
 showSection("home");
 
+/* 이미지 슬라이드 */
 const slides = document.querySelectorAll(".slide");
 let slideIndex = 0;
-
 setInterval(() => {
   slides[slideIndex].classList.remove("active");
   slideIndex = (slideIndex + 1) % slides.length;
   slides[slideIndex].classList.add("active");
 }, 4000);
+
+/* 용어 슬라이드 */
+setInterval(() => {
+  renderDictionaryHero();
+}, 3500);
 </script>
 
 </body>
