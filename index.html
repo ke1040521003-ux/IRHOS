@@ -7,194 +7,431 @@
 
 <style>
 *{box-sizing:border-box;}
-body{
-  margin:0;
-  font-family:Arial, sans-serif;
-  background:#f6f8fb;
-  color:#111;
-}
-header{
-  background:#1d3557;
-  color:white;
-  padding:18px;
+html,body{margin:0;padding:0;font-family:Arial,sans-serif;background:#f6f8fb;color:#111;}
+button,input,textarea,select{font:inherit;}
+a{color:#1d4ed8;text-decoration:none;}
+a:hover{text-decoration:underline;}
+
+.app{
   display:flex;
-  justify-content:space-between;
-  align-items:center;
-  gap:12px;
-  flex-wrap:wrap;
+  min-height:100vh;
 }
-header h1{
-  margin:0;
+
+.sidebar{
+  width:250px;
+  background:#1d3557;
+  color:#fff;
+  padding:20px 16px;
+  display:flex;
+  flex-direction:column;
+  justify-content:space-between;
+  position:sticky;
+  top:0;
+  height:100vh;
+}
+
+.brand{
+  margin-bottom:20px;
+}
+
+.brand h1{
+  margin:0 0 8px 0;
   font-size:22px;
 }
-.header-right{
+
+.brand p{
+  margin:0;
+  font-size:13px;
+  opacity:0.85;
+  line-height:1.5;
+}
+
+.side-nav{
   display:flex;
-  gap:8px;
+  flex-direction:column;
+  gap:10px;
+  margin-top:18px;
+}
+
+.side-nav button{
+  border:none;
+  background:rgba(255,255,255,0.08);
+  color:#fff;
+  padding:12px 14px;
+  border-radius:12px;
+  text-align:left;
+  cursor:pointer;
+}
+
+.side-nav button.active,
+.side-nav button:hover{
+  background:rgba(255,255,255,0.18);
+}
+
+.profile-wrap{
+  position:relative;
+  margin-top:18px;
+}
+
+.profile-summary{
+  display:flex;
   align-items:center;
-  flex-wrap:wrap;
-}
-nav{
-  background:white;
-  border-bottom:1px solid #ddd;
-  padding:10px;
-  text-align:center;
-}
-nav button{
-  margin:5px;
-  padding:9px 16px;
-  border:none;
-  background:#1d3557;
-  color:white;
-  border-radius:8px;
-  cursor:pointer;
-}
-.container{
-  max-width:1160px;
-  margin:auto;
-  padding:20px;
-}
-.card{
-  background:white;
-  padding:20px;
+  justify-content:space-between;
+  gap:10px;
+  padding:10px 12px;
+  background:rgba(255,255,255,0.1);
   border-radius:14px;
-  margin-bottom:20px;
-  box-shadow:0 4px 14px rgba(0,0,0,0.08);
-}
-.hidden{display:none !important;}
-.post{
-  border-top:1px solid #ddd;
-  padding:15px 0;
-}
-.post:first-child{border-top:none;}
-.tag{
-  display:inline-block;
-  background:#e3e9f2;
-  padding:4px 8px;
-  margin-right:5px;
-  margin-bottom:5px;
-  border-radius:5px;
-  font-size:12px;
-}
-textarea,input,select{
-  width:100%;
-  margin:6px 0 12px 0;
-  padding:10px;
-  border-radius:8px;
-  border:1px solid #ccc;
-  font-size:14px;
-}
-textarea{
-  min-height:100px;
-  resize:vertical;
-}
-button{
-  border:none;
-  border-radius:8px;
   cursor:pointer;
 }
-.primary-btn{
-  background:#1d3557;
-  color:white;
-  padding:10px 16px;
+
+.profile-left{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  min-width:0;
 }
-.secondary-btn{
+
+.profile-avatar{
+  width:40px;
+  height:40px;
+  border-radius:50%;
   background:#dfe7f3;
   color:#1d3557;
-  padding:10px 16px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-weight:700;
+  flex-shrink:0;
 }
-.danger-btn{
-  background:#b42318;
-  color:white;
-  padding:8px 12px;
+
+.profile-name{
+  font-size:14px;
+  font-weight:700;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
 }
-.small{
-  padding:8px 12px;
-  font-size:13px;
-  margin-right:8px;
-  margin-top:8px;
+
+.profile-role{
+  font-size:12px;
+  opacity:0.85;
 }
-.section-box{
-  border:1px solid #dbe2ea;
+
+.profile-menu{
+  position:absolute;
+  left:0;
+  right:0;
+  bottom:56px;
+  background:#fff;
+  color:#111;
+  border-radius:14px;
+  box-shadow:0 12px 28px rgba(0,0,0,0.18);
+  padding:8px;
+  display:none;
+  z-index:30;
+}
+
+.profile-menu.open{
+  display:block;
+}
+
+.profile-menu button{
+  width:100%;
+  border:none;
+  background:#fff;
+  padding:10px 12px;
   border-radius:10px;
-  padding:14px;
-  margin-bottom:14px;
-  background:#fafcff;
+  text-align:left;
+  cursor:pointer;
 }
+
+.profile-menu button:hover{
+  background:#f3f6fb;
+}
+
+.main{
+  flex:1;
+  padding:24px;
+  min-width:0;
+}
+
+.page{
+  display:none;
+}
+
+.page.active{
+  display:block;
+}
+
+.card{
+  background:#fff;
+  border-radius:18px;
+  box-shadow:0 4px 14px rgba(0,0,0,0.08);
+  padding:20px;
+  margin-bottom:20px;
+}
+
+.row{
+  display:flex;
+  gap:16px;
+  flex-wrap:wrap;
+}
+
+.col{
+  flex:1 1 320px;
+  min-width:0;
+}
+
+.tool-row{
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+  align-items:center;
+  margin-bottom:12px;
+}
+
+input,textarea,select{
+  width:100%;
+  border:1px solid #d0d5dd;
+  border-radius:10px;
+  padding:10px 12px;
+  background:#fff;
+}
+
+textarea{
+  min-height:110px;
+  resize:vertical;
+}
+
+.primary-btn{
+  border:none;
+  background:#1d3557;
+  color:#fff;
+  padding:10px 16px;
+  border-radius:10px;
+  cursor:pointer;
+}
+
+.secondary-btn{
+  border:none;
+  background:#e7edf6;
+  color:#1d3557;
+  padding:10px 16px;
+  border-radius:10px;
+  cursor:pointer;
+}
+
+.danger-btn{
+  border:none;
+  background:#b42318;
+  color:#fff;
+  padding:8px 12px;
+  border-radius:10px;
+  cursor:pointer;
+}
+
+.small{
+  padding:8px 10px;
+  font-size:13px;
+}
+
+.meta{
+  color:#667085;
+  font-size:13px;
+  margin:8px 0;
+  line-height:1.5;
+}
+
 .inline-info{
-  color:#555;
+  color:#667085;
   font-size:14px;
   margin-bottom:10px;
 }
-.notice-badge{
+
+.hero-slider,
+.intro-slider{
+  position:relative;
+  width:100%;
+  height:420px;
+  overflow:hidden;
+  border-radius:18px;
+  background:#dfe7f3;
+}
+
+.hero-slide,
+.intro-slide{
+  position:absolute;
+  inset:0;
+  opacity:0;
+  transition:opacity .8s ease;
+  pointer-events:none;
+}
+
+.hero-slide.active,
+.intro-slide.active{
+  opacity:1;
+  pointer-events:auto;
+}
+
+.hero-slide img,
+.intro-slide img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  display:block;
+}
+
+.hero-overlay{
+  position:absolute;
+  inset:0;
+  background:linear-gradient(to top, rgba(0,0,0,.6), rgba(0,0,0,.18));
+}
+
+.hero-text{
+  position:absolute;
+  left:32px;
+  bottom:32px;
+  color:#fff;
+  z-index:2;
+  max-width:680px;
+}
+
+.hero-badge{
   display:inline-block;
-  background:#fff3cd;
-  color:#7a5b00;
-  padding:4px 8px;
-  border-radius:6px;
+  background:rgba(255,255,255,0.18);
+  border:1px solid rgba(255,255,255,0.24);
+  padding:6px 12px;
+  border-radius:999px;
   font-size:12px;
-  margin-bottom:8px;
-  margin-right:6px;
+  margin-bottom:12px;
 }
-.pinned-badge{
-  display:inline-block;
-  background:#fee4e2;
-  color:#b42318;
-  padding:4px 8px;
-  border-radius:6px;
-  font-size:12px;
-  margin-bottom:8px;
+
+.hero-text h2{
+  margin:0 0 10px 0;
+  font-size:36px;
+  line-height:1.2;
 }
-.type-badge{
-  display:inline-block;
-  background:#eef2ff;
-  color:#344054;
-  padding:4px 8px;
-  border-radius:6px;
-  font-size:12px;
-  margin-bottom:8px;
-  margin-right:6px;
+
+.hero-text p{
+  margin:0;
+  font-size:16px;
+  line-height:1.6;
 }
-.status-badge{
-  display:inline-block;
-  background:#ecfdf3;
-  color:#027a48;
-  padding:4px 8px;
-  border-radius:6px;
-  font-size:12px;
-  margin-bottom:8px;
-}
-.meta{
-  color:#666;
-  font-size:13px;
-  margin:8px 0;
-}
-.row{
+
+.hero-buttons{
+  margin-top:16px;
   display:flex;
-  gap:12px;
+  gap:10px;
   flex-wrap:wrap;
 }
-.col{
-  flex:1 1 320px;
+
+.slider-nav{
+  position:absolute;
+  top:50%;
+  transform:translateY(-50%);
+  width:44px;
+  height:44px;
+  border:none;
+  border-radius:50%;
+  background:rgba(255,255,255,.76);
+  color:#1d3557;
+  font-size:20px;
+  cursor:pointer;
+  z-index:3;
 }
-.tool-row{
+
+.slider-nav.prev{left:14px;}
+.slider-nav.next{right:14px;}
+
+.slider-dots{
+  position:absolute;
+  bottom:18px;
+  left:50%;
+  transform:translateX(-50%);
   display:flex;
   gap:8px;
-  flex-wrap:wrap;
-  align-items:center;
+  z-index:3;
+}
+
+.slider-dot{
+  width:10px;
+  height:10px;
+  border-radius:50%;
+  background:rgba(255,255,255,.55);
+  cursor:pointer;
+}
+
+.slider-dot.active{
+  background:#fff;
+}
+
+.home-intro-box{
+  background:#f8fafc;
+  border:1px solid #e5e7eb;
+  border-radius:14px;
+  padding:18px;
+}
+
+.dictionary-box,
+.today-photo-box{
+  border-radius:16px;
+  padding:22px;
+  color:#fff;
+  min-height:180px;
+}
+
+.dictionary-box{
+  background:linear-gradient(135deg,#1d3557,#457b9d);
+}
+
+.today-photo-box{
+  background:#1f2937;
+  position:relative;
+  overflow:hidden;
+}
+
+.today-photo-box img{
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  opacity:.4;
+}
+
+.today-photo-content{
+  position:relative;
+  z-index:1;
+}
+
+.section-label{
+  font-size:12px;
+  opacity:.9;
+  letter-spacing:.08em;
   margin-bottom:10px;
 }
+
+.big-title{
+  font-size:28px;
+  font-weight:700;
+  margin-bottom:10px;
+}
+
 .thumb-grid{
   display:grid;
   grid-template-columns:repeat(auto-fill, minmax(260px, 1fr));
   gap:16px;
 }
+
 .thumb-card{
   border:1px solid #e5e7eb;
-  border-radius:14px;
+  border-radius:16px;
   overflow:hidden;
-  background:white;
-  box-shadow:0 2px 10px rgba(0,0,0,0.05);
+  background:#fff;
+  box-shadow:0 2px 10px rgba(0,0,0,.05);
+  cursor:pointer;
 }
+
 .thumb-image-wrap{
   width:100%;
   height:180px;
@@ -204,783 +441,535 @@ button{
   justify-content:center;
   overflow:hidden;
 }
+
 .thumb-image-wrap img{
   width:100%;
   height:100%;
   object-fit:cover;
 }
+
 .thumb-image-fallback{
   color:#667085;
   font-size:14px;
 }
+
 .thumb-content{
   padding:14px;
 }
+
 .thumb-title{
   font-size:17px;
   font-weight:700;
-  margin-bottom:8px;
   line-height:1.4;
+  margin-bottom:8px;
 }
+
 .thumb-summary{
   color:#475467;
   font-size:14px;
   line-height:1.5;
   min-height:42px;
 }
+
+.notice-badge,
+.type-badge,
+.status-badge,
+.pinned-badge{
+  display:inline-block;
+  padding:4px 8px;
+  border-radius:8px;
+  font-size:12px;
+  margin-right:6px;
+  margin-bottom:8px;
+}
+
+.notice-badge{background:#fff3cd;color:#7a5b00;}
+.type-badge{background:#eef2ff;color:#344054;}
+.status-badge{background:#ecfdf3;color:#027a48;}
+.pinned-badge{background:#fee4e2;color:#b42318;}
+
 .filter-btn{
+  border:none;
   background:#edf2f7;
   color:#1d3557;
   padding:8px 12px;
-  border-radius:8px;
+  border-radius:10px;
+  cursor:pointer;
 }
+
 .filter-btn.active{
   background:#1d3557;
-  color:white;
+  color:#fff;
 }
-.comment-box{
+
+.post{
   border-top:1px solid #eee;
-  padding-top:12px;
-  margin-top:12px;
+  padding:14px 0;
 }
-.comment-item{
-  border-top:1px solid #eee;
-  padding:10px 0;
-}
-.comment-item:first-child{
+
+.post:first-child{
   border-top:none;
 }
+
+.tag{
+  display:inline-block;
+  background:#e8eef8;
+  padding:4px 8px;
+  border-radius:999px;
+  font-size:12px;
+  margin-right:6px;
+  margin-bottom:6px;
+}
+
 .attachment-image{
   width:100%;
   max-width:360px;
-  border-radius:10px;
+  border-radius:12px;
   border:1px solid #ddd;
   display:block;
   margin:8px 0;
 }
+
+.section-box{
+  border:1px solid #dbe2ea;
+  border-radius:12px;
+  background:#fafcff;
+  padding:14px;
+  margin-bottom:14px;
+}
+
 .attach-manage-item{
   display:flex;
   justify-content:space-between;
   gap:8px;
   align-items:center;
   border:1px solid #e5e7eb;
-  border-radius:8px;
+  border-radius:10px;
   padding:8px 10px;
   margin-bottom:8px;
 }
-.checkbox-row{
-  display:flex;
-  gap:8px;
-  align-items:center;
-  margin:8px 0 14px 0;
-}
-.checkbox-row input{
-  width:auto;
-  margin:0;
-}
-.detail-header{
-  display:flex;
-  justify-content:space-between;
-  gap:12px;
-  flex-wrap:wrap;
-  align-items:flex-start;
-}
-.detail-actions{
-  display:flex;
-  gap:8px;
-  flex-wrap:wrap;
-}
+
 .term-note{
   color:#1d4ed8;
   cursor:pointer;
   text-decoration:underline dotted;
   font-weight:600;
 }
+
 .term-popup{
   position:fixed;
   inset:0;
-  background:rgba(0,0,0,0.35);
+  background:rgba(0,0,0,.35);
   display:flex;
   align-items:center;
   justify-content:center;
   z-index:9999;
 }
+
 .term-popup-box{
-  background:white;
-  width:min(520px, 92vw);
-  border-radius:14px;
-  padding:20px;
-  box-shadow:0 10px 30px rgba(0,0,0,0.2);
-}
-.term-popup-box h3{
-  margin-top:0;
-}
-.term-popup-box button{
-  margin-top:12px;
-  background:#1d3557;
-  color:white;
-  padding:8px 14px;
-  border:none;
-  border-radius:8px;
-}
-.gallery-grid{
-  display:grid;
-  grid-template-columns:repeat(auto-fill, minmax(260px, 1fr));
-  gap:16px;
-}
-.gallery-card{
-  border:1px solid #e5e7eb;
-  border-radius:14px;
-  overflow:hidden;
   background:#fff;
-}
-.gallery-card img{
-  width:100%;
-  height:200px;
-  object-fit:cover;
-}
-.gallery-card-content{
-  padding:12px;
-}
-.preview-note{
-  font-size:13px;
-  color:#666;
-  margin-top:-6px;
-  margin-bottom:12px;
-}
-hr{
-  border:none;
-  border-top:1px solid #eee;
-  margin:18px 0;
+  width:min(520px,92vw);
+  border-radius:16px;
+  padding:20px;
+  box-shadow:0 10px 30px rgba(0,0,0,.2);
 }
 
-/* 홈 슬라이드 */
-.hero-slider{
-  position:relative;
-  width:100%;
-  height:440px;
-  overflow:hidden;
-  border-radius:18px;
-  margin-bottom:22px;
-  background:#dfe7f3;
-}
-.hero-slide{
-  position:absolute;
-  inset:0;
-  opacity:0;
-  transition:opacity 0.8s ease;
-  pointer-events:none;
-}
-.hero-slide.active{
-  opacity:1;
-  pointer-events:auto;
-}
-.hero-slide img{
-  width:100%;
-  height:100%;
-  object-fit:cover;
-  display:block;
-}
-.hero-overlay{
-  position:absolute;
-  inset:0;
-  background:linear-gradient(to top, rgba(0,0,0,0.6), rgba(0,0,0,0.18));
-}
-.hero-text{
-  position:absolute;
-  left:34px;
-  bottom:34px;
-  color:white;
-  z-index:2;
-  max-width:680px;
-}
-.hero-badge{
-  display:inline-block;
-  background:rgba(255,255,255,0.18);
-  border:1px solid rgba(255,255,255,0.24);
-  padding:6px 12px;
-  border-radius:999px;
-  font-size:12px;
-  margin-bottom:12px;
-  backdrop-filter:blur(4px);
-}
-.hero-text h2{
-  margin:0 0 10px 0;
-  font-size:36px;
-  line-height:1.2;
-}
-.hero-text p{
-  margin:0;
-  font-size:16px;
-  line-height:1.6;
-  max-width:620px;
-}
-.hero-buttons{
-  margin-top:16px;
+.detail-actions{
   display:flex;
   gap:10px;
   flex-wrap:wrap;
 }
-.hero-nav{
-  position:absolute;
-  top:50%;
-  transform:translateY(-50%);
-  z-index:3;
-  width:46px;
-  height:46px;
-  border:none;
-  border-radius:999px;
-  background:rgba(255,255,255,0.75);
-  color:#1d3557;
-  font-size:22px;
-  cursor:pointer;
-  display:flex;
-  align-items:center;
-  justify-content:center;
+
+.comment-box{
+  border-top:1px solid #eee;
+  padding-top:14px;
+  margin-top:16px;
 }
-.hero-nav:hover{
-  background:white;
+
+.comment-item{
+  border-top:1px solid #eee;
+  padding:10px 0;
 }
-.hero-nav.prev{left:16px;}
-.hero-nav.next{right:16px;}
-.hero-dots{
-  position:absolute;
-  bottom:18px;
-  left:50%;
-  transform:translateX(-50%);
-  z-index:3;
-  display:flex;
-  gap:8px;
+
+.comment-item:first-child{
+  border-top:none;
 }
-.hero-dot{
-  width:10px;
-  height:10px;
-  border-radius:50%;
-  background:rgba(255,255,255,0.55);
-  cursor:pointer;
-}
-.hero-dot.active{
-  background:white;
-}
-.home-intro-box{
-  background:#f8fafc;
-  border:1px solid #e5e7eb;
-  border-radius:14px;
-  padding:20px;
-  margin-bottom:18px;
-}
-.home-intro-box h2{
-  margin-top:0;
-  margin-bottom:10px;
-}
-.dictionary-hero{
-  margin-top:14px;
-  min-height:150px;
-  border-radius:16px;
-  background:linear-gradient(135deg,#1d3557,#457b9d);
-  color:white;
-  padding:24px;
-  overflow:hidden;
-  margin-bottom:20px;
-}
-.dictionary-label{
-  font-size:12px;
-  opacity:0.9;
-  margin-bottom:10px;
-  letter-spacing:0.08em;
-}
-.dictionary-term{
-  font-size:30px;
-  font-weight:700;
-  margin-bottom:10px;
-}
-.dictionary-desc{
-  font-size:15px;
-  line-height:1.7;
-  max-width:760px;
-}
-.quick-menu-grid{
-  display:grid;
-  grid-template-columns:repeat(auto-fit, minmax(220px, 1fr));
-  gap:14px;
-  margin-bottom:10px;
-}
-.quick-menu-card{
-  background:#ffffff;
-  border:1px solid #e5e7eb;
-  border-radius:14px;
-  padding:18px;
-  cursor:pointer;
-  transition:0.2s;
-}
-.quick-menu-card:hover{
-  transform:translateY(-2px);
-  box-shadow:0 6px 18px rgba(0,0,0,0.08);
-}
-.quick-menu-card h3{
-  margin:0 0 8px 0;
-  font-size:18px;
-}
-.quick-menu-card p{
-  margin:0;
-  color:#475467;
-  line-height:1.5;
-  font-size:14px;
+
+@media (max-width: 960px){
+  .app{
+    flex-direction:column;
+  }
+  .sidebar{
+    width:100%;
+    height:auto;
+    position:static;
+    border-radius:0 0 18px 18px;
+  }
+  .main{
+    padding:16px;
+  }
 }
 
 @media (max-width: 768px){
-  .hero-slider{
-    height:320px;
-    border-radius:14px;
+  .hero-slider,
+  .intro-slider{
+    height:300px;
   }
   .hero-text{
     left:18px;
     right:18px;
-    bottom:24px;
-    max-width:none;
+    bottom:22px;
   }
   .hero-text h2{
     font-size:24px;
   }
   .hero-text p{
     font-size:14px;
-    line-height:1.5;
   }
-  .hero-nav{
-    width:38px;
-    height:38px;
-    font-size:18px;
+  .big-title{
+    font-size:22px;
   }
-  .dictionary-term{
-    font-size:24px;
-  }
-}
-@media (max-width: 480px){
-  .hero-slider{
-    height:270px;
-  }
-  .hero-text h2{
-    font-size:20px;
-  }
-  .hero-text p{
-    font-size:13px;
-  }
-  .hero-buttons{
-    gap:8px;
-  }
-}
-
-@media print{
-  body *{visibility:hidden;}
-  #detail, #detail *{visibility:visible;}
-  #detail{
-    position:absolute;
-    left:0;
-    top:0;
-    width:100%;
-    box-shadow:none;
-  }
-  nav, header{display:none !important;}
 }
 </style>
 </head>
 
 <body>
+<div class="app">
 
-<header>
-  <h1>🔬 IRHOS 과학동아리</h1>
-  <div class="header-right">
-    <span id="loginInfo">로그인 안 됨</span>
-    <button class="secondary-btn" onclick="toggleLogin()">로그인</button>
-    <button class="secondary-btn hidden" id="logoutBtn" onclick="logout()">로그아웃</button>
-  </div>
-</header>
+  <aside class="sidebar">
+    <div>
+      <div class="brand">
+        <h1>🔬 IRHOS</h1>
+        <p>실험과 탐구로 성장하는 학생 과학 동아리</p>
+      </div>
 
-<nav>
-  <button onclick="showSection('home')">홈</button>
-  <button onclick="showSection('intro')">동아리 소개</button>
-  <button onclick="showSection('notice')">공지</button>
-  <button onclick="showSection('archive')">탐구 아카이브</button>
-  <button onclick="showSection('materials')">연구 자료실</button>
-  <button onclick="showSection('schedule')">동아리 일정</button>
-  <button onclick="showSection('gallery')">실험 사진 갤러리</button>
-  <button onclick="showSection('write')">글 작성</button>
-  <button onclick="showSection('myPosts')">내 글 관리</button>
-</nav>
+      <div class="side-nav" id="sideNav">
+        <button data-page="home" onclick="showPage('home')">홈</button>
+        <button data-page="intro" onclick="showPage('intro')">동아리 소개</button>
+        <button data-page="notice" onclick="showPage('notice')">공지</button>
+        <button data-page="archive" onclick="showPage('archive')">탐구 아카이브</button>
+        <button data-page="write" onclick="showPage('write')">글 작성</button>
+      </div>
+    </div>
 
-<div class="container">
+    <div class="profile-wrap">
+      <div class="profile-menu" id="profileMenu">
+        <button onclick="toggleLogin()">로그인</button>
+        <button onclick="logout()">로그아웃</button>
+        <button onclick="openMyPosts()">내 글 관리</button>
+      </div>
 
-  <div id="home" class="card">
+      <div class="profile-summary" onclick="toggleProfileMenu()">
+        <div class="profile-left">
+          <div class="profile-avatar" id="profileAvatar">G</div>
+          <div>
+            <div class="profile-name" id="profileName">게스트</div>
+            <div class="profile-role" id="profileRole">로그인 안 됨</div>
+          </div>
+        </div>
+        <div>▴</div>
+      </div>
+    </div>
+  </aside>
 
-    <div class="hero-slider" id="heroSlider">
-      <div class="hero-slide active">
-        <img src="https://i.imgur.com/PtA3Uwz.jpeg" alt="IRHOS 동아리 대표 사진">
-        <div class="hero-overlay"></div>
-        <div class="hero-text">
-          <div class="hero-badge">IRHOS SCIENCE CLUB</div>
-          <h2>IRHOS 과학동아리</h2>
-          <p>실험과 탐구를 통해 과학적 사고를 확장하는 학생 연구 동아리</p>
-          <div class="hero-buttons">
-            <button class="primary-btn" onclick="showSection('intro')">동아리 소개 보기</button>
-            <button class="secondary-btn" onclick="showSection('archive')">탐구 아카이브 보기</button>
+  <main class="main">
+
+    <section id="page-home" class="page active">
+      <div class="card">
+
+        <div class="hero-slider">
+          <div class="hero-slide active">
+            <img src="https://i.imgur.com/PtA3Uwz.jpeg" alt="IRHOS 동아리 대표 사진">
+            <div class="hero-overlay"></div>
+            <div class="hero-text">
+              <div class="hero-badge">IRHOS SCIENCE CLUB</div>
+              <h2>IRHOS 과학동아리</h2>
+              <p>실험과 탐구를 통해 과학적 사고를 확장하는 학생 연구 동아리</p>
+              <div class="hero-buttons">
+                <button class="primary-btn" onclick="showPage('intro')">동아리 소개 보기</button>
+                <button class="secondary-btn" onclick="showPage('archive')">탐구 아카이브 보기</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="hero-slide">
+            <img src="https://i.imgur.com/lwXX7wS.jpg" alt="실험 활동 사진">
+            <div class="hero-overlay"></div>
+            <div class="hero-text">
+              <div class="hero-badge">EXPERIMENT</div>
+              <h2>실험 중심 활동</h2>
+              <p>직접 실험하고 기록하며 결과를 분석하는 탐구 활동을 진행합니다.</p>
+            </div>
+          </div>
+
+          <div class="hero-slide">
+            <img src="https://i.imgur.com/WUmRtAy.jpg" alt="발표 및 연구 기록 사진">
+            <div class="hero-overlay"></div>
+            <div class="hero-text">
+              <div class="hero-badge">RESEARCH ARCHIVE</div>
+              <h2>연구 기록과 발표</h2>
+              <p>탐구 과정을 정리하고 발표하며 함께 성장하는 과학 동아리입니다.</p>
+            </div>
+          </div>
+
+          <button class="slider-nav prev" onclick="moveHeroSlide(-1)">❮</button>
+          <button class="slider-nav next" onclick="moveHeroSlide(1)">❯</button>
+
+          <div class="slider-dots">
+            <span class="slider-dot active" onclick="goToHeroSlide(0)"></span>
+            <span class="slider-dot" onclick="goToHeroSlide(1)"></span>
+            <span class="slider-dot" onclick="goToHeroSlide(2)"></span>
+          </div>
+        </div>
+
+        <div class="home-intro-box">
+          <h2 style="margin-top:0;">IRHOS 과학동아리</h2>
+          <p style="margin:0;line-height:1.7;">
+            IRHOS 과학동아리는 실험과 연구 기록을 바탕으로 과학적 사고를 키우고,
+            다양한 탐구 활동을 함께 만들어가는 학생 연구 동아리입니다.
+          </p>
+        </div>
+
+        <div class="row">
+          <div class="col">
+            <div class="dictionary-box">
+              <div class="section-label">오늘의 과학 용어</div>
+              <div class="big-title" id="dictionaryHeroTerm">과학 용어 불러오는 중...</div>
+              <div id="dictionaryHeroDesc" style="line-height:1.7;">잠시만 기다려주세요.</div>
+            </div>
+          </div>
+
+          <div class="col">
+            <div class="today-photo-box">
+              <img id="todayPhotoImg" src="" alt="오늘의 실험 사진" style="display:none;">
+              <div class="today-photo-content">
+                <div class="section-label">오늘의 실험 사진</div>
+                <div class="big-title" id="todayPhotoTitle">실험 사진 불러오는 중...</div>
+                <div id="todayPhotoMeta" style="line-height:1.7;"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="row" style="margin-top:20px;">
+          <div class="col">
+            <h3>📢 최근 공지</h3>
+            <div id="noticePreview"></div>
+          </div>
+
+          <div class="col">
+            <h3>🧪 최근 탐구</h3>
+            <div id="recentResearch" class="thumb-grid"></div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <section id="page-intro" class="page">
+      <div class="card">
+        <div class="tool-row" style="justify-content:space-between;">
+          <div>
+            <h2 style="margin:0 0 8px 0;">동아리 소개</h2>
+            <div class="inline-info">사진 슬라이드와 동아리 소개 내용을 볼 수 있습니다.</div>
+          </div>
+          <button class="secondary-btn" id="editIntroBtn" style="display:none;" onclick="toggleIntroEditor(true)">소개 수정</button>
+        </div>
+
+        <div class="intro-slider" id="introSlider">
+          <div id="introSlidesWrap"></div>
+          <button class="slider-nav prev" onclick="moveIntroSlide(-1)">❮</button>
+          <button class="slider-nav next" onclick="moveIntroSlide(1)">❯</button>
+          <div class="slider-dots" id="introDotsWrap"></div>
+        </div>
+
+        <div id="introView" style="margin-top:18px;"></div>
+
+        <div id="introEditor" class="hidden" style="margin-top:18px;">
+          <label>동아리 목표</label>
+          <textarea id="introGoal"></textarea>
+
+          <label>활동 내용</label>
+          <textarea id="introActivities"></textarea>
+
+          <label>주요 연구 분야</label>
+          <textarea id="introFields"></textarea>
+
+          <label>활동 사진</label>
+          <input id="introPhotoInput" type="file" accept=".jpg,.jpeg,.png,.webp" multiple>
+
+          <div id="introExistingPhotos" class="section-box hidden"></div>
+
+          <div class="tool-row">
+            <button class="primary-btn" onclick="saveClubIntro()">저장</button>
+            <button class="secondary-btn" onclick="toggleIntroEditor(false)">취소</button>
           </div>
         </div>
       </div>
+    </section>
 
-      <div class="hero-slide">
-        <img src="https://i.imgur.com/lwXX7wS.jpg" alt="실험 활동 사진">
-        <div class="hero-overlay"></div>
-        <div class="hero-text">
-          <div class="hero-badge">EXPERIMENT</div>
-          <h2>실험 중심 활동</h2>
-          <p>직접 실험하고 기록하며 결과를 분석하는 탐구 활동을 진행합니다.</p>
-          <div class="hero-buttons">
-            <button class="primary-btn" onclick="showSection('gallery')">실험 사진 갤러리</button>
-          </div>
+    <section id="page-notice" class="page">
+      <div class="card">
+        <h2>공지</h2>
+        <div id="noticeList"></div>
+      </div>
+    </section>
+
+    <section id="page-archive" class="page">
+      <div class="card">
+        <h2>탐구 아카이브</h2>
+
+        <div class="tool-row">
+          <input id="searchInput" placeholder="제목, 작성자, 태그, 동아리로 검색" onkeyup="renderArchive()">
+          <select id="sortSelect" onchange="renderArchive()" style="max-width:160px;">
+            <option value="latest">최신순</option>
+            <option value="oldest">오래된순</option>
+            <option value="views">조회수순</option>
+          </select>
         </div>
-      </div>
 
-      <div class="hero-slide">
-        <img src="https://i.imgur.com/WUmRtAy.jpg" alt="발표 및 연구 기록 사진">
-        <div class="hero-overlay"></div>
-        <div class="hero-text">
-          <div class="hero-badge">RESEARCH ARCHIVE</div>
-          <h2>연구 기록과 발표</h2>
-          <p>탐구 과정을 정리하고 발표하며 함께 성장하는 과학 동아리입니다.</p>
-          <div class="hero-buttons">
-            <button class="primary-btn" onclick="showSection('materials')">연구 자료실 보기</button>
-          </div>
+        <div class="tool-row" id="clubFilterBar">
+          <button class="filter-btn active" data-club="전체" onclick="setClubFilter('전체')">전체</button>
+          <button class="filter-btn" data-club="융합과학탐구1" onclick="setClubFilter('융합과학탐구1')">융합과학탐구1</button>
+          <button class="filter-btn" data-club="융합과학탐구2" onclick="setClubFilter('융합과학탐구2')">융합과학탐구2</button>
+          <button class="filter-btn" data-club="생명과학" onclick="setClubFilter('생명과학')">생명과학</button>
+          <button class="filter-btn" data-club="지구과학" onclick="setClubFilter('지구과학')">지구과학</button>
         </div>
+
+        <div id="researchList" class="thumb-grid"></div>
       </div>
+    </section>
 
-      <button class="hero-nav prev" onclick="moveHeroSlide(-1)">❮</button>
-      <button class="hero-nav next" onclick="moveHeroSlide(1)">❯</button>
+    <section id="page-write" class="page">
+      <div class="card">
+        <h2 id="writeTitleText">글 작성</h2>
+        <div class="inline-info" id="editModeInfo">공지나 탐구 글을 작성할 수 있습니다.</div>
+        <div class="inline-info">단어 설명은 <strong>[[단어|설명]]</strong> 형식으로 넣을 수 있습니다.</div>
 
-      <div class="hero-dots">
-        <span class="hero-dot active" onclick="goToHeroSlide(0)"></span>
-        <span class="hero-dot" onclick="goToHeroSlide(1)"></span>
-        <span class="hero-dot" onclick="goToHeroSlide(2)"></span>
-      </div>
-    </div>
-
-    <div class="home-intro-box">
-      <h2>IRHOS 과학동아리</h2>
-      <p>
-        IRHOS 과학동아리는 실험과 연구 기록을 바탕으로 과학적 사고를 키우고,
-        다양한 탐구 활동을 함께 만들어가는 학생 연구 동아리입니다.
-      </p>
-    </div>
-
-    <div class="dictionary-hero">
-      <div class="dictionary-label">오늘의 과학 용어</div>
-      <div class="dictionary-term" id="dictionaryHeroTerm">과학 용어 불러오는 중...</div>
-      <div class="dictionary-desc" id="dictionaryHeroDesc">잠시만 기다려주세요.</div>
-    </div>
-
-    <div class="quick-menu-grid">
-      <div class="quick-menu-card" onclick="showSection('intro')">
-        <h3>동아리 소개</h3>
-        <p>목표, 활동 내용, 주요 연구 분야, 활동 사진 보기</p>
-      </div>
-
-      <div class="quick-menu-card" onclick="showSection('materials')">
-        <h3>연구 자료실</h3>
-        <p>PDF, PPT, DOC 등 탐구 자료 확인</p>
-      </div>
-
-      <div class="quick-menu-card" onclick="showSection('schedule')">
-        <h3>동아리 일정</h3>
-        <p>실험, 발표, 준비 일정을 한눈에 보기</p>
-      </div>
-
-      <div class="quick-menu-card" onclick="showSection('gallery')">
-        <h3>실험 사진 갤러리</h3>
-        <p>실험 활동 사진과 기록 보기</p>
-      </div>
-    </div>
-
-    <div class="row" style="margin-top:20px;">
-      <div class="col">
-        <h3>📢 최근 공지</h3>
-        <div id="noticePreview"></div>
-      </div>
-
-      <div class="col">
-        <h3>🧪 최근 탐구</h3>
-        <div id="recentResearch" class="thumb-grid"></div>
-      </div>
-    </div>
-
-  </div>
-
-  <div id="intro" class="card hidden">
-    <div class="detail-header">
-      <div>
-        <h2>동아리 소개</h2>
-        <p class="inline-info">동아리 목표, 활동 내용, 주요 연구 분야, 활동 사진을 볼 수 있습니다.</p>
-      </div>
-      <div class="detail-actions">
-        <button class="secondary-btn hidden" id="editIntroBtn" onclick="toggleIntroEditor(true)">소개 수정</button>
-      </div>
-    </div>
-
-    <div id="introView"></div>
-
-    <div id="introEditor" class="hidden">
-      <label>동아리 목표</label>
-      <textarea id="introGoal"></textarea>
-
-      <label>활동 내용</label>
-      <textarea id="introActivities"></textarea>
-
-      <label>주요 연구 분야</label>
-      <textarea id="introFields" placeholder="예: 화학 실험 / 생명과학 탐구 / 지구과학 분석"></textarea>
-
-      <label>활동 사진</label>
-      <input id="introPhotoInput" type="file" accept=".jpg,.jpeg,.png,.webp" multiple>
-
-      <div id="introExistingPhotos" class="section-box hidden"></div>
-
-      <div class="tool-row">
-        <button class="primary-btn" onclick="saveClubIntro()">저장</button>
-        <button class="secondary-btn" onclick="toggleIntroEditor(false)">취소</button>
-      </div>
-    </div>
-  </div>
-
-  <div id="notice" class="card hidden">
-    <h2>공지</h2>
-    <div id="noticeList"></div>
-  </div>
-
-  <div id="archive" class="card hidden">
-    <h2>탐구 아카이브</h2>
-
-    <div class="tool-row">
-      <input id="searchInput" placeholder="제목, 작성자, 태그, 동아리로 검색" onkeyup="renderArchive()">
-      <select id="sortSelect" onchange="renderArchive()">
-        <option value="latest">최신순</option>
-        <option value="oldest">오래된순</option>
-        <option value="views">조회수순</option>
-      </select>
-    </div>
-
-    <div class="tool-row" id="clubFilterBar">
-      <button class="filter-btn active" data-club="전체" onclick="setClubFilter('전체')">전체</button>
-      <button class="filter-btn" data-club="융합과학탐구1" onclick="setClubFilter('융합과학탐구1')">융합과학탐구1</button>
-      <button class="filter-btn" data-club="융합과학탐구2" onclick="setClubFilter('융합과학탐구2')">융합과학탐구2</button>
-      <button class="filter-btn" data-club="생명과학" onclick="setClubFilter('생명과학')">생명과학</button>
-      <button class="filter-btn" data-club="지구과학" onclick="setClubFilter('지구과학')">지구과학</button>
-    </div>
-
-    <div id="researchList" class="thumb-grid"></div>
-  </div>
-
-  <div id="materials" class="card hidden">
-    <div class="detail-header">
-      <div>
-        <h2>연구 자료실</h2>
-        <p class="inline-info">PDF, PPT, DOC, HWP 등 자료를 올리고 관리할 수 있습니다.</p>
-      </div>
-      <div class="detail-actions">
-        <button class="secondary-btn hidden" id="openMaterialFormBtn" onclick="toggleMaterialForm(true)">자료 등록</button>
-      </div>
-    </div>
-
-    <div id="materialForm" class="hidden">
-      <label>자료 제목</label>
-      <input id="materialTitle">
-
-      <label>설명</label>
-      <textarea id="materialDesc"></textarea>
-
-      <label>자료 파일</label>
-      <input id="materialFile" type="file" accept=".pdf,.ppt,.pptx,.doc,.docx,.hwp">
-
-      <div class="tool-row">
-        <button class="primary-btn" onclick="saveMaterial()">등록</button>
-        <button class="secondary-btn" onclick="toggleMaterialForm(false)">취소</button>
-      </div>
-    </div>
-
-    <div id="materialList"></div>
-  </div>
-
-  <div id="schedule" class="card hidden">
-    <div class="detail-header">
-      <div>
-        <h2>동아리 일정</h2>
-        <p class="inline-info">예정된 실험, 발표, 준비 일정을 확인할 수 있습니다.</p>
-      </div>
-      <div class="detail-actions">
-        <button class="secondary-btn hidden" id="openScheduleFormBtn" onclick="toggleScheduleForm(true)">일정 등록</button>
-      </div>
-    </div>
-
-    <div id="scheduleForm" class="hidden">
-      <label>일정 제목</label>
-      <input id="scheduleTitle">
-
-      <label>날짜</label>
-      <input id="scheduleDate" type="date">
-
-      <label>설명</label>
-      <textarea id="scheduleDesc"></textarea>
-
-      <div class="tool-row">
-        <button class="primary-btn" onclick="saveSchedule()">등록</button>
-        <button class="secondary-btn" onclick="toggleScheduleForm(false)">취소</button>
-      </div>
-    </div>
-
-    <div id="scheduleList"></div>
-  </div>
-
-  <div id="gallery" class="card hidden">
-    <div class="detail-header">
-      <div>
-        <h2>실험 사진 갤러리</h2>
-        <p class="inline-info">실험 활동 사진과 설명을 모아 볼 수 있습니다.</p>
-      </div>
-      <div class="detail-actions">
-        <button class="secondary-btn hidden" id="openGalleryFormBtn" onclick="toggleGalleryForm(true)">사진 등록</button>
-      </div>
-    </div>
-
-    <div id="galleryForm" class="hidden">
-      <label>사진 제목</label>
-      <input id="galleryTitle">
-
-      <label>설명</label>
-      <textarea id="galleryDesc"></textarea>
-
-      <label>사진 파일</label>
-      <input id="galleryFiles" type="file" accept=".jpg,.jpeg,.png,.webp" multiple>
-
-      <div class="tool-row">
-        <button class="primary-btn" onclick="saveGalleryItem()">등록</button>
-        <button class="secondary-btn" onclick="toggleGalleryForm(false)">취소</button>
-      </div>
-    </div>
-
-    <div id="galleryList" class="gallery-grid"></div>
-  </div>
-
-  <div id="write" class="card hidden">
-    <h2 id="writeTitleText">글 작성</h2>
-    <p class="inline-info" id="editModeInfo">공지나 탐구 글을 작성할 수 있습니다.</p>
-    <p class="preview-note">단어 설명은 <strong>[[단어|설명]]</strong> 형식으로 넣을 수 있습니다.</p>
-
-    <label>글 종류</label>
-    <select id="writeType" onchange="changeWriteForm()">
-      <option value="notice">공지</option>
-      <option value="experiment">실험 보고서</option>
-      <option value="project">장기 프로젝트</option>
-    </select>
-
-    <div id="noticeForm">
-      <label>공지 제목</label>
-      <input id="noticeTitleWrite">
-      <label>공지 내용</label>
-      <textarea id="noticeContentWrite"></textarea>
-      <div class="checkbox-row">
-        <input type="checkbox" id="noticePinned">
-        <label for="noticePinned">상단 고정 공지</label>
-      </div>
-    </div>
-
-    <div id="researchForm" class="hidden">
-      <label>공개 범위 / 동아리</label>
-      <select id="researchClub">
-        <option value="전체">전체</option>
-        <option value="융합과학탐구1">융합과학탐구1</option>
-        <option value="융합과학탐구2">융합과학탐구2</option>
-        <option value="생명과학">생명과학</option>
-        <option value="지구과학">지구과학</option>
-      </select>
-
-      <label>제목</label>
-      <input id="title">
-
-      <label>태그</label>
-      <input id="tags">
-
-      <div id="experimentForm">
-        <label>실험 이유</label>
-        <textarea id="reason"></textarea>
-        <label>결과 예측</label>
-        <textarea id="prediction"></textarea>
-        <label>실험 과정</label>
-        <textarea id="method"></textarea>
-        <label>실험 결과</label>
-        <textarea id="result"></textarea>
-      </div>
-
-      <div id="projectForm" class="hidden">
-        <label>프로젝트 상태</label>
-        <select id="projectStatus">
-          <option value="진행중">진행중</option>
-          <option value="완료">완료</option>
-          <option value="보류">보류</option>
+        <label>글 종류</label>
+        <select id="writeType" onchange="changeWriteForm()">
+          <option value="notice">공지</option>
+          <option value="experiment">실험 보고서</option>
+          <option value="project">장기 프로젝트</option>
         </select>
 
-        <label>연구 목적</label>
-        <textarea id="projectPurpose"></textarea>
+        <div id="noticeForm">
+          <label>공지 제목</label>
+          <input id="noticeTitleWrite">
 
-        <label>프로젝트 요약</label>
-        <textarea id="projectSummary"></textarea>
+          <label>공지 내용</label>
+          <textarea id="noticeContentWrite"></textarea>
 
-        <h3>세부 기록 섹션</h3>
-        <div id="projectSections"></div>
-        <button type="button" class="secondary-btn" onclick="addProjectSection()">+ 섹션 추가</button>
+          <div class="tool-row">
+            <label style="display:flex;align-items:center;gap:8px;">
+              <input type="checkbox" id="noticePinned" style="width:auto;">
+              상단 고정 공지
+            </label>
+          </div>
+        </div>
+
+        <div id="researchForm" class="hidden">
+          <label>공개 범위 / 동아리</label>
+          <select id="researchClub">
+            <option value="전체">전체</option>
+            <option value="융합과학탐구1">융합과학탐구1</option>
+            <option value="융합과학탐구2">융합과학탐구2</option>
+            <option value="생명과학">생명과학</option>
+            <option value="지구과학">지구과학</option>
+          </select>
+
+          <label>제목</label>
+          <input id="title">
+
+          <label>태그</label>
+          <input id="tags" placeholder="#화학 #실험 #생명과학">
+
+          <div id="experimentForm">
+            <label>실험 이유</label>
+            <textarea id="reason"></textarea>
+
+            <label>결과 예측</label>
+            <textarea id="prediction"></textarea>
+
+            <label>실험 과정</label>
+            <textarea id="method"></textarea>
+
+            <label>실험 결과</label>
+            <textarea id="result"></textarea>
+          </div>
+
+          <div id="projectForm" class="hidden">
+            <label>프로젝트 상태</label>
+            <select id="projectStatus">
+              <option value="진행중">진행중</option>
+              <option value="완료">완료</option>
+              <option value="보류">보류</option>
+            </select>
+
+            <label>연구 목적</label>
+            <textarea id="projectPurpose"></textarea>
+
+            <label>프로젝트 요약</label>
+            <textarea id="projectSummary"></textarea>
+
+            <h3>세부 기록 섹션</h3>
+            <div id="projectSections"></div>
+            <button type="button" class="secondary-btn" onclick="addProjectSection()">+ 섹션 추가</button>
+          </div>
+        </div>
+
+        <hr>
+
+        <label>첨부파일</label>
+        <input id="fileInput" type="file" multiple accept=".jpg,.jpeg,.png,.webp,.pdf,.ppt,.pptx,.doc,.docx,.hwp">
+
+        <div id="existingAttachmentsBox" class="hidden" style="margin-top:14px;">
+          <h3>기존 첨부파일</h3>
+          <div id="existingAttachmentsList"></div>
+        </div>
+
+        <div class="tool-row" style="margin-top:16px;">
+          <button class="primary-btn" onclick="submitWrite()" id="submitBtn">저장</button>
+          <button class="secondary-btn hidden" onclick="cancelEdit()" id="cancelEditBtn">수정 취소</button>
+        </div>
       </div>
-    </div>
+    </section>
 
-    <hr>
-
-    <label>첨부파일</label>
-    <input id="fileInput" type="file" multiple accept=".jpg,.jpeg,.png,.webp,.pdf,.ppt,.pptx,.doc,.docx,.hwp">
-    <p class="inline-info">이미지와 문서를 여러 개 첨부할 수 있습니다.</p>
-
-    <div id="existingAttachmentsBox" class="hidden">
-      <h3>기존 첨부파일</h3>
-      <div id="existingAttachmentsList"></div>
-    </div>
-
-    <div class="tool-row">
-      <button class="primary-btn" onclick="submitWrite()" id="submitBtn">저장</button>
-      <button class="secondary-btn hidden" onclick="cancelEdit()" id="cancelEditBtn">수정 취소</button>
-    </div>
-  </div>
-
-  <div id="myPosts" class="card hidden">
-    <h2>내 글 관리</h2>
-    <div id="myPostList"></div>
-  </div>
-
-  <div id="detail" class="card hidden">
-    <div class="detail-header">
-      <div>
-        <div id="detailBadges"></div>
-        <h2 id="detailTitle"></h2>
-        <div class="meta" id="detailMeta"></div>
+    <section id="page-myPosts" class="page">
+      <div class="card">
+        <h2>내 글 관리</h2>
+        <div id="myPostList"></div>
       </div>
-      <div class="detail-actions">
-        <button class="secondary-btn" onclick="showSection('archive')">아카이브로</button>
-        <button class="secondary-btn" onclick="window.print()">PDF 저장 / 인쇄</button>
+    </section>
+
+    <section id="page-detail" class="page">
+      <div class="card">
+        <div class="tool-row" style="justify-content:space-between;">
+          <div>
+            <div id="detailBadges"></div>
+            <h2 id="detailTitle" style="margin:0 0 8px 0;"></h2>
+            <div class="meta" id="detailMeta"></div>
+          </div>
+          <div class="detail-actions">
+            <button class="secondary-btn" onclick="showPage('archive')">아카이브로</button>
+            <button class="secondary-btn" onclick="window.print()">PDF 저장 / 인쇄</button>
+          </div>
+        </div>
+
+        <div id="detailBody"></div>
+
+        <div class="comment-box">
+          <h3>댓글</h3>
+          <div id="commentList"></div>
+          <textarea id="commentInput" placeholder="댓글을 입력하세요"></textarea>
+          <div class="tool-row">
+            <button class="primary-btn" onclick="submitComment()">댓글 등록</button>
+          </div>
+        </div>
       </div>
-    </div>
+    </section>
 
-    <div id="detailBody"></div>
-
-    <div class="comment-box">
-      <h3>댓글</h3>
-      <div id="commentList"></div>
-      <textarea id="commentInput" placeholder="댓글을 입력하세요"></textarea>
-      <button class="primary-btn" onclick="submitComment()">댓글 등록</button>
-    </div>
-  </div>
-
+  </main>
 </div>
 
 <script type="module">
@@ -1031,6 +1020,10 @@ let dictionaryItems = [];
 let dictionaryIndex = 0;
 let introDocId = null;
 let introPhotos = [];
+let heroIndex = 0;
+let heroInterval = null;
+let introIndex = 0;
+let introInterval = null;
 
 function escapeHtml(text = ""){
   return String(text)
@@ -1097,10 +1090,12 @@ function openTermPopup(term, desc){
     <div class="term-popup-box">
       <h3>${escapeHtml(term)}</h3>
       <p>${renderRichText(desc)}</p>
-      <button type="button">닫기</button>
+      <button type="button" class="primary-btn">닫기</button>
     </div>
   `;
-  popup.addEventListener("click", e => { if(e.target === popup) popup.remove(); });
+  popup.addEventListener("click", e => {
+    if(e.target === popup) popup.remove();
+  });
   popup.querySelector("button").addEventListener("click", () => popup.remove());
   document.body.appendChild(popup);
 }
@@ -1111,24 +1106,58 @@ document.addEventListener("click", (e) => {
   openTermPopup(target.textContent || "", target.dataset.desc || "");
 });
 
-function updateLoginUI(){
+function toggleProfileMenu(){
+  document.getElementById("profileMenu").classList.toggle("open");
+}
+window.toggleProfileMenu = toggleProfileMenu;
+
+document.addEventListener("click", (e) => {
+  const wrap = document.querySelector(".profile-wrap");
+  if(!wrap.contains(e.target)){
+    document.getElementById("profileMenu").classList.remove("open");
+  }
+});
+
+function updateProfileUI(){
   const user = getUser();
-  const loginInfo = document.getElementById("loginInfo");
-  const logoutBtn = document.getElementById("logoutBtn");
+  const avatar = document.getElementById("profileAvatar");
+  const name = document.getElementById("profileName");
+  const role = document.getElementById("profileRole");
 
   if(user){
-    loginInfo.textContent = `${user.name} (${user.id}, ${user.club}, ${user.role})`;
-    logoutBtn.classList.remove("hidden");
+    avatar.textContent = user.name?.[0] || "U";
+    name.textContent = user.name;
+    role.textContent = `${user.role} · ${user.club}`;
   }else{
-    loginInfo.textContent = "로그인 안 됨";
-    logoutBtn.classList.add("hidden");
+    avatar.textContent = "G";
+    name.textContent = "게스트";
+    role.textContent = "로그인 안 됨";
   }
 
-  document.getElementById("editIntroBtn").classList.toggle("hidden", !canManageClubPages());
-  document.getElementById("openMaterialFormBtn").classList.toggle("hidden", !canManageClubPages());
-  document.getElementById("openScheduleFormBtn").classList.toggle("hidden", !canManageClubPages());
-  document.getElementById("openGalleryFormBtn").classList.toggle("hidden", !canManageClubPages());
+  document.getElementById("editIntroBtn").style.display = canManageClubPages() ? "inline-block" : "none";
 }
+
+function setActiveNav(page){
+  document.querySelectorAll("#sideNav button").forEach(btn => {
+    btn.classList.toggle("active", btn.dataset.page === page);
+  });
+}
+
+function showPage(page){
+  document.querySelectorAll(".page").forEach(el => el.classList.remove("active"));
+  document.getElementById(`page-${page}`).classList.add("active");
+  setActiveNav(page);
+
+  if(page === "intro") loadClubIntro();
+  if(page === "archive") renderArchive();
+  if(page === "myPosts") loadMyPosts();
+}
+window.showPage = showPage;
+
+window.openMyPosts = function(){
+  showPage("myPosts");
+  document.getElementById("profileMenu").classList.remove("open");
+};
 
 window.toggleLogin = function(){
   const id = prompt("학번을 입력하세요");
@@ -1150,29 +1179,16 @@ window.toggleLogin = function(){
     role:role.trim()
   }));
 
-  updateLoginUI();
-  loadMyPosts();
+  updateProfileUI();
+  document.getElementById("profileMenu").classList.remove("open");
   alert("로그인 성공");
 };
 
 window.logout = function(){
   localStorage.removeItem("user");
-  updateLoginUI();
-  loadMyPosts();
+  updateProfileUI();
+  document.getElementById("profileMenu").classList.remove("open");
   alert("로그아웃 완료");
-};
-
-window.showSection = function(id){
-  ["home","intro","notice","archive","materials","schedule","gallery","write","myPosts","detail"].forEach(sectionId=>{
-    document.getElementById(sectionId).classList.add("hidden");
-  });
-  document.getElementById(id).classList.remove("hidden");
-
-  if(id === "myPosts") loadMyPosts();
-  if(id === "intro") loadClubIntro();
-  if(id === "materials") loadMaterials();
-  if(id === "schedule") loadSchedules();
-  if(id === "gallery") loadGallery();
 };
 
 window.changeWriteForm = function(){
@@ -1193,7 +1209,6 @@ window.changeWriteForm = function(){
   }else{
     noticeForm.classList.add("hidden");
     researchForm.classList.remove("hidden");
-
     if(type === "experiment"){
       experimentForm.classList.remove("hidden");
       projectForm.classList.add("hidden");
@@ -1272,7 +1287,7 @@ function getFirstSentence(item){
   let source = "";
   if(item.type === "experiment") source = item.reason || item.method || item.result || "";
   else if(item.type === "project") source = item.summary || item.purpose || ((item.sections || [])[0]?.content || "");
-  else source = item.content || item.desc || "";
+  else source = item.content || "";
 
   const cleaned = source.replace(/\[\[([^|\]]+)\|([^\]]+)\]\]/g, "$1").trim();
   const sentence = cleaned.split(/(?<=[.!?。]|다\.)\s+/)[0] || cleaned;
@@ -1349,6 +1364,35 @@ function renderRecentResearch(){
   items.forEach(item => recentResearch.innerHTML += setThumbCardContent(item));
 }
 
+function renderTodayExperimentPhoto(){
+  const imageEl = document.getElementById("todayPhotoImg");
+  const titleEl = document.getElementById("todayPhotoTitle");
+  const metaEl = document.getElementById("todayPhotoMeta");
+
+  const experimentPosts = archiveItems.filter(item =>
+    item.type === "experiment" && (item.attachments || []).some(file => isImageFile(file))
+  );
+
+  if(!experimentPosts.length){
+    imageEl.style.display = "none";
+    titleEl.textContent = "등록된 실험 사진이 없습니다.";
+    metaEl.textContent = "";
+    return;
+  }
+
+  const picked = experimentPosts[Math.floor(Math.random() * experimentPosts.length)];
+  const image = (picked.attachments || []).find(file => isImageFile(file));
+
+  imageEl.src = image.url;
+  imageEl.style.display = "block";
+  titleEl.textContent = picked.title || "실험 사진";
+  metaEl.innerHTML = `
+    작성자: ${escapeHtml(picked.author || "-")}<br>
+    동아리: ${escapeHtml(picked.club || "-")}<br>
+    작성일: ${formatDate(picked.createdAt)}
+  `;
+}
+
 async function loadNotice(){
   const list = document.getElementById("noticeList");
   const preview = document.getElementById("noticePreview");
@@ -1406,6 +1450,7 @@ async function loadResearch(){
   });
   renderArchive();
   renderRecentResearch();
+  renderTodayExperimentPhoto();
 }
 
 window.openResearchDetail = async function(id){
@@ -1462,8 +1507,7 @@ window.openResearchDetail = async function(id){
 
   document.getElementById("detailBody").innerHTML = bodyHtml;
   await loadComments("research", id);
-  await loadResearch();
-  showSection("detail");
+  showPage("detail");
 };
 
 window.submitComment = async function(){
@@ -1643,7 +1687,6 @@ window.submitWrite = async function(){
       author:user.name,
       authorId:user.id,
       views:0,
-      viewUsers:[],
       createdAt:new Date().toISOString(),
       attachments:[...keptAttachments, ...uploadedFiles]
     };
@@ -1657,7 +1700,6 @@ window.submitWrite = async function(){
       const oldSnap = await getDoc(doc(db,"research",editState.id));
       const oldData = oldSnap.exists() ? oldSnap.data() : {};
       researchData.views = oldData.views || 0;
-      researchData.viewUsers = oldData.viewUsers || [];
       await updateDoc(doc(db,"research",editState.id), researchData);
       alert("실험 보고서 수정 완료");
     }else{
@@ -1679,7 +1721,6 @@ window.submitWrite = async function(){
       author:user.name,
       authorId:user.id,
       views:0,
-      viewUsers:[],
       createdAt:new Date().toISOString(),
       attachments:[...keptAttachments, ...uploadedFiles]
     };
@@ -1693,7 +1734,6 @@ window.submitWrite = async function(){
       const oldSnap = await getDoc(doc(db,"research",editState.id));
       const oldData = oldSnap.exists() ? oldSnap.data() : {};
       projectData.views = oldData.views || 0;
-      projectData.viewUsers = oldData.viewUsers || [];
       await updateDoc(doc(db,"research",editState.id), projectData);
       alert("장기 프로젝트 수정 완료");
     }else{
@@ -1706,7 +1746,7 @@ window.submitWrite = async function(){
   await loadNotice();
   await loadResearch();
   await loadMyPosts();
-  showSection("home");
+  showPage("home");
 };
 
 window.removePost = async function(category, id){
@@ -1767,7 +1807,7 @@ window.editPost = async function(category, id){
 
   renderExistingAttachments();
   changeWriteForm();
-  showSection("write");
+  showPage("write");
 };
 
 async function loadMyPosts(){
@@ -1863,11 +1903,13 @@ async function loadClubIntro(){
     document.getElementById("introGoal").value = "";
     document.getElementById("introActivities").value = "";
     document.getElementById("introFields").value = "";
+    renderIntroSlider([]);
     document.getElementById("introExistingPhotos").classList.add("hidden");
     return;
   }
 
   introPhotos = [...(item.photos || [])];
+  renderIntroSlider(introPhotos);
 
   view.innerHTML = `
     <div class="section-box">
@@ -1881,12 +1923,6 @@ async function loadClubIntro(){
     <div class="section-box">
       <h3>주요 연구 분야</h3>
       <p>${renderRichText(item.fields || "")}</p>
-    </div>
-    <div class="section-box">
-      <h3>활동 사진</h3>
-      ${(item.photos || []).length ? item.photos.map(photo => `
-        <img src="${photo.url}" alt="${escapeHtml(photo.name || "활동 사진")}" class="attachment-image">
-      `).join("") : "<p>등록된 사진이 없습니다.</p>"}
     </div>
   `;
 
@@ -1915,6 +1951,7 @@ function renderIntroExistingPhotos(){
 window.removeIntroPhoto = function(index){
   introPhotos.splice(index,1);
   renderIntroExistingPhotos();
+  renderIntroSlider(introPhotos);
 };
 
 window.saveClubIntro = async function(){
@@ -1945,6 +1982,59 @@ window.saveClubIntro = async function(){
   alert("동아리 소개 저장 완료");
 };
 
+function renderIntroSlider(photos){
+  const wrap = document.getElementById("introSlidesWrap");
+  const dots = document.getElementById("introDotsWrap");
+  wrap.innerHTML = "";
+  dots.innerHTML = "";
+  introIndex = 0;
+  clearInterval(introInterval);
+
+  if(!photos.length){
+    wrap.innerHTML = `
+      <div class="intro-slide active">
+        <img src="https://i.imgur.com/PtA3Uwz.jpeg" alt="기본 동아리 사진">
+      </div>
+    `;
+    return;
+  }
+
+  photos.forEach((photo, index) => {
+    wrap.innerHTML += `
+      <div class="intro-slide ${index === 0 ? "active" : ""}">
+        <img src="${photo.url}" alt="${escapeHtml(photo.name || "활동 사진")}">
+      </div>
+    `;
+    dots.innerHTML += `
+      <span class="slider-dot ${index === 0 ? "active" : ""}" onclick="goToIntroSlide(${index})"></span>
+    `;
+  });
+
+  introInterval = setInterval(() => {
+    moveIntroSlide(1);
+  }, 4000);
+}
+
+window.moveIntroSlide = function(direction){
+  const slides = document.querySelectorAll(".intro-slide");
+  const dots = document.querySelectorAll("#introDotsWrap .slider-dot");
+  if(!slides.length) return;
+
+  introIndex = (introIndex + direction + slides.length) % slides.length;
+  slides.forEach((slide, index) => slide.classList.toggle("active", index === introIndex));
+  dots.forEach((dot, index) => dot.classList.toggle("active", index === introIndex));
+};
+
+window.goToIntroSlide = function(index){
+  const slides = document.querySelectorAll(".intro-slide");
+  const dots = document.querySelectorAll("#introDotsWrap .slider-dot");
+  if(!slides.length) return;
+
+  introIndex = index;
+  slides.forEach((slide, i) => slide.classList.toggle("active", i === introIndex));
+  dots.forEach((dot, i) => dot.classList.toggle("active", i === introIndex));
+};
+
 async function ensureDictionarySeed(){
   const snap = await getDocs(collection(db,"dictionary"));
   if(!snap.empty) return;
@@ -1963,17 +2053,9 @@ async function ensureDictionarySeed(){
 
 async function loadDictionary(){
   await ensureDictionarySeed();
-
   const snap = await getDocs(collection(db,"dictionary"));
   dictionaryItems = [];
   snap.forEach(docu => dictionaryItems.push({ id:docu.id, ...docu.data() }));
-
-  if(!dictionaryItems.length){
-    document.getElementById("dictionaryHeroTerm").textContent = "과학 용어가 없습니다.";
-    document.getElementById("dictionaryHeroDesc").textContent = "";
-    return;
-  }
-
   renderDictionaryHero();
 }
 
@@ -1985,203 +2067,16 @@ function renderDictionaryHero(){
   dictionaryIndex++;
 }
 
-window.toggleMaterialForm = function(show){
-  if(!canManageClubPages()) return;
-  document.getElementById("materialForm").classList.toggle("hidden", !show);
-};
-
-window.saveMaterial = async function(){
-  if(!canManageClubPages()){
-    alert("부장/차장만 등록할 수 있어요.");
-    return;
-  }
-
-  const title = document.getElementById("materialTitle").value.trim();
-  const desc = document.getElementById("materialDesc").value.trim();
-  const files = Array.from(document.getElementById("materialFile").files || []);
-
-  if(!title || !files.length){
-    alert("자료 제목과 파일을 입력해주세요.");
-    return;
-  }
-
-  const uploaded = await uploadFiles(files, "materials");
-  await addDoc(collection(db,"materials"), {
-    title,
-    desc,
-    file:uploaded[0],
-    createdAt:new Date().toISOString()
-  });
-
-  document.getElementById("materialTitle").value = "";
-  document.getElementById("materialDesc").value = "";
-  document.getElementById("materialFile").value = "";
-  toggleMaterialForm(false);
-  await loadMaterials();
-};
-
-async function loadMaterials(){
-  const list = document.getElementById("materialList");
-  list.innerHTML = "";
-  const snap = await getDocs(collection(db,"materials"));
-  const items = [];
-  snap.forEach(docu => items.push({ id:docu.id, ...docu.data() }));
-  items.sort((a,b)=>new Date(b.createdAt)-new Date(a.createdAt));
-
-  if(!items.length){
-    list.innerHTML = "<p>등록된 자료가 없습니다.</p>";
-    return;
-  }
-
-  items.forEach(item => {
-    list.innerHTML += `
-      <div class="post">
-        <h3>${escapeHtml(item.title)}</h3>
-        <p>${renderRichText(item.desc || "")}</p>
-        <div><a href="${item.file?.url || "#"}" target="_blank" rel="noopener noreferrer">${escapeHtml(item.file?.name || "자료 열기")}</a></div>
-        <div class="meta">등록일: ${formatDate(item.createdAt)}</div>
-      </div>
-    `;
-  });
-}
-
-window.toggleScheduleForm = function(show){
-  if(!canManageClubPages()) return;
-  document.getElementById("scheduleForm").classList.toggle("hidden", !show);
-};
-
-window.saveSchedule = async function(){
-  if(!canManageClubPages()){
-    alert("부장/차장만 등록할 수 있어요.");
-    return;
-  }
-
-  const title = document.getElementById("scheduleTitle").value.trim();
-  const date = document.getElementById("scheduleDate").value;
-  const desc = document.getElementById("scheduleDesc").value.trim();
-
-  if(!title || !date){
-    alert("일정 제목과 날짜를 입력해주세요.");
-    return;
-  }
-
-  await addDoc(collection(db,"schedules"), {
-    title,
-    date,
-    desc,
-    createdAt:new Date().toISOString()
-  });
-
-  document.getElementById("scheduleTitle").value = "";
-  document.getElementById("scheduleDate").value = "";
-  document.getElementById("scheduleDesc").value = "";
-  toggleScheduleForm(false);
-  await loadSchedules();
-};
-
-async function loadSchedules(){
-  const list = document.getElementById("scheduleList");
-  list.innerHTML = "";
-  const snap = await getDocs(collection(db,"schedules"));
-  const items = [];
-  snap.forEach(docu => items.push({ id:docu.id, ...docu.data() }));
-  items.sort((a,b)=>new Date(a.date)-new Date(b.date));
-
-  if(!items.length){
-    list.innerHTML = "<p>등록된 일정이 없습니다.</p>";
-    return;
-  }
-
-  items.forEach(item => {
-    list.innerHTML += `
-      <div class="post">
-        <h3>${escapeHtml(item.title)}</h3>
-        <div class="meta">${item.date}</div>
-        <p>${renderRichText(item.desc || "")}</p>
-      </div>
-    `;
-  });
-}
-
-window.toggleGalleryForm = function(show){
-  if(!canManageClubPages()) return;
-  document.getElementById("galleryForm").classList.toggle("hidden", !show);
-};
-
-window.saveGalleryItem = async function(){
-  if(!canManageClubPages()){
-    alert("부장/차장만 등록할 수 있어요.");
-    return;
-  }
-
-  const title = document.getElementById("galleryTitle").value.trim();
-  const desc = document.getElementById("galleryDesc").value.trim();
-  const files = Array.from(document.getElementById("galleryFiles").files || []);
-
-  if(!title || !files.length){
-    alert("사진 제목과 이미지를 입력해주세요.");
-    return;
-  }
-
-  const uploaded = await uploadFiles(files, "gallery");
-  await addDoc(collection(db,"gallery"), {
-    title,
-    desc,
-    images:uploaded,
-    createdAt:new Date().toISOString()
-  });
-
-  document.getElementById("galleryTitle").value = "";
-  document.getElementById("galleryDesc").value = "";
-  document.getElementById("galleryFiles").value = "";
-  toggleGalleryForm(false);
-  await loadGallery();
-};
-
-async function loadGallery(){
-  const list = document.getElementById("galleryList");
-  list.innerHTML = "";
-  const snap = await getDocs(collection(db,"gallery"));
-  const items = [];
-  snap.forEach(docu => items.push({ id:docu.id, ...docu.data() }));
-  items.sort((a,b)=>new Date(b.createdAt)-new Date(a.createdAt));
-
-  if(!items.length){
-    list.innerHTML = "<p>등록된 사진이 없습니다.</p>";
-    return;
-  }
-
-  items.forEach(item => {
-    list.innerHTML += `
-      <div class="gallery-card">
-        ${item.images?.[0]?.url ? `<img src="${item.images[0].url}" alt="${escapeHtml(item.title)}">` : ""}
-        <div class="gallery-card-content">
-          <h3>${escapeHtml(item.title)}</h3>
-          <p>${renderRichText(item.desc || "")}</p>
-          <div class="meta">등록일: ${formatDate(item.createdAt)}</div>
-        </div>
-      </div>
-    `;
-  });
-}
-
-/* 홈 슬라이드 */
-const heroSlides = document.querySelectorAll(".hero-slide");
-const heroDots = document.querySelectorAll(".hero-dot");
-let heroIndex = 0;
-let heroInterval = null;
-
 function renderHeroSlide(){
-  heroSlides.forEach((slide, index) => {
-    slide.classList.toggle("active", index === heroIndex);
-  });
-  heroDots.forEach((dot, index) => {
-    dot.classList.toggle("active", index === heroIndex);
-  });
+  const slides = document.querySelectorAll(".hero-slide");
+  const dots = document.querySelectorAll(".slider-dots .slider-dot");
+  slides.forEach((slide, index) => slide.classList.toggle("active", index === heroIndex));
+  dots.forEach((dot, index) => dot.classList.toggle("active", index === heroIndex));
 }
 
 window.moveHeroSlide = function(direction){
-  heroIndex = (heroIndex + direction + heroSlides.length) % heroSlides.length;
+  const slides = document.querySelectorAll(".hero-slide");
+  heroIndex = (heroIndex + direction + slides.length) % slides.length;
   renderHeroSlide();
   restartHeroAutoSlide();
 };
@@ -2194,7 +2089,8 @@ window.goToHeroSlide = function(index){
 
 function startHeroAutoSlide(){
   heroInterval = setInterval(() => {
-    heroIndex = (heroIndex + 1) % heroSlides.length;
+    const slides = document.querySelectorAll(".hero-slide");
+    heroIndex = (heroIndex + 1) % slides.length;
     renderHeroSlide();
   }, 4500);
 }
@@ -2205,26 +2101,21 @@ function restartHeroAutoSlide(){
 }
 
 /* 초기 실행 */
-updateLoginUI();
+updateProfileUI();
 resetWriteForm();
 await loadNotice();
 await loadResearch();
 await loadMyPosts();
 await loadClubIntro();
 await loadDictionary();
-await loadMaterials();
-await loadSchedules();
-await loadGallery();
-showSection("home");
 
+showPage("home");
 renderHeroSlide();
 startHeroAutoSlide();
-renderDictionaryHero();
 
 setInterval(() => {
   renderDictionaryHero();
 }, 3500);
 </script>
-
 </body>
 </html>
