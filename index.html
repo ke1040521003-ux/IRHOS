@@ -1,470 +1,478 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <title>IRHOS 과학동아리</title>
 
 <style>
-
 body{
-margin:0;
-font-family:Arial;
-background:#f6f8fb;
-color:#111;
+  margin:0;
+  font-family:Arial;
+  background:#f6f8fb;
+  color:#111;
 }
 
 header{
-background:#1d3557;
-color:white;
-padding:18px;
-display:flex;
-justify-content:space-between;
-align-items:center;
+  background:#1d3557;
+  color:white;
+  padding:18px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
 }
 
 header h1{
-margin:0;
-font-size:22px;
+  margin:0;
+  font-size:22px;
 }
 
 nav{
-background:white;
-border-bottom:1px solid #ddd;
-padding:10px;
-text-align:center;
+  background:white;
+  border-bottom:1px solid #ddd;
+  padding:10px;
+  text-align:center;
 }
 
 nav button{
-margin:5px;
-padding:8px 16px;
-border:none;
-background:#1d3557;
-color:white;
-border-radius:8px;
-cursor:pointer;
+  margin:5px;
+  padding:8px 16px;
+  border:none;
+  background:#1d3557;
+  color:white;
+  border-radius:8px;
+  cursor:pointer;
 }
 
 .container{
-max-width:1000px;
-margin:auto;
-padding:20px;
+  max-width:1000px;
+  margin:auto;
+  padding:20px;
 }
 
 .card{
-background:white;
-padding:20px;
-border-radius:12px;
-margin-bottom:20px;
-box-shadow:0 4px 10px rgba(0,0,0,0.1);
+  background:white;
+  padding:20px;
+  border-radius:12px;
+  margin-bottom:20px;
+  box-shadow:0 4px 10px rgba(0,0,0,0.1);
 }
 
 .hidden{
-display:none;
+  display:none;
 }
 
 .post{
-border-top:1px solid #ddd;
-padding:15px 0;
+  border-top:1px solid #ddd;
+  padding:15px 0;
 }
 
 .tag{
-display:inline-block;
-background:#e3e9f2;
-padding:4px 8px;
-margin-right:5px;
-border-radius:5px;
-font-size:12px;
+  display:inline-block;
+  background:#e3e9f2;
+  padding:4px 8px;
+  margin-right:5px;
+  border-radius:5px;
+  font-size:12px;
 }
 
 textarea,input,select{
-width:100%;
-margin:5px 0;
-padding:8px;
-border-radius:6px;
-border:1px solid #ccc;
+  width:100%;
+  margin:5px 0;
+  padding:8px;
+  border-radius:6px;
+  border:1px solid #ccc;
+  box-sizing:border-box;
 }
 
 button.small{
-padding:4px 10px;
-font-size:12px;
+  padding:4px 10px;
+  font-size:12px;
 }
 
 /* 슬라이드 */
-
 .slider{
-position:relative;
-height:300px;
-overflow:hidden;
-border-radius:10px;
+  position:relative;
+  height:300px;
+  overflow:hidden;
+  border-radius:10px;
 }
 
 .slide{
-position:absolute;
-width:100%;
-height:100%;
-opacity:0;
-transition:opacity 1s;
+  position:absolute;
+  width:100%;
+  height:100%;
+  opacity:0;
+  transition:opacity 1s;
 }
 
 .slide img{
-width:100%;
-height:100%;
-object-fit:cover;
+  width:100%;
+  height:100%;
+  object-fit:cover;
 }
 
 .slide.active{
-opacity:1;
+  opacity:1;
 }
-
 </style>
 </head>
 
-
 <body>
 
-
 <header>
-
-<h1>🔬 IRHOS 과학동아리</h1>
-
-<button onclick="toggleLogin()">로그인</button>
-
+  <h1>🔬 IRHOS 과학동아리</h1>
+  <button onclick="toggleLogin()">로그인</button>
 </header>
 
-
 <nav>
-
-<button onclick="showSection('home')">홈</button>
-<button onclick="showSection('notice')">공지</button>
-<button onclick="showSection('archive')">탐구 아카이브</button>
-<button onclick="showSection('write')">탐구 작성</button>
-
+  <button onclick="showSection('home')">홈</button>
+  <button onclick="showSection('notice')">공지</button>
+  <button onclick="showSection('archive')">탐구 아카이브</button>
+  <button onclick="showSection('write')">글 작성</button>
 </nav>
-
 
 <div class="container">
 
-<!-- 홈 -->
+  <!-- 홈 -->
+  <div id="home" class="card">
+    <div class="slider">
+      <div class="slide active"><img src="slide1.jpg" alt="슬라이드1"></div>
+      <div class="slide"><img src="slide2.jpg" alt="슬라이드2"></div>
+      <div class="slide"><img src="slide3.jpg" alt="슬라이드3"></div>
+    </div>
 
-<div id="home" class="card">
+    <h2>IRHOS 과학동아리</h2>
 
-<div class="slider">
+    <p>
+      IRHOS 과학동아리는 탐구 기반 실험과 연구 기록을 통해
+      과학적 사고를 확장하는 학생 연구 동아리입니다.
+    </p>
 
-<div class="slide active"><img src="slide1.jpg"></div>
-<div class="slide"><img src="slide2.jpg"></div>
-<div class="slide"><img src="slide3.jpg"></div>
+    <p>
+      본 사이트는 실험 기록, 장기 연구 프로젝트,
+      공지 및 탐구 아카이브를 관리하기 위해 제작되었습니다.
+    </p>
 
-</div>
+    <h3>📢 최근 공지</h3>
+    <div id="noticePreview"></div>
 
-<h2>IRHOS 과학동아리</h2>
+    <h3>🧪 최근 탐구</h3>
+    <div id="recentResearch"></div>
+  </div>
 
-<p>
-IRHOS 과학동아리는 탐구 기반 실험과 연구 기록을 통해
-과학적 사고를 확장하는 학생 연구 동아리입니다.
-</p>
+  <!-- 공지 -->
+  <div id="notice" class="card hidden">
+    <h2>공지</h2>
+    <div id="noticeList"></div>
+  </div>
 
-<p>
-본 사이트는 실험 기록, 장기 연구 프로젝트,
-공지 및 탐구 아카이브를 관리하기 위해 제작되었습니다.
-</p>
+  <!-- 아카이브 -->
+  <div id="archive" class="card hidden">
+    <h2>탐구 아카이브</h2>
+    <input id="searchInput" placeholder="검색" onkeyup="searchResearch()">
+    <div id="researchList"></div>
+  </div>
 
-<h3>📢 최근 공지</h3>
+  <!-- 글 작성 -->
+  <div id="write" class="card hidden">
+    <h2>글 작성</h2>
 
-<div id="noticePreview"></div>
+    <select id="writeType" onchange="changeWriteForm()">
+      <option value="notice">공지</option>
+      <option value="experiment">실험 보고서</option>
+      <option value="project">장기 프로젝트</option>
+    </select>
 
-<h3>🧪 최근 탐구</h3>
+    <!-- 공지 작성 폼 -->
+    <div id="noticeForm">
+      <input id="noticeTitleWrite" placeholder="공지 제목">
+      <textarea id="noticeContentWrite" placeholder="공지 내용"></textarea>
+    </div>
 
-<div id="recentResearch"></div>
+    <!-- 탐구 작성 폼 -->
+    <div id="researchForm" class="hidden">
+      <select id="researchClub">
+        <option value="전체">전체</option>
+        <option value="융합과학탐구1">융합과학탐구1</option>
+        <option value="융합과학탐구2">융합과학탐구2</option>
+        <option value="생명과학">생명과학</option>
+        <option value="지구과학">지구과학</option>
+      </select>
 
-</div>
+      <input id="title" placeholder="제목">
+      <input id="tags" placeholder="#화학 #생명과학">
 
+      <div id="experimentForm">
+        <textarea id="reason" placeholder="실험 이유"></textarea>
+        <textarea id="prediction" placeholder="결과 예측"></textarea>
+        <textarea id="method" placeholder="실험 과정"></textarea>
+        <textarea id="result" placeholder="실험 결과"></textarea>
+      </div>
 
+      <div id="projectForm" class="hidden">
+        <textarea id="intro" placeholder="서론"></textarea>
+        <textarea id="body" placeholder="본론"></textarea>
+        <textarea id="conclusion" placeholder="결론"></textarea>
+      </div>
+    </div>
 
-<!-- 공지 -->
-
-<div id="notice" class="card hidden">
-
-<h2>공지</h2>
-
-<div id="noticeList"></div>
-
-<div id="noticeWrite" class="hidden">
-
-<h3>공지 작성</h3>
-
-<input id="noticeTitle" placeholder="제목">
-
-<textarea id="noticeContent"></textarea>
-
-<button onclick="saveNotice()">작성</button>
-
-</div>
-
-</div>
-
-
-
-<!-- 아카이브 -->
-
-<div id="archive" class="card hidden">
-
-<h2>탐구 아카이브</h2>
-
-<input id="searchInput" placeholder="검색" onkeyup="searchResearch()">
-
-<div id="researchList"></div>
-
-</div>
-
-
-
-<!-- 작성 -->
-
-<div id="write" class="card hidden">
-
-<h2>탐구 작성</h2>
-
-<select id="researchType" onchange="changeForm()">
-
-<option value="experiment">실험 보고서</option>
-<option value="project">장기 프로젝트</option>
-
-</select>
-
-<select id="researchClub">
-
-<option value="전체">전체</option>
-<option>융합과학탐구1</option>
-<option>융합과학탐구2</option>
-<option>생명과학</option>
-<option>지구과학</option>
-
-</select>
-
-<input id="title" placeholder="제목">
-
-<input id="tags" placeholder="#화학 #생명과학">
-
-<div id="experimentForm">
-
-<textarea id="reason" placeholder="실험 이유"></textarea>
-<textarea id="prediction" placeholder="결과 예측"></textarea>
-<textarea id="method" placeholder="실험 과정"></textarea>
-<textarea id="result" placeholder="실험 결과"></textarea>
+    <button onclick="submitWrite()">저장</button>
+  </div>
 
 </div>
-
-<div id="projectForm" class="hidden">
-
-<textarea id="intro" placeholder="서론"></textarea>
-<textarea id="body" placeholder="본론"></textarea>
-<textarea id="conclusion" placeholder="결론"></textarea>
-
-</div>
-
-<button onclick="saveResearch()">저장</button>
-
-</div>
-
-</div>
-
-
 
 <script type="module">
-
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-
-import { getFirestore, collection, addDoc, getDocs, doc, updateDoc, deleteDoc }
-
+import { getFirestore, collection, addDoc, getDocs } 
 from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
-
 const firebaseConfig = {
-
-apiKey:"AIzaSyDXVVSPhvErz9JfjXKjMaZIBNYu6d3j8dg",
-
-authDomain:"irhos-science-lab.firebaseapp.com",
-
-projectId:"irhos-science-lab",
-
+  apiKey:"AIzaSyDXVVSPhvErz9JfjXKjMaZIBNYu6d3j8dg",
+  authDomain:"irhos-science-lab.firebaseapp.com",
+  projectId:"irhos-science-lab",
 };
 
-const app=initializeApp(firebaseConfig);
-
-const db=getFirestore(app);
-
-
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
 
 function getUser(){
-
-return JSON.parse(localStorage.getItem("user")||"null")
-
+  return JSON.parse(localStorage.getItem("user") || "null");
 }
 
+window.toggleLogin = function(){
+  let id = prompt("학번");
+  let name = prompt("이름");
+  let club = prompt("동아리명");
 
-
-window.toggleLogin=function(){
-
-let id=prompt("학번")
-
-let name=prompt("이름")
-
-let club=prompt("동아리명")
-
-localStorage.setItem("user",JSON.stringify({id,name,club}))
-
-alert("로그인 성공")
-
+  localStorage.setItem("user", JSON.stringify({id, name, club}));
+  alert("로그인 성공");
 }
 
-
-
-window.showSection=function(id){
-
-["home","notice","archive","write"].forEach(s=>{
-
-document.getElementById(s).classList.add("hidden")
-
-})
-
-document.getElementById(id).classList.remove("hidden")
-
+window.showSection = function(id){
+  ["home","notice","archive","write"].forEach(s=>{
+    document.getElementById(s).classList.add("hidden");
+  });
+  document.getElementById(id).classList.remove("hidden");
 }
 
+window.changeWriteForm = function(){
+  const type = document.getElementById("writeType").value;
+  const noticeForm = document.getElementById("noticeForm");
+  const researchForm = document.getElementById("researchForm");
+  const experimentForm = document.getElementById("experimentForm");
+  const projectForm = document.getElementById("projectForm");
 
+  if(type === "notice"){
+    noticeForm.classList.remove("hidden");
+    researchForm.classList.add("hidden");
+  } else {
+    noticeForm.classList.add("hidden");
+    researchForm.classList.remove("hidden");
 
-window.changeForm=function(){
-
-let type=document.getElementById("researchType").value
-
-document.getElementById("experimentForm").style.display=
-type==="experiment"?"block":"none"
-
-document.getElementById("projectForm").style.display=
-type==="project"?"block":"none"
-
+    if(type === "experiment"){
+      experimentForm.classList.remove("hidden");
+      projectForm.classList.add("hidden");
+    } else {
+      experimentForm.classList.add("hidden");
+      projectForm.classList.remove("hidden");
+    }
+  }
 }
 
+window.submitWrite = async function(){
+  const user = getUser();
 
+  if(!user){
+    alert("먼저 로그인해주세요.");
+    return;
+  }
 
-window.saveResearch=async function(){
+  const type = document.getElementById("writeType").value;
 
-let title=title.value
-let tags=tags.value.split(" ")
+  if(type === "notice"){
+    const title = document.getElementById("noticeTitleWrite").value.trim();
+    const content = document.getElementById("noticeContentWrite").value.trim();
 
-await addDoc(collection(db,"research"),{
+    if(!title || !content){
+      alert("공지 제목과 내용을 입력해주세요.");
+      return;
+    }
 
-title,
-tags,
-author:getUser().name,
-club:researchClub.value,
-views:0,
-viewUsers:[],
-createdAt:new Date().toISOString()
+    await addDoc(collection(db, "notice"), {
+      title,
+      content,
+      author: user.name,
+      club: user.club,
+      date: new Date().toISOString()
+    });
 
-})
+    alert("공지 등록 완료");
+    document.getElementById("noticeTitleWrite").value = "";
+    document.getElementById("noticeContentWrite").value = "";
 
-alert("저장 완료")
+    loadNotice();
+    loadHomePreview();
+    return;
+  }
 
-loadResearch()
+  const title = document.getElementById("title").value.trim();
+  const tagsValue = document.getElementById("tags").value.trim();
+  const tags = tagsValue ? tagsValue.split(" ") : [];
+  const club = document.getElementById("researchClub").value;
 
+  if(!title){
+    alert("제목을 입력해주세요.");
+    return;
+  }
+
+  const data = {
+    title,
+    tags,
+    author: user.name,
+    club,
+    type,
+    views: 0,
+    viewUsers: [],
+    createdAt: new Date().toISOString()
+  };
+
+  if(type === "experiment"){
+    data.reason = document.getElementById("reason").value;
+    data.prediction = document.getElementById("prediction").value;
+    data.method = document.getElementById("method").value;
+    data.result = document.getElementById("result").value;
+  }
+
+  if(type === "project"){
+    data.intro = document.getElementById("intro").value;
+    data.body = document.getElementById("body").value;
+    data.conclusion = document.getElementById("conclusion").value;
+  }
+
+  await addDoc(collection(db, "research"), data);
+
+  alert("탐구 저장 완료");
+
+  document.getElementById("title").value = "";
+  document.getElementById("tags").value = "";
+  document.getElementById("reason").value = "";
+  document.getElementById("prediction").value = "";
+  document.getElementById("method").value = "";
+  document.getElementById("result").value = "";
+  document.getElementById("intro").value = "";
+  document.getElementById("body").value = "";
+  document.getElementById("conclusion").value = "";
+
+  loadResearch();
+  loadHomePreview();
 }
-
-
 
 async function loadResearch(){
+  const list = document.getElementById("researchList");
+  const recentResearch = document.getElementById("recentResearch");
 
-let list=document.getElementById("researchList")
+  list.innerHTML = "";
+  recentResearch.innerHTML = "";
 
-list.innerHTML=""
+  const snap = await getDocs(collection(db, "research"));
+  let items = [];
 
-let snap=await getDocs(collection(db,"research"))
+  snap.forEach(docu=>{
+    items.push(docu.data());
+  });
 
-snap.forEach(docu=>{
+  items.sort((a,b)=> new Date(b.createdAt) - new Date(a.createdAt));
 
-let d=docu.data()
+  items.forEach(d=>{
+    list.innerHTML += `
+      <div class="post">
+        <h3>${d.title}</h3>
+        <p>${(d.tags || []).map(t=>`<span class="tag">${t}</span>`).join("")}</p>
+        <p>동아리: ${d.club || "-"}</p>
+        <p>작성자: ${d.author || "-"}</p>
+        <p>조회수 ${d.views || 0}</p>
+        <p>조회자 ${(d.viewUsers || []).join(", ")}</p>
+      </div>
+    `;
+  });
 
-list.innerHTML+=`
-
-<div class="post">
-
-<h3>${d.title}</h3>
-
-<p>${d.tags.map(t=>`<span class="tag">${t}</span>`).join("")}</p>
-
-<p>조회수 ${d.views}</p>
-
-<p>조회자 ${d.viewUsers.join(",")}</p>
-
-</div>
-
-`
-
-})
-
+  items.slice(0,3).forEach(d=>{
+    recentResearch.innerHTML += `
+      <div class="post">
+        <h4>${d.title}</h4>
+        <p>${d.author || "-"} · ${d.club || "-"}</p>
+      </div>
+    `;
+  });
 }
 
+async function loadNotice(){
+  const list = document.getElementById("noticeList");
+  const preview = document.getElementById("noticePreview");
 
+  list.innerHTML = "";
+  preview.innerHTML = "";
 
-window.searchResearch=function(){
+  const snap = await getDocs(collection(db, "notice"));
+  let items = [];
 
-let k=document.getElementById("searchInput").value.toLowerCase()
+  snap.forEach(docu=>{
+    items.push(docu.data());
+  });
 
-let posts=document.querySelectorAll(".post")
+  items.sort((a,b)=> new Date(b.date) - new Date(a.date));
 
-posts.forEach(p=>{
+  items.forEach(d=>{
+    list.innerHTML += `
+      <div class="post">
+        <h3>${d.title}</h3>
+        <p>${d.content}</p>
+        <p>${d.author || "-"} | ${new Date(d.date).toLocaleDateString()}</p>
+      </div>
+    `;
+  });
 
-p.style.display=p.innerText.toLowerCase().includes(k)
-?"block":"none"
-
-})
-
+  items.slice(0,3).forEach(d=>{
+    preview.innerHTML += `
+      <div class="post">
+        <h4>${d.title}</h4>
+        <p>${new Date(d.date).toLocaleDateString()}</p>
+      </div>
+    `;
+  });
 }
 
+window.searchResearch = function(){
+  let k = document.getElementById("searchInput").value.toLowerCase();
+  let posts = document.querySelectorAll("#researchList .post");
 
-
-async function saveNotice(){
-
-await addDoc(collection(db,"notice"),{
-
-title:noticeTitle.value,
-content:noticeContent.value,
-date:new Date().toISOString()
-
-})
-
-alert("공지 등록")
-
+  posts.forEach(p=>{
+    p.style.display = p.innerText.toLowerCase().includes(k) ? "block" : "none";
+  });
 }
 
+window.loadHomePreview = function(){
+  loadNotice();
+  loadResearch();
+}
 
-
-loadResearch()
-
-showSection("home")
-
-
+loadNotice();
+loadResearch();
+showSection("home");
+changeWriteForm();
 
 /* 슬라이드 */
-
-let slides=document.querySelectorAll(".slide")
-
-let index=0
+let slides = document.querySelectorAll(".slide");
+let index = 0;
 
 setInterval(()=>{
-
-slides[index].classList.remove("active")
-
-index=(index+1)%slides.length
-
-slides[index].classList.add("active")
-
-},4000)
-
+  slides[index].classList.remove("active");
+  index = (index + 1) % slides.length;
+  slides[index].classList.add("active");
+}, 4000);
 </script>
 
 </body>
+</html>
 </html>
