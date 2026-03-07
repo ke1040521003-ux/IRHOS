@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
@@ -9,13 +10,14 @@
 <style>
 
 body{
-font-family:Arial;
 margin:0;
-background:#eef6fb;
+font-family:Arial;
+background:#f6f8fb;
+color:#111;
 }
 
 header{
-background:#000;
+background:#1d3557;
 color:white;
 padding:18px;
 display:flex;
@@ -23,18 +25,25 @@ justify-content:space-between;
 align-items:center;
 }
 
+header h1{
+margin:0;
+font-size:22px;
+}
+
 nav{
-background:#d9efff;
+background:white;
+border-bottom:1px solid #ddd;
 padding:10px;
 text-align:center;
 }
 
 nav button{
 margin:5px;
-padding:8px 15px;
+padding:8px 16px;
 border:none;
-background:white;
-border-radius:10px;
+background:#1d3557;
+color:white;
+border-radius:8px;
 cursor:pointer;
 }
 
@@ -49,7 +58,11 @@ background:white;
 padding:20px;
 border-radius:12px;
 margin-bottom:20px;
-box-shadow:0 3px 10px rgba(0,0,0,0.1);
+box-shadow:0 4px 10px rgba(0,0,0,0.1);
+}
+
+.hidden{
+display:none;
 }
 
 .post{
@@ -57,36 +70,48 @@ border-top:1px solid #ddd;
 padding:15px 0;
 }
 
-button{
-padding:6px 12px;
-border:none;
-background:#3ea6ff;
-color:white;
-border-radius:6px;
-cursor:pointer;
+.tag{
+display:inline-block;
+background:#e3e9f2;
+padding:4px 8px;
+margin-right:5px;
+border-radius:5px;
+font-size:12px;
 }
 
-img{
-max-width:200px;
-margin:5px;
-border-radius:8px;
+textarea,input,select{
+width:100%;
+margin:5px 0;
+padding:8px;
+border-radius:6px;
+border:1px solid #ccc;
+}
+
+button.small{
+padding:4px 10px;
+font-size:12px;
 }
 
 </style>
 </head>
 
+
 <body>
 
+
 <header>
-<h2>🔬 IRHOS 융합과학탐구동아리</h2>
+
+<h1>🔬 IRHOS 융합과학탐구동아리</h1>
 
 <button onclick="toggleLogin()">로그인</button>
 
 </header>
 
+
 <nav>
 
-<button onclick="showSection('home')">메인</button>
+<button onclick="showSection('home')">홈</button>
+<button onclick="showSection('notice')">공지</button>
 <button onclick="showSection('archive')">탐구 아카이브</button>
 <button onclick="showSection('write')">탐구 작성</button>
 
@@ -95,52 +120,89 @@ border-radius:8px;
 
 <div class="container">
 
+<!-- 홈 -->
+
 <div id="home" class="card">
-<h3>최근 탐구</h3>
-<div id="homePreview"></div>
+
+<h3>📢 공지</h3>
+<div id="noticePreview"></div>
+
+<h3>🧪 최근 탐구</h3>
+<div id="recentResearch"></div>
+
 </div>
 
 
+
+<!-- 공지 -->
+
+<div id="notice" class="card hidden">
+
+<h2>공지</h2>
+
+<div id="noticeList"></div>
+
+<div id="noticeWrite" class="hidden">
+
+<h3>공지 작성</h3>
+
+<input id="noticeTitle" placeholder="제목">
+
+<textarea id="noticeContent"></textarea>
+
+<button onclick="saveNotice()">작성</button>
+
+</div>
+
+</div>
+
+
+
+<!-- 아카이브 -->
+
 <div id="archive" class="card hidden">
 
-<h3>탐구 아카이브</h3>
+<h2>탐구 아카이브</h2>
 
 <input id="searchInput" placeholder="검색" onkeyup="searchResearch()">
-
-<select id="yearFilter" onchange="loadResearch()">
-<option value="">전체</option>
-<option>2026</option>
-<option>2025</option>
-<option>2024</option>
-</select>
 
 <div id="researchList"></div>
 
 </div>
 
 
+
+<!-- 작성 -->
+
 <div id="write" class="card hidden">
 
-<h3>탐구 작성</h3>
+<h2>탐구 작성</h2>
+
+<select id="researchType" onchange="changeForm()">
+<option value="experiment">실험 보고서</option>
+<option value="project">장기 프로젝트</option>
+</select>
 
 <input id="title" placeholder="제목">
 
-<select id="year">
-<option>2026</option>
-<option>2025</option>
-<option>2024</option>
-</select>
+<input id="tags" placeholder="#화학 #생명과학">
 
-<textarea id="content" placeholder="내용"></textarea>
+<div id="experimentForm">
 
-<input id="fileLink" placeholder="PDF / Word / 한글 링크">
+<textarea id="reason" placeholder="실험 이유"></textarea>
+<textarea id="prediction" placeholder="결과 예측"></textarea>
+<textarea id="method" placeholder="실험 과정"></textarea>
+<textarea id="result" placeholder="실험 결과"></textarea>
 
-<input type="file" id="photo" multiple>
+</div>
 
-<label>
-<input type="checkbox" id="featured">
-대표 탐구
-</label>
+<div id="projectForm" class="hidden">
+
+<textarea id="intro" placeholder="서론"></textarea>
+<textarea id="body" placeholder="본론"></textarea>
+<textarea id="conclusion" placeholder="결론"></textarea>
+
+</div>
 
 <button onclick="saveResearch()">저장</button>
 
@@ -153,46 +215,70 @@ border-radius:8px;
 <script type="module">
 
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-import { getFirestore, collection, addDoc, getDocs, doc, updateDoc, deleteDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+import { getFirestore, collection, addDoc, getDocs, doc, updateDoc, deleteDoc }
+
+from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
 
 
 const firebaseConfig = {
-apiKey: "AIzaSyDXVVSPhvErz9JfjXKjMaZIBNYu6d3j8dg",
-authDomain: "irhos-science-lab.firebaseapp.com",
-projectId: "irhos-science-lab",
-storageBucket: "irhos-science-lab.firebasestorage.app",
-messagingSenderId: "54955251430",
-appId: "1:54955251430:web:5396c836ccc33f981d4d27"
+
+apiKey:"AIzaSyDXVVSPhvErz9JfjXKjMaZIBNYu6d3j8dg",
+
+authDomain:"irhos-science-lab.firebaseapp.com",
+
+projectId:"irhos-science-lab",
+
 };
 
+const app=initializeApp(firebaseConfig);
 
-const app = initializeApp(firebaseConfig);
-const db = getFirestore(app);
+const db=getFirestore(app);
+
 
 
 function getUser(){
-return JSON.parse(localStorage.getItem("user") || "null");
+
+return JSON.parse(localStorage.getItem("user")||"null")
+
 }
+
+
 
 function isLeader(){
-let u=getUser();
-return u && u.id==="20602";
+
+let u=getUser()
+
+return u && u.id==="20602"
+
 }
+
+
 
 function isTeacher(){
-let u=getUser();
-return u && u.id==="00000";
+
+let u=getUser()
+
+return u && u.id==="00000"
+
 }
 
 
 
-window.showSection=function(id){
+function isVice(){
 
-["home","archive","write"].forEach(s=>{
-document.getElementById(s).classList.add("hidden");
-});
+let u=getUser()
 
-document.getElementById(id).classList.remove("hidden");
+return u && u.id==="20601"
+
+}
+
+
+
+function canWriteNotice(){
+
+return isTeacher()||isLeader()||isVice()
 
 }
 
@@ -200,24 +286,55 @@ document.getElementById(id).classList.remove("hidden");
 
 window.toggleLogin=function(){
 
-let id=prompt("학번 입력");
+let id=prompt("학번")
 
-let name=prompt("이름 입력");
+let name=prompt("이름")
 
 if(
-(id==="20602" && name==="김가은") ||
-(id==="00000" && name==="구자형")
+
+(id==="20602"&&name==="김가은")||
+
+(id==="00000"&&name==="구자형")||
+
+(id==="20601"&&name==="차장")
+
 ){
 
-localStorage.setItem("user",JSON.stringify({id,name}));
+localStorage.setItem("user",JSON.stringify({id,name}))
 
-alert("로그인 성공");
-
-}else{
-
-alert("계정 없음");
+alert("로그인 성공")
 
 }
+
+}
+
+
+
+window.showSection=function(id){
+
+["home","notice","archive","write"].forEach(s=>{
+
+document.getElementById(s).classList.add("hidden")
+
+})
+
+document.getElementById(id).classList.remove("hidden")
+
+}
+
+
+
+window.changeForm=function(){
+
+let type=document.getElementById("researchType").value
+
+document.getElementById("experimentForm").style.display=
+
+type==="experiment"?"block":"none"
+
+document.getElementById("projectForm").style.display=
+
+type==="project"?"block":"none"
 
 }
 
@@ -225,57 +342,71 @@ alert("계정 없음");
 
 window.saveResearch=async function(){
 
-if(!isLeader()){
-alert("부장만 작성 가능");
-return;
-}
+if(!getUser()){
 
-let title=document.getElementById("title").value;
-let content=document.getElementById("content").value;
-let year=document.getElementById("year").value;
-let fileLink=document.getElementById("fileLink").value;
-let featured=document.getElementById("featured").checked;
+alert("로그인 필요")
 
-let photoInput=document.getElementById("photo");
-
-let photos=[];
-
-for(let file of photoInput.files){
-
-let reader=new FileReader();
-
-await new Promise(resolve=>{
-
-reader.onload=()=>{
-photos.push(reader.result);
-resolve();
-};
-
-reader.readAsDataURL(file);
-
-});
+return
 
 }
 
-await addDoc(collection(db,"research"),{
+let title=document.getElementById("title").value
+
+let tags=document.getElementById("tags").value.split(" ")
+
+let type=document.getElementById("researchType").value
+
+let data={
 
 title,
-content,
-year,
-fileLink,
-photos,
-featured,
-views:0,
-viewUsers:[],
-teacherFeedback:"",
+
+tags,
+
 author:getUser().name,
+
+views:0,
+
+viewUsers:[],
+
+teacherFeedback:"",
+
+type,
+
 createdAt:new Date().toISOString()
 
-});
+}
 
-alert("저장 완료");
 
-loadResearch();
+
+if(type==="experiment"){
+
+data.reason=reason.value
+
+data.prediction=prediction.value
+
+data.method=method.value
+
+data.result=result.value
+
+}
+
+else{
+
+data.intro=intro.value
+
+data.body=body.value
+
+data.conclusion=conclusion.value
+
+}
+
+
+
+await addDoc(collection(db,"research"),data)
+
+alert("저장 완료")
+
+loadResearch()
 
 }
 
@@ -283,93 +414,67 @@ loadResearch();
 
 async function loadResearch(){
 
-let list=document.getElementById("researchList");
+let list=document.getElementById("researchList")
 
-list.innerHTML="";
+list.innerHTML=""
 
-let snapshot=await getDocs(collection(db,"research"));
+let snap=await getDocs(collection(db,"research"))
 
-let posts=[];
+snap.forEach(docu=>{
 
-snapshot.forEach(doc=>{
-
-posts.push({
-id:doc.id,
-...doc.data()
-});
-
-});
-
-let filter=document.getElementById("yearFilter").value;
-
-if(filter){
-posts=posts.filter(p=>p.year===filter);
-}
-
-posts.sort((a,b)=>b.createdAt.localeCompare(a.createdAt));
-
-for(let p of posts){
+let d=docu.data()
 
 list.innerHTML+=`
 
 <div class="post">
 
-<h3>${p.featured?"⭐":""} ${p.title}</h3>
+<h3>${d.title}</h3>
 
-<p>${p.content}</p>
+<p>${d.tags.map(t=>`<span class="tag">${t}</span>`).join("")}</p>
 
-<p>연도 : ${p.year}</p>
+<p>조회수 ${d.views}</p>
 
-<p>조회수 : ${p.views}</p>
+<p>조회자 ${d.viewUsers.join(",")}</p>
 
-<p>조회자 : ${p.viewUsers.join(", ")}</p>
+${d.teacherFeedback?`<p>💬 ${d.teacherFeedback}</p>`:""}
 
-${p.fileLink?`<a href="${p.fileLink}" target="_blank">보고서</a>`:""}
+${getUser() && d.author===getUser().name?
 
-<div>
-${p.photos.map(img=>`<img src="${img}">`).join("")}
-</div>
-
-${p.teacherFeedback?`<p>💬 선생님 피드백 : ${p.teacherFeedback}</p>`:""}
-
-${isTeacher()?`
-
-<textarea id="feedback-${p.id}" placeholder="피드백"></textarea>
-<button onclick="saveFeedback('${p.id}')">피드백 저장</button>
-
-`:""}
-
-${getUser() && p.author===getUser().name?`
-
-<button onclick="deleteResearch('${p.id}')">삭제</button>
-
-`:""}
+`<button onclick="deleteResearch('${docu.id}')">삭제</button>`:""}
 
 </div>
 
-`;
+`
 
-}
+})
 
 }
 
 
 
-window.saveFeedback=async function(id){
+window.saveNotice=async function(){
 
-if(!isTeacher()) return;
+if(!canWriteNotice()){
 
-let text=document.getElementById("feedback-"+id).value;
+alert("권한 없음")
 
-let ref=doc(db,"research",id);
+return
 
-await updateDoc(ref,{
-teacherFeedback:text
-});
+}
 
-alert("피드백 저장");
+await addDoc(collection(db,"notice"),{
 
-loadResearch();
+title:noticeTitle.value,
+
+content:noticeContent.value,
+
+date:new Date().toISOString(),
+
+author:getUser().name
+
+})
+
+alert("공지 등록")
 
 }
 
@@ -377,13 +482,11 @@ loadResearch();
 
 window.deleteResearch=async function(id){
 
-if(!confirm("삭제할까?")) return;
+if(!confirm("삭제할까?")) return
 
-await deleteDoc(doc(db,"research",id));
+await deleteDoc(doc(db,"research",id))
 
-alert("삭제됨");
-
-loadResearch();
+loadResearch()
 
 }
 
@@ -391,22 +494,25 @@ loadResearch();
 
 window.searchResearch=function(){
 
-let keyword=document.getElementById("searchInput").value.toLowerCase();
+let k=document.getElementById("searchInput").value.toLowerCase()
 
-let posts=document.querySelectorAll(".post");
+let posts=document.querySelectorAll(".post")
 
 posts.forEach(p=>{
 
-p.style.display=p.innerText.toLowerCase().includes(keyword)
-?"block":"none";
+p.style.display=p.innerText.toLowerCase().includes(k)
 
-});
+?"block":"none"
+
+})
 
 }
 
 
 
-loadResearch();
+loadResearch()
+
+showSection("home")
 
 </script>
 
