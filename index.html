@@ -11,82 +11,88 @@ html,body{margin:0;padding:0;font-family:Arial,sans-serif;background:#f6f8fb;col
 button,input,textarea,select{font:inherit;}
 a{color:#1d4ed8;text-decoration:none;}
 a:hover{text-decoration:underline;}
-
 .hidden{display:none !important;}
 
 .app{
-  display:flex;
   min-height:100vh;
 }
 
 .sidebar{
-  width:250px;
+  width:100%;
   background:#1d3557;
   color:#fff;
-  padding:20px 16px;
+  padding:14px 18px;
   display:flex;
-  flex-direction:column;
+  align-items:center;
   justify-content:space-between;
+  gap:16px;
   position:sticky;
   top:0;
-  height:100vh;
+  z-index:100;
+  height:auto;
 }
 
 .brand{
-  margin-bottom:20px;
+  margin-bottom:0;
+  min-width:180px;
 }
 
 .brand-top{
   display:flex;
   align-items:center;
-  gap:8px;
-  font-size:13px;
+  gap:6px;
+  font-size:11px;
   opacity:0.9;
-  margin-bottom:10px;
+  margin-bottom:4px;
 }
 
 .toc-mini{
-  width:30px;
-  height:30px;
-  border-radius:8px;
+  width:24px;
+  height:24px;
+  border-radius:7px;
   background:rgba(255,255,255,0.14);
   display:flex;
   align-items:center;
   justify-content:center;
-  font-size:15px;
+  font-size:12px;
 }
 
 .brand h1{
-  margin:0 0 8px 0;
-  font-size:22px;
+  margin:0 0 4px 0;
+  font-size:18px;
 }
 
 .brand p{
   margin:0;
-  font-size:13px;
-  opacity:0.85;
-  line-height:1.5;
+  font-size:11px;
+  opacity:0.8;
+  line-height:1.35;
 }
 
 .side-nav{
-  display:flex;
-  flex-direction:column;
-  gap:10px;
-  margin-top:18px;
+  display:grid;
+  grid-template-columns:repeat(5, minmax(0, 1fr));
+  gap:8px;
+  flex:1;
+  margin-top:0;
+  align-items:stretch;
 }
 
 .side-nav button{
   border:none;
   background:rgba(255,255,255,0.08);
   color:#fff;
-  padding:12px 14px;
-  border-radius:14px;
-  text-align:left;
+  padding:8px 10px;
+  border-radius:12px;
+  text-align:center;
   cursor:pointer;
   display:flex;
+  flex-direction:column;
   align-items:center;
-  gap:10px;
+  justify-content:center;
+  gap:4px;
   font-weight:600;
+  min-height:58px;
 }
 
 .side-nav button.active,
@@ -95,55 +101,58 @@ a:hover{text-decoration:underline;}
 }
 
 .nav-icon{
-  width:30px;
-  height:30px;
-  border-radius:10px;
+  width:24px;
+  height:24px;
+  border-radius:8px;
   background:rgba(255,255,255,0.14);
   display:flex;
   align-items:center;
   justify-content:center;
-  font-size:16px;
+  font-size:13px;
   flex-shrink:0;
 }
 
 .nav-text{
   display:flex;
   flex-direction:column;
-  line-height:1.2;
+  align-items:center;
+  line-height:1.1;
+  font-size:12px;
 }
 
 .nav-text small{
-  font-size:11px;
-  opacity:0.8;
+  font-size:9px;
+  opacity:0.78;
   font-weight:400;
 }
 
 .profile-wrap{
   position:relative;
-  margin-top:18px;
+  margin-top:0;
+  min-width:160px;
 }
 
 .profile-summary{
   display:flex;
   align-items:center;
   justify-content:space-between;
-  gap:10px;
-  padding:10px 12px;
+  gap:8px;
+  padding:8px 10px;
   background:rgba(255,255,255,0.1);
-  border-radius:14px;
+  border-radius:12px;
   cursor:pointer;
 }
 
 .profile-left{
   display:flex;
   align-items:center;
-  gap:10px;
+  gap:8px;
   min-width:0;
 }
 
 .profile-avatar{
-  width:40px;
-  height:40px;
+  width:32px;
+  height:32px;
   border-radius:50%;
   background:#dfe7f3;
   color:#1d3557;
@@ -152,10 +161,11 @@ a:hover{text-decoration:underline;}
   justify-content:center;
   font-weight:700;
   flex-shrink:0;
+  font-size:13px;
 }
 
 .profile-name{
-  font-size:14px;
+  font-size:12px;
   font-weight:700;
   white-space:nowrap;
   overflow:hidden;
@@ -163,15 +173,15 @@ a:hover{text-decoration:underline;}
 }
 
 .profile-role{
-  font-size:12px;
-  opacity:0.85;
+  font-size:10px;
+  opacity:0.82;
 }
 
 .profile-menu{
   position:absolute;
-  left:0;
   right:0;
-  bottom:56px;
+  min-width:180px;
+  top:46px;
   background:#fff;
   color:#111;
   border-radius:14px;
@@ -201,7 +211,7 @@ a:hover{text-decoration:underline;}
 
 .main{
   flex:1;
-  padding:24px;
+  padding:20px;
   min-width:0;
 }
 
@@ -662,39 +672,63 @@ textarea{
   margin:8px 0 12px 0;
 }
 
-@media (max-width: 960px){
-  .app{
-    flex-direction:column;
-  }
+@media (max-width: 1100px){
   .sidebar{
-    width:100%;
-    height:auto;
-    position:static;
-    border-radius:0 0 18px 18px;
+    flex-wrap:wrap;
+    align-items:stretch;
   }
-  .main{
-    padding:16px;
+
+  .brand{
+    width:100%;
+  }
+
+  .side-nav{
+    width:100%;
+    grid-template-columns:repeat(5, minmax(0, 1fr));
+  }
+
+  .profile-wrap{
+    width:100%;
+    min-width:0;
   }
 }
 
 @media (max-width: 768px){
+  .side-nav{
+    grid-template-columns:repeat(3, minmax(0, 1fr));
+  }
+
   .hero-slider,
   .intro-slider{
     height:300px;
   }
+
   .hero-text{
     left:18px;
     right:18px;
     bottom:22px;
   }
+
   .hero-text h2{
     font-size:24px;
   }
+
   .hero-text p{
     font-size:14px;
   }
+
   .big-title{
     font-size:22px;
+  }
+}
+
+@media (max-width: 520px){
+  .side-nav{
+    grid-template-columns:repeat(2, minmax(0, 1fr));
+  }
+
+  .nav-text small{
+    display:none;
   }
 }
 </style>
@@ -704,42 +738,40 @@ textarea{
 <div class="app">
 
   <aside class="sidebar">
-    <div>
-      <div class="brand">
-        <div class="brand-top">
-          <div class="toc-mini">☰</div>
-          <span>목차</span>
-        </div>
-        <h1>🔬 IRHOS</h1>
-        <p>실험과 탐구로 성장하는 학생 과학 동아리</p>
+    <div class="brand">
+      <div class="brand-top">
+        <div class="toc-mini">☰</div>
+        <span>목차</span>
       </div>
+      <h1>🔬 IRHOS</h1>
+      <p>실험과 탐구로 성장하는 학생 과학 동아리</p>
+    </div>
 
-      <div class="side-nav" id="sideNav">
-        <button data-page="home" onclick="showPage('home')">
-          <span class="nav-icon">🏠</span>
-          <span class="nav-text">홈 <small>메인 화면</small></span>
-        </button>
+    <div class="side-nav" id="sideNav">
+      <button data-page="home" onclick="showPage('home')">
+        <span class="nav-icon">🏠</span>
+        <span class="nav-text">홈 <small>메인 화면</small></span>
+      </button>
 
-        <button data-page="intro" onclick="showPage('intro')">
-          <span class="nav-icon">👥</span>
-          <span class="nav-text">동아리 소개 <small>소개글 · 슬라이드</small></span>
-        </button>
+      <button id="introNavBtn" data-page="intro" onclick="showPage('intro')">
+        <span class="nav-icon">👥</span>
+        <span class="nav-text">동아리 소개 <small>소개글 · 슬라이드</small></span>
+      </button>
 
-        <button data-page="notice" onclick="showPage('notice')">
-          <span class="nav-icon">📢</span>
-          <span class="nav-text">공지 <small>중요 안내</small></span>
-        </button>
+      <button data-page="notice" onclick="showPage('notice')">
+        <span class="nav-icon">📢</span>
+        <span class="nav-text">공지 <small>중요 안내</small></span>
+      </button>
 
-        <button data-page="archive" onclick="showPage('archive')">
-          <span class="nav-icon">🧪</span>
-          <span class="nav-text">탐구 아카이브 <small>실험 · 프로젝트</small></span>
-        </button>
+      <button data-page="archive" onclick="showPage('archive')">
+        <span class="nav-icon">🧪</span>
+        <span class="nav-text">탐구 아카이브 <small>실험 · 프로젝트</small></span>
+      </button>
 
-        <button data-page="write" onclick="showPage('write')">
-          <span class="nav-icon">✍️</span>
-          <span class="nav-text">글 작성 <small>새 글 등록</small></span>
-        </button>
-      </div>
+      <button data-page="write" onclick="showPage('write')">
+        <span class="nav-icon">✍️</span>
+        <span class="nav-text">글 작성 <small>새 글 등록</small></span>
+      </button>
     </div>
 
     <div class="profile-wrap">
@@ -757,7 +789,7 @@ textarea{
             <div class="profile-role" id="profileRole">로그인 안 됨</div>
           </div>
         </div>
-        <div>▴</div>
+        <div>▾</div>
       </div>
     </div>
   </aside>
@@ -782,6 +814,10 @@ textarea{
             IRHOS 과학동아리는 실험과 연구 기록을 바탕으로 과학적 사고를 키우고,
             다양한 탐구 활동을 함께 만들어가는 학생 연구 동아리입니다.
           </p>
+        </div>
+
+        <div id="homeClubIntroBox" class="card" style="display:none; margin-top:18px;">
+          <div id="homeClubIntroContent"></div>
         </div>
 
         <div class="row" style="margin-top:20px;">
@@ -1147,6 +1183,11 @@ function canWriteNotice(){
   return !!user && NOTICE_ALLOWED_ROLES.includes(user.role);
 }
 
+function isLeader(){
+  const user = getUser();
+  return !!user && user.role === "부장";
+}
+
 function parseTags(raw){
   if(!raw.trim()) return [];
   return raw.split(/\s+/).map(t => t.trim()).filter(Boolean);
@@ -1201,11 +1242,60 @@ document.addEventListener("click", (e) => {
   }
 });
 
+function renderHomeClubIntro(item){
+  const box = document.getElementById("homeClubIntroBox");
+  const content = document.getElementById("homeClubIntroContent");
+
+  if(isLeader()){
+    box.style.display = "none";
+    content.innerHTML = "";
+    return;
+  }
+
+  box.style.display = "block";
+
+  if(!item){
+    content.innerHTML = `
+      <h3 style="margin-top:0;">📘 동아리 소개</h3>
+      <div class="section-box">
+        <h4>동아리 목표</h4>
+        <p>아직 등록되지 않았습니다.</p>
+      </div>
+      <div class="section-box">
+        <h4>활동 내용</h4>
+        <p>아직 등록되지 않았습니다.</p>
+      </div>
+      <div class="section-box">
+        <h4>주요 연구 분야</h4>
+        <p>아직 등록되지 않았습니다.</p>
+      </div>
+    `;
+    return;
+  }
+
+  content.innerHTML = `
+    <h3 style="margin-top:0;">📘 동아리 소개</h3>
+    <div class="section-box">
+      <h4>동아리 목표</h4>
+      <p>${renderRichText(item.goal || "")}</p>
+    </div>
+    <div class="section-box">
+      <h4>활동 내용</h4>
+      <p>${renderRichText(item.activities || "")}</p>
+    </div>
+    <div class="section-box">
+      <h4>주요 연구 분야</h4>
+      <p>${renderRichText(item.fields || "")}</p>
+    </div>
+  `;
+}
+
 function updateProfileUI(){
   const user = getUser();
   const avatar = document.getElementById("profileAvatar");
   const name = document.getElementById("profileName");
   const role = document.getElementById("profileRole");
+  const introNavBtn = document.getElementById("introNavBtn");
 
   if(user){
     avatar.textContent = user.name?.[0] || "U";
@@ -1218,6 +1308,10 @@ function updateProfileUI(){
   }
 
   document.getElementById("editIntroBtn").style.display = canEditClubIntro() ? "inline-block" : "none";
+
+  if(introNavBtn){
+    introNavBtn.style.display = isLeader() ? "flex" : "none";
+  }
 }
 
 function setActiveNav(page){
@@ -1227,10 +1321,15 @@ function setActiveNav(page){
 }
 
 function showPage(page){
+  if(page === "intro" && !isLeader()){
+    page = "home";
+  }
+
   document.querySelectorAll(".page").forEach(el => el.classList.remove("active"));
   document.getElementById(`page-${page}`).classList.add("active");
   setActiveNav(page);
 
+  if(page === "home") loadClubIntro();
   if(page === "intro") loadClubIntro();
   if(page === "archive") renderArchive();
   if(page === "myPosts") loadMyPosts();
@@ -1264,6 +1363,7 @@ window.toggleLogin = function(){
 
   updateProfileUI();
   document.getElementById("profileMenu").classList.remove("open");
+  loadClubIntro();
   alert("로그인 성공");
 };
 
@@ -1271,6 +1371,7 @@ window.logout = function(){
   localStorage.removeItem("user");
   updateProfileUI();
   document.getElementById("profileMenu").classList.remove("open");
+  loadClubIntro();
   alert("로그아웃 완료");
 };
 
@@ -2041,6 +2142,8 @@ async function loadClubIntro(){
   const snap = await getDocs(collection(db,"clubIntro"));
   let item = null;
 
+  introDocId = null;
+
   snap.forEach(docu => {
     if(!item){
       introDocId = docu.id;
@@ -2071,6 +2174,7 @@ async function loadClubIntro(){
     renderIntroSlider([]);
     document.getElementById("introExistingPhotos").classList.add("hidden");
     renderHeroSlider(DEFAULT_HERO_SLIDES);
+    renderHomeClubIntro(null);
     return;
   }
 
@@ -2129,6 +2233,7 @@ async function loadClubIntro(){
   document.getElementById("introActivities").value = item.activities || "";
   document.getElementById("introFields").value = item.fields || "";
   renderIntroExistingPhotos();
+  renderHomeClubIntro(item);
 }
 
 function renderIntroExistingPhotos(){
