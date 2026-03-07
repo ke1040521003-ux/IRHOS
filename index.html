@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>IRHOS 과학동아리</title>
 
 <style>
@@ -11,6 +11,8 @@ html,body{margin:0;padding:0;font-family:Arial,sans-serif;background:#f6f8fb;col
 button,input,textarea,select{font:inherit;}
 a{color:#1d4ed8;text-decoration:none;}
 a:hover{text-decoration:underline;}
+
+.hidden{display:none !important;}
 
 .app{
   display:flex;
@@ -32,6 +34,26 @@ a:hover{text-decoration:underline;}
 
 .brand{
   margin-bottom:20px;
+}
+
+.brand-top{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  font-size:13px;
+  opacity:0.9;
+  margin-bottom:10px;
+}
+
+.toc-mini{
+  width:30px;
+  height:30px;
+  border-radius:8px;
+  background:rgba(255,255,255,0.14);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:15px;
 }
 
 .brand h1{
@@ -58,14 +80,42 @@ a:hover{text-decoration:underline;}
   background:rgba(255,255,255,0.08);
   color:#fff;
   padding:12px 14px;
-  border-radius:12px;
+  border-radius:14px;
   text-align:left;
   cursor:pointer;
+  display:flex;
+  align-items:center;
+  gap:10px;
+  font-weight:600;
 }
 
 .side-nav button.active,
 .side-nav button:hover{
   background:rgba(255,255,255,0.18);
+}
+
+.nav-icon{
+  width:30px;
+  height:30px;
+  border-radius:10px;
+  background:rgba(255,255,255,0.14);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:16px;
+  flex-shrink:0;
+}
+
+.nav-text{
+  display:flex;
+  flex-direction:column;
+  line-height:1.2;
+}
+
+.nav-text small{
+  font-size:11px;
+  opacity:0.8;
+  font-weight:400;
 }
 
 .profile-wrap{
@@ -370,6 +420,7 @@ textarea{
   border:1px solid #e5e7eb;
   border-radius:14px;
   padding:18px;
+  margin-top:18px;
 }
 
 .dictionary-box,
@@ -549,6 +600,16 @@ textarea{
   margin-bottom:8px;
 }
 
+.attach-manage-item.actions-2{
+  align-items:center;
+}
+
+.attach-actions{
+  display:flex;
+  gap:8px;
+  flex-wrap:wrap;
+}
+
 .term-note{
   color:#1d4ed8;
   cursor:pointer;
@@ -595,6 +656,12 @@ textarea{
   border-top:none;
 }
 
+.photo-limit-note{
+  font-size:13px;
+  color:#667085;
+  margin:8px 0 12px 0;
+}
+
 @media (max-width: 960px){
   .app{
     flex-direction:column;
@@ -639,16 +706,39 @@ textarea{
   <aside class="sidebar">
     <div>
       <div class="brand">
+        <div class="brand-top">
+          <div class="toc-mini">☰</div>
+          <span>목차</span>
+        </div>
         <h1>🔬 IRHOS</h1>
         <p>실험과 탐구로 성장하는 학생 과학 동아리</p>
       </div>
 
       <div class="side-nav" id="sideNav">
-        <button data-page="home" onclick="showPage('home')">홈</button>
-        <button data-page="intro" onclick="showPage('intro')">동아리 소개</button>
-        <button data-page="notice" onclick="showPage('notice')">공지</button>
-        <button data-page="archive" onclick="showPage('archive')">탐구 아카이브</button>
-        <button data-page="write" onclick="showPage('write')">글 작성</button>
+        <button data-page="home" onclick="showPage('home')">
+          <span class="nav-icon">🏠</span>
+          <span class="nav-text">홈 <small>메인 화면</small></span>
+        </button>
+
+        <button data-page="intro" onclick="showPage('intro')">
+          <span class="nav-icon">👥</span>
+          <span class="nav-text">동아리 소개 <small>소개글 · 슬라이드</small></span>
+        </button>
+
+        <button data-page="notice" onclick="showPage('notice')">
+          <span class="nav-icon">📢</span>
+          <span class="nav-text">공지 <small>중요 안내</small></span>
+        </button>
+
+        <button data-page="archive" onclick="showPage('archive')">
+          <span class="nav-icon">🧪</span>
+          <span class="nav-text">탐구 아카이브 <small>실험 · 프로젝트</small></span>
+        </button>
+
+        <button data-page="write" onclick="showPage('write')">
+          <span class="nav-icon">✍️</span>
+          <span class="nav-text">글 작성 <small>새 글 등록</small></span>
+        </button>
       </div>
     </div>
 
@@ -677,49 +767,13 @@ textarea{
     <section id="page-home" class="page active">
       <div class="card">
 
-        <div class="hero-slider">
-          <div class="hero-slide active">
-            <img src="https://i.imgur.com/PtA3Uwz.jpeg" alt="IRHOS 동아리 대표 사진">
-            <div class="hero-overlay"></div>
-            <div class="hero-text">
-              <div class="hero-badge">IRHOS SCIENCE CLUB</div>
-              <h2>IRHOS 과학동아리</h2>
-              <p>실험과 탐구를 통해 과학적 사고를 확장하는 학생 연구 동아리</p>
-              <div class="hero-buttons">
-                <button class="primary-btn" onclick="showPage('intro')">동아리 소개 보기</button>
-                <button class="secondary-btn" onclick="showPage('archive')">탐구 아카이브 보기</button>
-              </div>
-            </div>
-          </div>
-
-          <div class="hero-slide">
-            <img src="https://i.imgur.com/lwXX7wS.jpg" alt="실험 활동 사진">
-            <div class="hero-overlay"></div>
-            <div class="hero-text">
-              <div class="hero-badge">EXPERIMENT</div>
-              <h2>실험 중심 활동</h2>
-              <p>직접 실험하고 기록하며 결과를 분석하는 탐구 활동을 진행합니다.</p>
-            </div>
-          </div>
-
-          <div class="hero-slide">
-            <img src="https://i.imgur.com/WUmRtAy.jpg" alt="발표 및 연구 기록 사진">
-            <div class="hero-overlay"></div>
-            <div class="hero-text">
-              <div class="hero-badge">RESEARCH ARCHIVE</div>
-              <h2>연구 기록과 발표</h2>
-              <p>탐구 과정을 정리하고 발표하며 함께 성장하는 과학 동아리입니다.</p>
-            </div>
-          </div>
+        <div class="hero-slider" id="heroSlider">
+          <div id="heroSlidesWrap"></div>
 
           <button class="slider-nav prev" onclick="moveHeroSlide(-1)">❮</button>
           <button class="slider-nav next" onclick="moveHeroSlide(1)">❯</button>
 
-          <div class="slider-dots">
-            <span class="slider-dot active" onclick="goToHeroSlide(0)"></span>
-            <span class="slider-dot" onclick="goToHeroSlide(1)"></span>
-            <span class="slider-dot" onclick="goToHeroSlide(2)"></span>
-          </div>
+          <div class="slider-dots" id="heroDotsWrap"></div>
         </div>
 
         <div class="home-intro-box">
@@ -730,7 +784,7 @@ textarea{
           </p>
         </div>
 
-        <div class="row">
+        <div class="row" style="margin-top:20px;">
           <div class="col">
             <div class="dictionary-box">
               <div class="section-label">오늘의 과학 용어</div>
@@ -771,7 +825,7 @@ textarea{
         <div class="tool-row" style="justify-content:space-between;">
           <div>
             <h2 style="margin:0 0 8px 0;">동아리 소개</h2>
-            <div class="inline-info">사진 슬라이드와 동아리 소개 내용을 볼 수 있습니다.</div>
+            <div class="inline-info">사진 슬라이드와 동아리 소개 내용을 볼 수 있습니다. 소개 수정은 부장만 가능합니다.</div>
           </div>
           <button class="secondary-btn" id="editIntroBtn" style="display:none;" onclick="toggleIntroEditor(true)">소개 수정</button>
         </div>
@@ -797,6 +851,7 @@ textarea{
 
           <label>활동 사진</label>
           <input id="introPhotoInput" type="file" accept=".jpg,.jpeg,.png,.webp" multiple>
+          <div class="photo-limit-note">슬라이드 사진은 최대 5장까지 등록할 수 있어요. 기존 사진도 교체할 수 있습니다.</div>
 
           <div id="introExistingPhotos" class="section-box hidden"></div>
 
@@ -1008,8 +1063,35 @@ const db = getFirestore(app);
 const storage = getStorage(app);
 
 const NOTICE_ALLOWED_ROLES = ["부장", "차장", "선생님"];
-const MANAGE_ALLOWED_ROLES = ["부장", "차장"];
+const INTRO_ALLOWED_ROLES = ["부장"];
 const HIDDEN_RESEARCH_KEYWORDS = ["산염기", "산-염기", "코아세르베이트"];
+
+const DEFAULT_HERO_SLIDES = [
+  {
+    name: "기본 대표 사진",
+    url: "https://i.imgur.com/PtA3Uwz.jpeg",
+    badge: "IRHOS SCIENCE CLUB",
+    title: "IRHOS 과학동아리",
+    desc: "실험과 탐구를 통해 과학적 사고를 확장하는 학생 연구 동아리",
+    buttons: true
+  },
+  {
+    name: "기본 실험 활동 사진",
+    url: "https://i.imgur.com/lwXX7wS.jpg",
+    badge: "EXPERIMENT",
+    title: "실험 중심 활동",
+    desc: "직접 실험하고 기록하며 결과를 분석하는 탐구 활동을 진행합니다.",
+    buttons: false
+  },
+  {
+    name: "기본 연구 기록 사진",
+    url: "https://i.imgur.com/WUmRtAy.jpg",
+    badge: "RESEARCH ARCHIVE",
+    title: "연구 기록과 발표",
+    desc: "탐구 과정을 정리하고 발표하며 함께 성장하는 과학 동아리입니다.",
+    buttons: false
+  }
+];
 
 let editState = { isEditing:false, category:null, id:null };
 let archiveItems = [];
@@ -1020,6 +1102,7 @@ let dictionaryItems = [];
 let dictionaryIndex = 0;
 let introDocId = null;
 let introPhotos = [];
+let heroSlides = [...DEFAULT_HERO_SLIDES];
 let heroIndex = 0;
 let heroInterval = null;
 let introIndex = 0;
@@ -1054,9 +1137,9 @@ function getUser(){
   return JSON.parse(localStorage.getItem("user") || "null");
 }
 
-function canManageClubPages(){
+function canEditClubIntro(){
   const user = getUser();
-  return !!user && MANAGE_ALLOWED_ROLES.includes(user.role);
+  return !!user && INTRO_ALLOWED_ROLES.includes(user.role);
 }
 
 function canWriteNotice(){
@@ -1113,7 +1196,7 @@ window.toggleProfileMenu = toggleProfileMenu;
 
 document.addEventListener("click", (e) => {
   const wrap = document.querySelector(".profile-wrap");
-  if(!wrap.contains(e.target)){
+  if(wrap && !wrap.contains(e.target)){
     document.getElementById("profileMenu").classList.remove("open");
   }
 });
@@ -1134,7 +1217,7 @@ function updateProfileUI(){
     role.textContent = "로그인 안 됨";
   }
 
-  document.getElementById("editIntroBtn").style.display = canManageClubPages() ? "inline-block" : "none";
+  document.getElementById("editIntroBtn").style.display = canEditClubIntro() ? "inline-block" : "none";
 }
 
 function setActiveNav(page){
@@ -1876,9 +1959,82 @@ async function loadMyPosts(){
 }
 
 window.toggleIntroEditor = function(show){
-  if(!canManageClubPages()) return;
+  if(!canEditClubIntro()) return;
   document.getElementById("introEditor").classList.toggle("hidden", !show);
 };
+
+function renderHeroSlider(slides = []){
+  const wrap = document.getElementById("heroSlidesWrap");
+  const dots = document.getElementById("heroDotsWrap");
+  wrap.innerHTML = "";
+  dots.innerHTML = "";
+  heroIndex = 0;
+  clearInterval(heroInterval);
+
+  const safeSlides = slides.length ? slides : DEFAULT_HERO_SLIDES;
+  heroSlides = safeSlides;
+
+  safeSlides.forEach((slide, index) => {
+    wrap.innerHTML += `
+      <div class="hero-slide ${index === 0 ? "active" : ""}">
+        <img src="${slide.url}" alt="${escapeHtml(slide.name || slide.title || "슬라이드 사진")}">
+        <div class="hero-overlay"></div>
+        <div class="hero-text">
+          <div class="hero-badge">${escapeHtml(slide.badge || "IRHOS SCIENCE CLUB")}</div>
+          <h2>${escapeHtml(slide.title || "IRHOS 과학동아리")}</h2>
+          <p>${escapeHtml(slide.desc || "실험과 탐구를 통해 과학적 사고를 확장하는 학생 연구 동아리")}</p>
+          ${slide.buttons ? `
+            <div class="hero-buttons">
+              <button class="primary-btn" onclick="showPage('intro')">동아리 소개 보기</button>
+              <button class="secondary-btn" onclick="showPage('archive')">탐구 아카이브 보기</button>
+            </div>
+          ` : ""}
+        </div>
+      </div>
+    `;
+    dots.innerHTML += `
+      <span class="slider-dot ${index === 0 ? "active" : ""}" onclick="goToHeroSlide(${index})"></span>
+    `;
+  });
+
+  startHeroAutoSlide();
+}
+
+function renderHeroSlide(){
+  const slides = document.querySelectorAll(".hero-slide");
+  const dots = document.querySelectorAll("#heroDotsWrap .slider-dot");
+  slides.forEach((slide, index) => slide.classList.toggle("active", index === heroIndex));
+  dots.forEach((dot, index) => dot.classList.toggle("active", index === heroIndex));
+}
+
+window.moveHeroSlide = function(direction){
+  const slides = document.querySelectorAll(".hero-slide");
+  if(!slides.length) return;
+  heroIndex = (heroIndex + direction + slides.length) % slides.length;
+  renderHeroSlide();
+  restartHeroAutoSlide();
+};
+
+window.goToHeroSlide = function(index){
+  heroIndex = index;
+  renderHeroSlide();
+  restartHeroAutoSlide();
+};
+
+function startHeroAutoSlide(){
+  clearInterval(heroInterval);
+  heroInterval = setInterval(() => {
+    const slides = document.querySelectorAll(".hero-slide");
+    if(!slides.length) return;
+    heroIndex = (heroIndex + 1) % slides.length;
+    renderHeroSlide();
+  }, 4500);
+}
+
+function restartHeroAutoSlide(){
+  clearInterval(heroInterval);
+  startHeroAutoSlide();
+}
 
 async function loadClubIntro(){
   const view = document.getElementById("introView");
@@ -1898,18 +2054,61 @@ async function loadClubIntro(){
         <h3>동아리 목표</h3>
         <p>아직 등록되지 않았습니다.</p>
       </div>
+      <div class="section-box">
+        <h3>활동 내용</h3>
+        <p>아직 등록되지 않았습니다.</p>
+      </div>
+      <div class="section-box">
+        <h3>주요 연구 분야</h3>
+        <p>아직 등록되지 않았습니다.</p>
+      </div>
     `;
+
     introPhotos = [];
     document.getElementById("introGoal").value = "";
     document.getElementById("introActivities").value = "";
     document.getElementById("introFields").value = "";
     renderIntroSlider([]);
     document.getElementById("introExistingPhotos").classList.add("hidden");
+    renderHeroSlider(DEFAULT_HERO_SLIDES);
     return;
   }
 
   introPhotos = [...(item.photos || [])];
   renderIntroSlider(introPhotos);
+
+  const customHeroSlides = (item.photos || []).slice(0, 5).map((photo, index) => {
+    if(index === 0){
+      return {
+        name: photo.name || "대표 사진",
+        url: photo.url,
+        badge: "IRHOS SCIENCE CLUB",
+        title: "IRHOS 과학동아리",
+        desc: "실험과 탐구를 통해 과학적 사고를 확장하는 학생 연구 동아리",
+        buttons: true
+      };
+    }
+    if(index === 1){
+      return {
+        name: photo.name || "실험 활동 사진",
+        url: photo.url,
+        badge: "EXPERIMENT",
+        title: "실험 중심 활동",
+        desc: "직접 실험하고 기록하며 결과를 분석하는 탐구 활동을 진행합니다.",
+        buttons: false
+      };
+    }
+    return {
+      name: photo.name || `활동 사진 ${index + 1}`,
+      url: photo.url,
+      badge: "RESEARCH ARCHIVE",
+      title: "연구 기록과 발표",
+      desc: "탐구 과정을 정리하고 발표하며 함께 성장하는 과학 동아리입니다.",
+      buttons: false
+    };
+  });
+
+  renderHeroSlider(customHeroSlides.length ? customHeroSlides : DEFAULT_HERO_SLIDES);
 
   view.innerHTML = `
     <div class="section-box">
@@ -1934,18 +2133,26 @@ async function loadClubIntro(){
 
 function renderIntroExistingPhotos(){
   const box = document.getElementById("introExistingPhotos");
+
   if(!introPhotos.length){
     box.classList.add("hidden");
     box.innerHTML = "";
     return;
   }
+
   box.classList.remove("hidden");
-  box.innerHTML = "<strong>기존 활동 사진</strong>" + introPhotos.map((photo, index) => `
-    <div class="attach-manage-item">
-      <span>${escapeHtml(photo.name || "사진")}</span>
-      <button type="button" class="danger-btn small" onclick="removeIntroPhoto(${index})">제거</button>
-    </div>
-  `).join("");
+  box.innerHTML = `
+    <strong>기존 활동 사진 (${introPhotos.length}/5)</strong>
+    ${introPhotos.map((photo, index) => `
+      <div class="attach-manage-item actions-2">
+        <span>${escapeHtml(photo.name || `사진 ${index + 1}`)}</span>
+        <div class="attach-actions">
+          <button type="button" class="secondary-btn small" onclick="replaceIntroPhoto(${index})">교체</button>
+          <button type="button" class="danger-btn small" onclick="removeIntroPhoto(${index})">제거</button>
+        </div>
+      </div>
+    `).join("")}
+  `;
 }
 
 window.removeIntroPhoto = function(index){
@@ -1954,18 +2161,55 @@ window.removeIntroPhoto = function(index){
   renderIntroSlider(introPhotos);
 };
 
-window.saveClubIntro = async function(){
-  if(!canManageClubPages()){
-    alert("부장/차장만 수정할 수 있어요.");
+window.replaceIntroPhoto = function(index){
+  if(!canEditClubIntro()){
+    alert("동아리 소개 사진 수정은 부장만 할 수 있어요.");
     return;
   }
 
-  const photos = await uploadFiles(Array.from(document.getElementById("introPhotoInput").files || []), "club-intro");
+  const input = document.createElement("input");
+  input.type = "file";
+  input.accept = ".jpg,.jpeg,.png,.webp";
+
+  input.addEventListener("change", async (e) => {
+    const file = e.target.files?.[0];
+    if(!file) return;
+
+    try{
+      const [uploaded] = await uploadFiles([file], "club-intro");
+      introPhotos[index] = uploaded;
+      renderIntroExistingPhotos();
+      renderIntroSlider(introPhotos);
+      alert("사진이 교체되었어요. 저장 버튼을 누르면 최종 반영됩니다.");
+    }catch(error){
+      console.error(error);
+      alert("사진 교체 중 오류가 발생했어요.");
+    }
+  });
+
+  input.click();
+};
+
+window.saveClubIntro = async function(){
+  if(!canEditClubIntro()){
+    alert("동아리 소개 수정은 부장만 할 수 있어요.");
+    return;
+  }
+
+  const newFiles = Array.from(document.getElementById("introPhotoInput").files || []);
+
+  if(introPhotos.length + newFiles.length > 5){
+    alert(`슬라이드 사진은 최대 5장까지 등록할 수 있어요. 현재 ${introPhotos.length}장이 들어 있어요.`);
+    return;
+  }
+
+  const photos = await uploadFiles(newFiles, "club-intro");
+
   const data = {
     goal:document.getElementById("introGoal").value.trim(),
     activities:document.getElementById("introActivities").value.trim(),
     fields:document.getElementById("introFields").value.trim(),
-    photos:[...introPhotos, ...photos],
+    photos:[...introPhotos, ...photos].slice(0, 5),
     updatedAt:new Date().toISOString()
   };
 
@@ -2067,39 +2311,6 @@ function renderDictionaryHero(){
   dictionaryIndex++;
 }
 
-function renderHeroSlide(){
-  const slides = document.querySelectorAll(".hero-slide");
-  const dots = document.querySelectorAll(".slider-dots .slider-dot");
-  slides.forEach((slide, index) => slide.classList.toggle("active", index === heroIndex));
-  dots.forEach((dot, index) => dot.classList.toggle("active", index === heroIndex));
-}
-
-window.moveHeroSlide = function(direction){
-  const slides = document.querySelectorAll(".hero-slide");
-  heroIndex = (heroIndex + direction + slides.length) % slides.length;
-  renderHeroSlide();
-  restartHeroAutoSlide();
-};
-
-window.goToHeroSlide = function(index){
-  heroIndex = index;
-  renderHeroSlide();
-  restartHeroAutoSlide();
-};
-
-function startHeroAutoSlide(){
-  heroInterval = setInterval(() => {
-    const slides = document.querySelectorAll(".hero-slide");
-    heroIndex = (heroIndex + 1) % slides.length;
-    renderHeroSlide();
-  }, 4500);
-}
-
-function restartHeroAutoSlide(){
-  clearInterval(heroInterval);
-  startHeroAutoSlide();
-}
-
 /* 초기 실행 */
 updateProfileUI();
 resetWriteForm();
@@ -2110,8 +2321,6 @@ await loadClubIntro();
 await loadDictionary();
 
 showPage("home");
-renderHeroSlide();
-startHeroAutoSlide();
 
 setInterval(() => {
   renderDictionaryHero();
