@@ -28,7 +28,7 @@ a:hover{text-decoration:underline;}
   position:sticky;
   top:0;
   z-index:100;
-  transition:all .28s ease;
+  transition:all .38s ease;
 }
 
 .topbar.shrink{
@@ -38,14 +38,14 @@ a:hover{text-decoration:underline;}
 
 .brand{
   min-width:180px;
-  transition:all .28s ease;
+  transition:all .38s ease;
   overflow:hidden;
 }
 
 .brand h1{
   margin:0 0 4px 0;
   font-size:18px;
-  transition:all .28s ease;
+  transition:all .38s ease;
   white-space:nowrap;
 }
 
@@ -54,7 +54,7 @@ a:hover{text-decoration:underline;}
   font-size:11px;
   opacity:.8;
   line-height:1.35;
-  transition:all .22s ease;
+  transition:all .38s ease;
 }
 
 .topbar.shrink .brand h1{
@@ -76,7 +76,7 @@ a:hover{text-decoration:underline;}
   gap:8px;
   flex:1;
   align-items:stretch;
-  transition:all .28s ease;
+  transition:all .38s ease;
 }
 
 .side-nav button{
@@ -94,7 +94,12 @@ a:hover{text-decoration:underline;}
   gap:4px;
   font-weight:600;
   min-height:58px;
-  transition:all .28s ease;
+  transition:all .38s ease;
+}
+
+.side-nav button.active,
+.side-nav button:hover{
+  background:rgba(255,255,255,0.18);
 }
 
 .topbar.shrink .side-nav{
@@ -102,8 +107,9 @@ a:hover{text-decoration:underline;}
 }
 
 .topbar.shrink .side-nav button{
-  min-height:42px;
-  padding:6px;
+  min-height:34px;
+  padding:4px;
+  border-radius:10px;
 }
 
 .nav-icon{
@@ -116,13 +122,14 @@ a:hover{text-decoration:underline;}
   justify-content:center;
   font-size:13px;
   flex-shrink:0;
-  transition:all .28s ease;
+  transition:all .38s ease;
 }
 
 .topbar.shrink .nav-icon{
-  width:22px;
-  height:22px;
-  font-size:12px;
+  width:18px;
+  height:18px;
+  font-size:10px;
+  border-radius:6px;
 }
 
 .nav-text{
@@ -131,7 +138,7 @@ a:hover{text-decoration:underline;}
   align-items:center;
   line-height:1.1;
   font-size:12px;
-  transition:all .2s ease;
+  transition:all .38s ease;
   overflow:hidden;
 }
 
@@ -139,7 +146,7 @@ a:hover{text-decoration:underline;}
   font-size:9px;
   opacity:.78;
   font-weight:400;
-  transition:all .2s ease;
+  transition:all .38s ease;
 }
 
 .topbar.shrink .nav-text{
@@ -156,7 +163,7 @@ a:hover{text-decoration:underline;}
 .profile-wrap{
   position:relative;
   min-width:170px;
-  transition:all .28s ease;
+  transition:all .38s ease;
 }
 
 .profile-summary{
@@ -168,7 +175,42 @@ a:hover{text-decoration:underline;}
   background:rgba(255,255,255,0.1);
   border-radius:12px;
   cursor:pointer;
-  transition:all .28s ease, opacity .22s ease, transform .22s ease;
+  transition:all .38s ease, opacity .3s ease, transform .3s ease;
+}
+
+.profile-left{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  min-width:0;
+}
+
+.profile-avatar{
+  width:32px;
+  height:32px;
+  border-radius:50%;
+  background:#dfe7f3;
+  color:#1d3557;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-weight:700;
+  flex-shrink:0;
+  font-size:13px;
+  transition:all .38s ease;
+}
+
+.profile-name{
+  font-size:12px;
+  font-weight:700;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+}
+
+.profile-role{
+  font-size:10px;
+  opacity:.82;
 }
 
 .topbar.shrink .profile-wrap{
@@ -186,108 +228,6 @@ a:hover{text-decoration:underline;}
   padding:0;
   margin:0;
   overflow:hidden;
-}
-
-.profile-left{
-  display:flex;
-  align-items:center;
-  gap:8px;
-  min-width:0;
-}
-
-.profile-avatar{
-  width:32px;
-  height:32px;
-  border-radius:50%;
-  background:#dfe7f3;
-  color:#1d3557;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  font-weight:700;
-  flex-shrink:0;
-  font-size:13px;
-  transition:all .28s ease;
-}
-
-.topbar.shrink .profile-avatar{
-  width:28px;
-  height:28px;
-  font-size:12px;
-}
-
-.profile-name{
-  font-size:12px;
-  font-weight:700;
-  white-space:nowrap;
-  overflow:hidden;
-  text-overflow:ellipsis;
-  transition:all .2s ease;
-}
-
-.profile-role{
-  font-size:10px;
-  opacity:.82;
-  transition:all .2s ease;
-}
-
-.topbar.shrink .profile-name,
-.topbar.shrink .profile-role{
-  opacity:0;
-  max-width:0;
-  overflow:hidden;
-}
-
-.topbar.shrink .profile-summary > div:last-child{
-  display:none;
-}
-.profile-left{
-  display:flex;
-  align-items:center;
-  gap:8px;
-  min-width:0;
-}
-
-.profile-avatar{
-  width:32px;
-  height:32px;
-  border-radius:50%;
-  background:#dfe7f3;
-  color:#1d3557;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  font-weight:700;
-  flex-shrink:0;
-  font-size:13px;
-  transition:all .28s ease;
-}
-
-.topbar.shrink .profile-avatar{
-  width:28px;
-  height:28px;
-  font-size:12px;
-}
-
-.profile-name{
-  font-size:12px;
-  font-weight:700;
-  white-space:nowrap;
-  overflow:hidden;
-  text-overflow:ellipsis;
-}
-
-.profile-role{
-  font-size:10px;
-  opacity:.82;
-}
-
-.topbar.shrink .profile-name{
-  font-size:11px;
-}
-
-.topbar.shrink .profile-role{
-  font-size:9px;
 }
 
 .profile-menu{
@@ -1277,21 +1217,18 @@ const DEFAULT_HERO_SLIDES = [
   {
     name: "기본 대표 사진",
     url: "https://i.imgur.com/PtA3Uwz.jpeg",
-    badge: "IRHOS SCIENCE CLUB",
     title: "IRHOS 과학동아리",
     desc: "실험과 탐구를 통해 과학적 사고를 확장하는 학생 연구 동아리"
   },
   {
     name: "기본 실험 활동 사진",
     url: "https://i.imgur.com/lwXX7wS.jpg",
-    badge: "EXPERIMENT",
     title: "실험 중심 활동",
     desc: "직접 실험하고 기록하며 결과를 분석하는 탐구 활동을 진행합니다."
   },
   {
     name: "기본 연구 기록 사진",
     url: "https://i.imgur.com/WUmRtAy.jpg",
-    badge: "RESEARCH ARCHIVE",
     title: "연구 기록과 발표",
     desc: "탐구 과정을 정리하고 발표하며 함께 성장하는 과학 동아리입니다."
   }
@@ -1311,6 +1248,7 @@ let heroInterval = null;
 let introIndex = 0;
 let introInterval = null;
 let memberItems = [];
+let isTopbarShrunk = false;
 
 function escapeHtml(text = ""){
   return String(text)
@@ -1339,6 +1277,14 @@ function formatDate(dateString){
 
 function getUser(){
   return JSON.parse(localStorage.getItem("user") || "null");
+}
+
+function saveCurrentPage(page){
+  localStorage.setItem("irhos-current-page", page);
+}
+
+function getSavedPage(){
+  return localStorage.getItem("irhos-current-page") || "home";
 }
 
 function canEditClubIntro(){
@@ -1413,8 +1359,15 @@ document.addEventListener("click", (e) => {
 window.addEventListener("scroll", () => {
   const topbar = document.getElementById("topbar");
   if(!topbar) return;
-  if(window.scrollY > 80) topbar.classList.add("shrink");
-  else topbar.classList.remove("shrink");
+
+  const y = window.scrollY;
+  if(!isTopbarShrunk && y > 140){
+    topbar.classList.add("shrink");
+    isTopbarShrunk = true;
+  }else if(isTopbarShrunk && y < 70){
+    topbar.classList.remove("shrink");
+    isTopbarShrunk = false;
+  }
 });
 
 function renderHomeClubIntro(item){
@@ -1487,7 +1440,7 @@ function setActiveNav(page){
   });
 }
 
-function showPage(page){
+async function showPage(page){
   if(page === "intro" && !isAdmin()) page = "home";
   if(page === "admin" && !isAdmin()) page = "home";
 
@@ -1496,11 +1449,18 @@ function showPage(page){
   setActiveNav(page);
   saveCurrentPage(page);
 
-  if(page === "home") loadClubIntro();
-  if(page === "intro") loadClubIntro();
-  if(page === "archive") renderArchive();
-  if(page === "myPosts") loadMyPosts();
-  if(page === "admin") loadMembers();
+  if(page === "home" || page === "intro"){
+    await loadClubIntro();
+  }
+  if(page === "archive"){
+    renderArchive();
+  }
+  if(page === "myPosts"){
+    await loadMyPosts();
+  }
+  if(page === "admin"){
+    await loadMembers();
+  }
 }
 window.showPage = showPage;
 
@@ -1897,7 +1857,7 @@ window.openResearchDetail = async function(id){
 
   document.getElementById("detailBody").innerHTML = bodyHtml;
   await loadComments("research", id);
-  showPage("detail");
+  await showPage("detail");
 };
 
 window.submitComment = async function(){
@@ -2136,8 +2096,7 @@ window.submitWrite = async function(){
   await loadNotice();
   await loadResearch();
   await loadMyPosts();
-  const savedPage = getSavedPage();
-showPage(savedPage);
+  await showPage("home");
 };
 
 window.removePost = async function(category, id){
@@ -2198,7 +2157,7 @@ window.editPost = async function(category, id){
 
   renderExistingAttachments();
   changeWriteForm();
-  showPage("write");
+  await showPage("write");
 };
 
 async function loadMyPosts(){
@@ -2287,13 +2246,8 @@ function renderHeroSlider(slides = []){
         <img src="${slide.url}" alt="${escapeHtml(slide.name || slide.title || "슬라이드 사진")}">
         <div class="hero-overlay"></div>
         <div class="hero-text">
-          <div class="hero-badge">${escapeHtml(slide.badge || "IRHOS SCIENCE CLUB")}</div>
           <h2>${escapeHtml(slide.title || "IRHOS 과학동아리")}</h2>
           <p>${escapeHtml(slide.desc || "실험과 탐구를 통해 과학적 사고를 확장하는 학생 연구 동아리")}</p>
-          <div class="hero-buttons">
-            <button class="primary-btn" onclick="scrollToHomeClubIntro()">동아리 소개 보기</button>
-            <button class="secondary-btn" onclick="showPage('archive')">탐구 아카이브 보기</button>
-          </div>
         </div>
       </div>
     `;
@@ -2399,7 +2353,6 @@ async function loadClubIntro(){
       return {
         name: photo.name || "대표 사진",
         url: photo.url,
-        badge: "IRHOS SCIENCE CLUB",
         title: "IRHOS 과학동아리",
         desc: "실험과 탐구를 통해 과학적 사고를 확장하는 학생 연구 동아리"
       };
@@ -2408,7 +2361,6 @@ async function loadClubIntro(){
       return {
         name: photo.name || "실험 활동 사진",
         url: photo.url,
-        badge: "EXPERIMENT",
         title: "실험 중심 활동",
         desc: "직접 실험하고 기록하며 결과를 분석하는 탐구 활동을 진행합니다."
       };
@@ -2416,7 +2368,6 @@ async function loadClubIntro(){
     return {
       name: photo.name || `활동 사진 ${index + 1}`,
       url: photo.url,
-      badge: "RESEARCH ARCHIVE",
       title: "연구 기록과 발표",
       desc: "탐구 과정을 정리하고 발표하며 함께 성장하는 과학 동아리입니다."
     };
@@ -2857,7 +2808,8 @@ await loadMyPosts();
 await loadClubIntro();
 await loadDictionary();
 
-showPage("home");
+const savedPage = getSavedPage();
+await showPage(savedPage);
 
 setInterval(() => {
   renderDictionaryHero();
