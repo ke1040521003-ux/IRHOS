@@ -33,17 +33,20 @@ a:hover{text-decoration:underline;}
 
 .topbar.shrink{
   padding:8px 14px;
+  gap:10px;
 }
 
 .brand{
   min-width:180px;
   transition:all .28s ease;
+  overflow:hidden;
 }
 
 .brand h1{
   margin:0 0 4px 0;
   font-size:18px;
   transition:all .28s ease;
+  white-space:nowrap;
 }
 
 .brand p{
@@ -51,18 +54,20 @@ a:hover{text-decoration:underline;}
   font-size:11px;
   opacity:.8;
   line-height:1.35;
-  transition:all .28s ease;
+  transition:all .22s ease;
 }
 
 .topbar.shrink .brand h1{
   font-size:16px;
-  margin-bottom:0;
+  margin:0;
 }
 
 .topbar.shrink .brand p{
-  font-size:10px;
-  opacity:.72;
-  transform:translateY(-2px);
+  opacity:0;
+  max-height:0;
+  transform:translateY(-8px);
+  margin:0;
+  overflow:hidden;
 }
 
 .side-nav{
@@ -92,14 +97,13 @@ a:hover{text-decoration:underline;}
   transition:all .28s ease;
 }
 
-.side-nav button.active,
-.side-nav button:hover{
-  background:rgba(255,255,255,0.18);
+.topbar.shrink .side-nav{
+  gap:6px;
 }
 
 .topbar.shrink .side-nav button{
-  min-height:46px;
-  padding:6px 8px;
+  min-height:42px;
+  padding:6px;
 }
 
 .nav-icon{
@@ -116,9 +120,9 @@ a:hover{text-decoration:underline;}
 }
 
 .topbar.shrink .nav-icon{
-  width:20px;
-  height:20px;
-  font-size:11px;
+  width:22px;
+  height:22px;
+  font-size:12px;
 }
 
 .nav-text{
@@ -127,27 +131,32 @@ a:hover{text-decoration:underline;}
   align-items:center;
   line-height:1.1;
   font-size:12px;
-  transition:all .28s ease;
+  transition:all .2s ease;
+  overflow:hidden;
 }
 
 .nav-text small{
   font-size:9px;
   opacity:.78;
   font-weight:400;
-  transition:all .28s ease;
+  transition:all .2s ease;
 }
 
 .topbar.shrink .nav-text{
-  font-size:11px;
+  opacity:0;
+  max-height:0;
+  transform:translateY(-6px);
+  pointer-events:none;
 }
 
 .topbar.shrink .nav-text small{
-  font-size:8px;
+  opacity:0;
 }
 
 .profile-wrap{
   position:relative;
   min-width:170px;
+  transition:all .28s ease;
 }
 
 .profile-summary{
@@ -163,9 +172,65 @@ a:hover{text-decoration:underline;}
 }
 
 .topbar.shrink .profile-summary{
-  padding:6px 8px;
+  padding:6px;
+  width:46px;
+  min-width:46px;
+  justify-content:center;
 }
 
+.profile-left{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  min-width:0;
+}
+
+.profile-avatar{
+  width:32px;
+  height:32px;
+  border-radius:50%;
+  background:#dfe7f3;
+  color:#1d3557;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-weight:700;
+  flex-shrink:0;
+  font-size:13px;
+  transition:all .28s ease;
+}
+
+.topbar.shrink .profile-avatar{
+  width:28px;
+  height:28px;
+  font-size:12px;
+}
+
+.profile-name{
+  font-size:12px;
+  font-weight:700;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  transition:all .2s ease;
+}
+
+.profile-role{
+  font-size:10px;
+  opacity:.82;
+  transition:all .2s ease;
+}
+
+.topbar.shrink .profile-name,
+.topbar.shrink .profile-role{
+  opacity:0;
+  max-width:0;
+  overflow:hidden;
+}
+
+.topbar.shrink .profile-summary > div:last-child{
+  display:none;
+}
 .profile-left{
   display:flex;
   align-items:center;
