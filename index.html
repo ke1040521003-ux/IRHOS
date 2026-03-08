@@ -168,14 +168,24 @@ a:hover{text-decoration:underline;}
   background:rgba(255,255,255,0.1);
   border-radius:12px;
   cursor:pointer;
-  transition:all .28s ease;
+  transition:all .28s ease, opacity .22s ease, transform .22s ease;
+}
+
+.topbar.shrink .profile-wrap{
+  min-width:0;
+  width:0;
+  overflow:hidden;
 }
 
 .topbar.shrink .profile-summary{
-  padding:6px;
-  width:46px;
-  min-width:46px;
-  justify-content:center;
+  opacity:0;
+  transform:translateY(-10px);
+  pointer-events:none;
+  width:0;
+  min-width:0;
+  padding:0;
+  margin:0;
+  overflow:hidden;
 }
 
 .profile-left{
@@ -1484,6 +1494,7 @@ function showPage(page){
   document.querySelectorAll(".page").forEach(el => el.classList.remove("active"));
   document.getElementById(`page-${page}`).classList.add("active");
   setActiveNav(page);
+  saveCurrentPage(page);
 
   if(page === "home") loadClubIntro();
   if(page === "intro") loadClubIntro();
@@ -2125,7 +2136,8 @@ window.submitWrite = async function(){
   await loadNotice();
   await loadResearch();
   await loadMyPosts();
-  showPage("home");
+  const savedPage = getSavedPage();
+showPage(savedPage);
 };
 
 window.removePost = async function(category, id){
