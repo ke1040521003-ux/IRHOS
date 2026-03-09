@@ -30,7 +30,6 @@ a:hover{text-decoration:underline;}
   z-index:100;
   transition:all .38s ease;
 }
-
 .topbar.shrink{
   padding:8px 14px;
   gap:10px;
@@ -41,14 +40,12 @@ a:hover{text-decoration:underline;}
   transition:all .38s ease;
   overflow:hidden;
 }
-
 .brand h1{
   margin:0 0 4px 0;
   font-size:18px;
   transition:all .38s ease;
   white-space:nowrap;
 }
-
 .brand p{
   margin:0;
   font-size:11px;
@@ -56,12 +53,10 @@ a:hover{text-decoration:underline;}
   line-height:1.35;
   transition:all .38s ease;
 }
-
 .topbar.shrink .brand h1{
   font-size:16px;
   margin:0;
 }
-
 .topbar.shrink .brand p{
   opacity:0;
   max-height:0;
@@ -78,7 +73,6 @@ a:hover{text-decoration:underline;}
   align-items:stretch;
   transition:all .38s ease;
 }
-
 .side-nav button{
   border:none;
   background:rgba(255,255,255,0.08);
@@ -96,16 +90,13 @@ a:hover{text-decoration:underline;}
   min-height:58px;
   transition:all .38s ease;
 }
-
 .side-nav button.active,
 .side-nav button:hover{
   background:rgba(255,255,255,0.18);
 }
-
 .topbar.shrink .side-nav{
   gap:6px;
 }
-
 .topbar.shrink .side-nav button{
   min-height:34px;
   padding:4px;
@@ -124,7 +115,6 @@ a:hover{text-decoration:underline;}
   flex-shrink:0;
   transition:all .38s ease;
 }
-
 .topbar.shrink .nav-icon{
   width:18px;
   height:18px;
@@ -141,31 +131,25 @@ a:hover{text-decoration:underline;}
   transition:all .38s ease;
   overflow:hidden;
 }
-
 .nav-text small{
   font-size:9px;
   opacity:.78;
   font-weight:400;
   transition:all .38s ease;
 }
-
 .topbar.shrink .nav-text{
   opacity:0;
   max-height:0;
   transform:translateY(-6px);
   pointer-events:none;
 }
-
-.topbar.shrink .nav-text small{
-  opacity:0;
-}
+.topbar.shrink .nav-text small{opacity:0;}
 
 .profile-wrap{
   position:relative;
   min-width:170px;
   transition:all .38s ease;
 }
-
 .profile-summary{
   display:flex;
   align-items:center;
@@ -177,14 +161,12 @@ a:hover{text-decoration:underline;}
   cursor:pointer;
   transition:all .38s ease, opacity .3s ease, transform .3s ease;
 }
-
 .profile-left{
   display:flex;
   align-items:center;
   gap:8px;
   min-width:0;
 }
-
 .profile-avatar{
   width:32px;
   height:32px;
@@ -199,7 +181,6 @@ a:hover{text-decoration:underline;}
   font-size:13px;
   transition:all .38s ease;
 }
-
 .profile-name{
   font-size:12px;
   font-weight:700;
@@ -207,18 +188,15 @@ a:hover{text-decoration:underline;}
   overflow:hidden;
   text-overflow:ellipsis;
 }
-
 .profile-role{
   font-size:10px;
   opacity:.82;
 }
-
 .topbar.shrink .profile-wrap{
   min-width:0;
   width:0;
   overflow:hidden;
 }
-
 .topbar.shrink .profile-summary{
   opacity:0;
   transform:translateY(-10px);
@@ -229,7 +207,6 @@ a:hover{text-decoration:underline;}
   margin:0;
   overflow:hidden;
 }
-
 .profile-menu{
   position:absolute;
   right:0;
@@ -243,9 +220,7 @@ a:hover{text-decoration:underline;}
   display:none;
   z-index:30;
 }
-
 .profile-menu.open{display:block;}
-
 .profile-menu button{
   width:100%;
   border:none;
@@ -255,14 +230,9 @@ a:hover{text-decoration:underline;}
   text-align:left;
   cursor:pointer;
 }
-
 .profile-menu button:hover{background:#f3f6fb;}
 
-.main{
-  padding:20px;
-  min-width:0;
-}
-
+.main{padding:20px;min-width:0;}
 .page{display:none;}
 .page.active{display:block;}
 
@@ -274,17 +244,8 @@ a:hover{text-decoration:underline;}
   margin-bottom:20px;
 }
 
-.row{
-  display:flex;
-  gap:16px;
-  flex-wrap:wrap;
-}
-
-.col{
-  flex:1 1 320px;
-  min-width:0;
-}
-
+.row{display:flex;gap:16px;flex-wrap:wrap;}
+.col{flex:1 1 320px;min-width:0;}
 .tool-row{
   display:flex;
   gap:10px;
@@ -300,7 +261,6 @@ input,textarea,select{
   padding:10px 12px;
   background:#fff;
 }
-
 textarea{
   min-height:110px;
   resize:vertical;
@@ -314,7 +274,6 @@ textarea{
   border-radius:10px;
   cursor:pointer;
 }
-
 .secondary-btn{
   border:none;
   background:#e7edf6;
@@ -323,7 +282,6 @@ textarea{
   border-radius:10px;
   cursor:pointer;
 }
-
 .danger-btn{
   border:none;
   background:#b42318;
@@ -332,11 +290,7 @@ textarea{
   border-radius:10px;
   cursor:pointer;
 }
-
-.small{
-  padding:8px 10px;
-  font-size:13px;
-}
+.small{padding:8px 10px;font-size:13px;}
 
 .meta{
   color:#667085;
@@ -344,7 +298,6 @@ textarea{
   margin:8px 0;
   line-height:1.5;
 }
-
 .inline-info{
   color:#667085;
   font-size:14px;
@@ -360,7 +313,6 @@ textarea{
   border-radius:18px;
   background:#dfe7f3;
 }
-
 .hero-slide,
 .intro-slide{
   position:absolute;
@@ -369,13 +321,11 @@ textarea{
   transition:opacity .8s ease;
   pointer-events:none;
 }
-
 .hero-slide.active,
 .intro-slide.active{
   opacity:1;
   pointer-events:auto;
 }
-
 .hero-slide img,
 .intro-slide img{
   width:100%;
@@ -383,13 +333,11 @@ textarea{
   object-fit:cover;
   display:block;
 }
-
 .hero-overlay{
   position:absolute;
   inset:0;
   background:linear-gradient(to top, rgba(0,0,0,.62), rgba(0,0,0,.18));
 }
-
 .hero-text{
   position:absolute;
   left:32px;
@@ -398,18 +346,11 @@ textarea{
   z-index:2;
   max-width:680px;
 }
-
-.hero-badge,
-.hero-buttons{
-  display:none !important;
-}
-
 .hero-text h2{
   margin:0 0 10px 0;
   font-size:36px;
   line-height:1.2;
 }
-
 .hero-text p{
   margin:0;
   font-size:16px;
@@ -430,7 +371,6 @@ textarea{
   cursor:pointer;
   z-index:3;
 }
-
 .slider-nav.prev{left:14px;}
 .slider-nav.next{right:14px;}
 
@@ -443,7 +383,6 @@ textarea{
   gap:8px;
   z-index:3;
 }
-
 .slider-dot{
   width:10px;
   height:10px;
@@ -451,7 +390,6 @@ textarea{
   background:rgba(255,255,255,.55);
   cursor:pointer;
 }
-
 .slider-dot.active{background:#fff;}
 
 .home-intro-box{
@@ -469,14 +407,12 @@ textarea{
   color:#fff;
   min-height:180px;
 }
-
 .dictionary-box{background:linear-gradient(135deg,#1d3557,#457b9d);}
 .today-photo-box{
   background:#1f2937;
   position:relative;
   overflow:hidden;
 }
-
 .today-photo-box img{
   position:absolute;
   inset:0;
@@ -485,7 +421,6 @@ textarea{
   object-fit:cover;
   opacity:.4;
 }
-
 .today-photo-content{
   position:relative;
   z-index:1;
@@ -497,7 +432,6 @@ textarea{
   letter-spacing:.08em;
   margin-bottom:10px;
 }
-
 .big-title{
   font-size:28px;
   font-weight:700;
@@ -509,7 +443,6 @@ textarea{
   grid-template-columns:repeat(auto-fill, minmax(260px, 1fr));
   gap:16px;
 }
-
 .thumb-card{
   border:1px solid #e5e7eb;
   border-radius:16px;
@@ -518,7 +451,6 @@ textarea{
   box-shadow:0 2px 10px rgba(0,0,0,.05);
   cursor:pointer;
 }
-
 .thumb-image-wrap{
   width:100%;
   height:180px;
@@ -528,27 +460,22 @@ textarea{
   justify-content:center;
   overflow:hidden;
 }
-
 .thumb-image-wrap img{
   width:100%;
   height:100%;
   object-fit:cover;
 }
-
 .thumb-image-fallback{
   color:#667085;
   font-size:14px;
 }
-
 .thumb-content{padding:14px;}
-
 .thumb-title{
   font-size:17px;
   font-weight:700;
   line-height:1.4;
   margin-bottom:8px;
 }
-
 .thumb-summary{
   color:#475467;
   font-size:14px;
@@ -567,7 +494,6 @@ textarea{
   margin-right:6px;
   margin-bottom:8px;
 }
-
 .notice-badge{background:#fff3cd;color:#7a5b00;}
 .type-badge{background:#eef2ff;color:#344054;}
 .status-badge{background:#ecfdf3;color:#027a48;}
@@ -581,7 +507,6 @@ textarea{
   border-radius:10px;
   cursor:pointer;
 }
-
 .filter-btn.active{
   background:#1d3557;
   color:#fff;
@@ -591,7 +516,6 @@ textarea{
   border-top:1px solid #eee;
   padding:14px 0;
 }
-
 .post:first-child{border-top:none;}
 
 .tag{
@@ -631,7 +555,6 @@ textarea{
   padding:8px 10px;
   margin-bottom:8px;
 }
-
 .attach-manage-item.actions-2{align-items:center;}
 
 .attach-actions{
@@ -656,7 +579,6 @@ textarea{
   justify-content:center;
   z-index:9999;
 }
-
 .term-popup-box{
   background:#fff;
   width:min(520px,92vw);
@@ -676,12 +598,10 @@ textarea{
   padding-top:14px;
   margin-top:16px;
 }
-
 .comment-item{
   border-top:1px solid #eee;
   padding:10px 0;
 }
-
 .comment-item:first-child{border-top:none;}
 
 .photo-limit-note{
@@ -695,7 +615,6 @@ textarea{
   grid-template-columns:1fr 1fr;
   gap:16px;
 }
-
 .member-item{
   border:1px solid #e5e7eb;
   border-radius:12px;
@@ -703,10 +622,7 @@ textarea{
   margin-bottom:10px;
   background:#fff;
 }
-
-.member-item h4{
-  margin:0 0 8px 0;
-}
+.member-item h4{margin:0 0 8px 0;}
 
 .warn-box{
   background:#fff8e6;
@@ -768,27 +684,27 @@ textarea{
     </div>
 
     <div class="side-nav" id="sideNav">
-      <button data-page="home" onclick="showPage('home')">
+      <button data-page="home">
         <span class="nav-icon">🏠</span>
         <span class="nav-text">홈 <small>메인 화면</small></span>
       </button>
 
-      <button id="introNavBtn" data-page="intro" onclick="showPage('intro')">
+      <button id="introNavBtn" data-page="intro">
         <span class="nav-icon">👥</span>
         <span class="nav-text">동아리 소개 <small>소개글 · 슬라이드</small></span>
       </button>
 
-      <button data-page="notice" onclick="showPage('notice')">
+      <button data-page="notice">
         <span class="nav-icon">📢</span>
         <span class="nav-text">공지 <small>중요 안내</small></span>
       </button>
 
-      <button data-page="archive" onclick="showPage('archive')">
+      <button data-page="archive">
         <span class="nav-icon">🧪</span>
         <span class="nav-text">탐구 아카이브 <small>실험 · 프로젝트</small></span>
       </button>
 
-      <button data-page="write" onclick="showPage('write')">
+      <button data-page="write">
         <span class="nav-icon">✍️</span>
         <span class="nav-text">글 작성 <small>새 글 등록</small></span>
       </button>
@@ -796,13 +712,13 @@ textarea{
 
     <div class="profile-wrap">
       <div class="profile-menu" id="profileMenu">
-        <button onclick="toggleLogin()">로그인</button>
-        <button onclick="logout()">로그아웃</button>
-        <button onclick="openMyPosts()">내 글 관리</button>
-        <button id="adminMenuBtn" class="hidden" onclick="openAdminPage()">관리자 페이지</button>
+        <button id="loginBtn">로그인</button>
+        <button id="logoutBtn">로그아웃</button>
+        <button id="myPostsBtn">내 글 관리</button>
+        <button id="adminMenuBtn" class="hidden">관리자 페이지</button>
       </div>
 
-      <div class="profile-summary" onclick="toggleProfileMenu()">
+      <div class="profile-summary" id="profileSummary">
         <div class="profile-left">
           <div class="profile-avatar" id="profileAvatar">G</div>
           <div>
@@ -822,8 +738,8 @@ textarea{
 
         <div class="hero-slider" id="heroSlider">
           <div id="heroSlidesWrap"></div>
-          <button class="slider-nav prev" onclick="moveHeroSlide(-1)">❮</button>
-          <button class="slider-nav next" onclick="moveHeroSlide(1)">❯</button>
+          <button class="slider-nav prev" id="heroPrevBtn">❮</button>
+          <button class="slider-nav next" id="heroNextBtn">❯</button>
           <div class="slider-dots" id="heroDotsWrap"></div>
         </div>
 
@@ -882,13 +798,13 @@ textarea{
             <h2 style="margin:0 0 8px 0;">동아리 소개</h2>
             <div class="inline-info">사진 슬라이드와 동아리 소개 내용을 볼 수 있습니다. 소개 수정은 부장만 가능합니다.</div>
           </div>
-          <button class="secondary-btn" id="editIntroBtn" style="display:none;" onclick="toggleIntroEditor(true)">소개 수정</button>
+          <button class="secondary-btn" id="editIntroBtn" style="display:none;">소개 수정</button>
         </div>
 
         <div class="intro-slider" id="introSlider">
           <div id="introSlidesWrap"></div>
-          <button class="slider-nav prev" onclick="moveIntroSlide(-1)">❮</button>
-          <button class="slider-nav next" onclick="moveIntroSlide(1)">❯</button>
+          <button class="slider-nav prev" id="introPrevBtn">❮</button>
+          <button class="slider-nav next" id="introNextBtn">❯</button>
           <div class="slider-dots" id="introDotsWrap"></div>
         </div>
 
@@ -911,8 +827,8 @@ textarea{
           <div id="introExistingPhotos" class="section-box hidden"></div>
 
           <div class="tool-row">
-            <button class="primary-btn" onclick="saveClubIntro()">저장</button>
-            <button class="secondary-btn" onclick="toggleIntroEditor(false)">취소</button>
+            <button type="button" class="primary-btn" id="saveIntroBtn">저장</button>
+            <button type="button" class="secondary-btn" id="cancelIntroBtn">취소</button>
           </div>
         </div>
       </div>
@@ -930,8 +846,8 @@ textarea{
         <h2>탐구 아카이브</h2>
 
         <div class="tool-row">
-          <input id="searchInput" placeholder="제목, 작성자, 태그, 동아리로 검색" onkeyup="renderArchive()">
-          <select id="sortSelect" onchange="renderArchive()" style="max-width:160px;">
+          <input id="searchInput" placeholder="제목, 작성자, 태그, 동아리로 검색">
+          <select id="sortSelect" style="max-width:160px;">
             <option value="latest">최신순</option>
             <option value="oldest">오래된순</option>
             <option value="views">조회수순</option>
@@ -939,11 +855,11 @@ textarea{
         </div>
 
         <div class="tool-row" id="clubFilterBar">
-          <button class="filter-btn active" data-club="전체" onclick="setClubFilter('전체')">전체</button>
-          <button class="filter-btn" data-club="융합과학탐구1" onclick="setClubFilter('융합과학탐구1')">융합과학탐구1</button>
-          <button class="filter-btn" data-club="융합과학탐구2" onclick="setClubFilter('융합과학탐구2')">융합과학탐구2</button>
-          <button class="filter-btn" data-club="생명과학" onclick="setClubFilter('생명과학')">생명과학</button>
-          <button class="filter-btn" data-club="지구과학" onclick="setClubFilter('지구과학')">지구과학</button>
+          <button class="filter-btn active" data-club="전체">전체</button>
+          <button class="filter-btn" data-club="융합과학탐구1">융합과학탐구1</button>
+          <button class="filter-btn" data-club="융합과학탐구2">융합과학탐구2</button>
+          <button class="filter-btn" data-club="생명과학">생명과학</button>
+          <button class="filter-btn" data-club="지구과학">지구과학</button>
         </div>
 
         <div id="researchList" class="thumb-grid"></div>
@@ -955,9 +871,10 @@ textarea{
         <h2 id="writeTitleText">글 작성</h2>
         <div class="inline-info" id="editModeInfo">공지나 탐구 글을 작성할 수 있습니다.</div>
         <div class="inline-info">단어 설명은 <strong>[[단어|설명]]</strong> 형식으로 넣을 수 있습니다.</div>
+        <div class="inline-info">새로고침 시 작성 중인 텍스트와 링크는 자동 복원되지만, 선택한 사진/파일은 보안상 다시 선택해야 해요.</div>
 
         <label>글 종류</label>
-        <select id="writeType" onchange="changeWriteForm()">
+        <select id="writeType">
           <option value="notice">공지</option>
           <option value="experiment">실험 보고서</option>
           <option value="project">장기 프로젝트</option>
@@ -1024,23 +941,34 @@ textarea{
 
             <h3>세부 기록 섹션</h3>
             <div id="projectSections"></div>
-            <button type="button" class="secondary-btn" onclick="addProjectSection()">+ 섹션 추가</button>
+            <button type="button" class="secondary-btn" id="addProjectSectionBtn">+ 섹션 추가</button>
           </div>
         </div>
 
         <hr>
 
-        <label>첨부파일</label>
-        <input id="fileInput" type="file" multiple accept=".jpg,.jpeg,.png,.webp,.pdf,.ppt,.pptx,.doc,.docx,.hwp">
+        <label>사진 첨부</label>
+        <input id="imageInput" type="file" multiple accept=".jpg,.jpeg,.png,.webp,image/*">
+
+        <label style="margin-top:12px;display:block;">문서 / 자료 파일 첨부</label>
+        <input id="fileInput" type="file" multiple accept=".pdf,.ppt,.pptx,.doc,.docx,.hwp,.txt">
+
+        <label style="margin-top:12px;display:block;">참고 링크</label>
+        <textarea id="linkInput" placeholder="논문, 뉴스, 기사 링크를 한 줄에 하나씩 입력하세요&#10;예: https://example.com/article"></textarea>
 
         <div id="existingAttachmentsBox" class="hidden" style="margin-top:14px;">
           <h3>기존 첨부파일</h3>
           <div id="existingAttachmentsList"></div>
         </div>
 
+        <div id="existingLinksBox" class="hidden" style="margin-top:14px;">
+          <h3>기존 링크</h3>
+          <div id="existingLinksList"></div>
+        </div>
+
         <div class="tool-row" style="margin-top:16px;">
-          <button type="button" class="primary-btn" onclick="submitWrite()" id="submitBtn">저장</button>
-          <button type="button" class="secondary-btn hidden" onclick="cancelEdit()" id="cancelEditBtn">수정 취소</button>
+          <button type="button" class="primary-btn" id="submitBtn">저장</button>
+          <button type="button" class="secondary-btn hidden" id="cancelEditBtn">수정 취소</button>
         </div>
       </div>
     </section>
@@ -1103,8 +1031,8 @@ textarea{
               </label>
 
               <div class="tool-row">
-                <button class="primary-btn" onclick="saveMember()">저장</button>
-                <button class="secondary-btn" onclick="resetMemberForm()">입력 초기화</button>
+                <button type="button" class="primary-btn" id="saveMemberBtn">저장</button>
+                <button type="button" class="secondary-btn" id="resetMemberBtn">입력 초기화</button>
               </div>
 
               <hr style="margin:18px 0;">
@@ -1115,7 +1043,7 @@ textarea{
               </div>
               <input id="memberExcelInput" type="file" accept=".csv,.xlsx">
               <div class="tool-row" style="margin-top:12px;">
-                <button class="secondary-btn" onclick="uploadMemberExcel()">엑셀 업로드</button>
+                <button type="button" class="secondary-btn" id="uploadExcelBtn">엑셀 업로드</button>
               </div>
             </div>
           </div>
@@ -1123,7 +1051,7 @@ textarea{
           <div class="col">
             <div class="section-box">
               <h3 style="margin-top:0;">명단 관리</h3>
-              <input id="memberSearchInput" placeholder="학번, 이름, 역할, 동아리 검색" onkeyup="renderMemberList()">
+              <input id="memberSearchInput" placeholder="학번, 이름, 역할, 동아리 검색">
               <div style="margin-top:12px;" id="memberList">불러오는 중...</div>
             </div>
           </div>
@@ -1140,8 +1068,8 @@ textarea{
             <div class="meta" id="detailMeta"></div>
           </div>
           <div class="detail-actions">
-            <button class="secondary-btn" onclick="showPage('archive')">아카이브로</button>
-            <button class="secondary-btn" onclick="window.print()">PDF 저장 / 인쇄</button>
+            <button type="button" class="secondary-btn" id="backArchiveBtn">아카이브로</button>
+            <button type="button" class="secondary-btn" id="printBtn">PDF 저장 / 인쇄</button>
           </div>
         </div>
 
@@ -1152,7 +1080,7 @@ textarea{
           <div id="commentList"></div>
           <textarea id="commentInput" placeholder="댓글을 입력하세요"></textarea>
           <div class="tool-row">
-            <button class="primary-btn" onclick="submitComment()">댓글 등록</button>
+            <button type="button" class="primary-btn" id="submitCommentBtn">댓글 등록</button>
           </div>
         </div>
       </div>
@@ -1199,6 +1127,7 @@ const storage = getStorage(app);
 const NOTICE_ALLOWED_ROLES = ["부장", "차장", "선생님"];
 const INTRO_ALLOWED_ROLES = ["부장"];
 const HIDDEN_RESEARCH_KEYWORDS = ["산염기", "산-염기", "코아세르베이트"];
+const WRITE_DRAFT_KEY = "irhos-write-draft";
 
 /* 실제 사용 전에 꼭 실제 명단으로 수정 */
 const MEMBER_SEED = [
@@ -1239,6 +1168,7 @@ let archiveItems = [];
 let currentClubFilter = "전체";
 let currentDetail = null;
 let keptAttachments = [];
+let keptLinks = [];
 let dictionaryItems = [];
 let dictionaryIndex = 0;
 let introDocId = null;
@@ -1307,6 +1237,15 @@ function parseTags(raw){
   return raw.split(/\s+/).map(t => t.trim()).filter(Boolean);
 }
 
+function parseLinks(raw){
+  if(!raw.trim()) return [];
+  return raw.split("\n").map(v => v.trim()).filter(Boolean);
+}
+
+function linksToTextareaValue(links = []){
+  return links.join("\n");
+}
+
 function isImageFile(file = {}){
   const name = (file.name || "").toLowerCase();
   const type = (file.type || "").toLowerCase();
@@ -1319,6 +1258,20 @@ function renderRichText(text = ""){
     (_, term, desc) => `<span class="term-note" data-desc="${desc}" tabindex="0">${term}</span>`
   );
   return parsed.replaceAll("\n","<br>");
+}
+
+function renderLinksSection(links = []){
+  if(!links.length) return "";
+  return `
+    <div class="section-box">
+      <strong>참고 링크</strong>
+      <ul>
+        ${links.map(link => `
+          <li><a href="${escapeHtml(link)}" target="_blank" rel="noopener noreferrer">${escapeHtml(link)}</a></li>
+        `).join("")}
+      </ul>
+    </div>
+  `;
 }
 
 function openTermPopup(term, desc){
@@ -1347,7 +1300,8 @@ document.addEventListener("click", (e) => {
 function toggleProfileMenu(){
   document.getElementById("profileMenu").classList.toggle("open");
 }
-window.toggleProfileMenu = toggleProfileMenu;
+
+document.getElementById("profileSummary").addEventListener("click", toggleProfileMenu);
 
 document.addEventListener("click", (e) => {
   const wrap = document.querySelector(".profile-wrap");
@@ -1430,8 +1384,8 @@ function updateProfileUI(){
   }
 
   document.getElementById("editIntroBtn").style.display = canEditClubIntro() ? "inline-block" : "none";
-  if(introNavBtn) introNavBtn.style.display = isAdmin() ? "flex" : "none";
-  if(adminMenuBtn) adminMenuBtn.classList.toggle("hidden", !isAdmin());
+  introNavBtn.style.display = isAdmin() ? "flex" : "none";
+  adminMenuBtn.classList.toggle("hidden", !isAdmin());
 }
 
 function setActiveNav(page){
@@ -1464,15 +1418,19 @@ async function showPage(page){
 }
 window.showPage = showPage;
 
-window.openMyPosts = function(){
-  showPage("myPosts");
-  document.getElementById("profileMenu").classList.remove("open");
-};
+document.querySelectorAll("#sideNav button").forEach(btn => {
+  btn.addEventListener("click", () => showPage(btn.dataset.page));
+});
 
-window.openAdminPage = function(){
-  showPage("admin");
+document.getElementById("myPostsBtn").addEventListener("click", async () => {
+  await showPage("myPosts");
   document.getElementById("profileMenu").classList.remove("open");
-};
+});
+
+document.getElementById("adminMenuBtn").addEventListener("click", async () => {
+  await showPage("admin");
+  document.getElementById("profileMenu").classList.remove("open");
+});
 
 async function ensureMemberSeed(){
   const snap = await getDocs(collection(db,"members"));
@@ -1501,7 +1459,7 @@ async function findMemberForLogin(id, name, password){
   return found;
 }
 
-window.toggleLogin = async function(){
+async function toggleLogin(){
   const id = prompt("학번(또는 교사용 코드)을 입력하세요");
   if(!id || !id.trim()) return;
 
@@ -1531,17 +1489,20 @@ window.toggleLogin = async function(){
   document.getElementById("profileMenu").classList.remove("open");
   await loadClubIntro();
   alert(`${member.name}님 로그인 완료 (${member.role} · ${member.club})`);
-};
+}
 
-window.logout = function(){
+function logout(){
   localStorage.removeItem("user");
   updateProfileUI();
   document.getElementById("profileMenu").classList.remove("open");
   loadClubIntro();
   alert("로그아웃 완료");
-};
+}
 
-window.changeWriteForm = function(){
+document.getElementById("loginBtn").addEventListener("click", toggleLogin);
+document.getElementById("logoutBtn").addEventListener("click", logout);
+
+function changeWriteForm(){
   const type = document.getElementById("writeType").value;
   const noticeForm = document.getElementById("noticeForm");
   const researchForm = document.getElementById("researchForm");
@@ -1567,7 +1528,11 @@ window.changeWriteForm = function(){
       projectForm.classList.remove("hidden");
     }
   }
-};
+}
+document.getElementById("writeType").addEventListener("change", () => {
+  changeWriteForm();
+  saveWriteDraft();
+});
 
 function createProjectSectionElement(title = "", content = ""){
   const wrapper = document.createElement("div");
@@ -1579,13 +1544,18 @@ function createProjectSectionElement(title = "", content = ""){
     <textarea class="section-content">${escapeHtml(content)}</textarea>
     <button type="button" class="danger-btn small remove-section-btn">섹션 삭제</button>
   `;
-  wrapper.querySelector(".remove-section-btn").addEventListener("click", ()=>wrapper.remove());
+  wrapper.querySelector(".remove-section-btn").addEventListener("click", ()=>{
+    wrapper.remove();
+    saveWriteDraft();
+  });
   return wrapper;
 }
 
-window.addProjectSection = function(title = "", content = ""){
+function addProjectSection(title = "", content = ""){
   document.getElementById("projectSections").appendChild(createProjectSectionElement(title, content));
-};
+  saveWriteDraft();
+}
+document.getElementById("addProjectSectionBtn").addEventListener("click", () => addProjectSection());
 
 function collectProjectSections(){
   return [...document.querySelectorAll(".project-section-item")].map(item => ({
@@ -1650,7 +1620,7 @@ function setThumbCardContent(item){
   const typeLabel = item.type === "project" ? "장기 프로젝트" : "실험 보고서";
 
   return `
-    <div class="thumb-card" onclick="openResearchDetail('${item.id}')">
+    <div class="thumb-card" data-open-id="${item.id}">
       <div class="thumb-image-wrap">
         ${thumbUrl ? `<img src="${thumbUrl}" alt="${escapeHtml(item.title)}">` : `<div class="thumb-image-fallback">썸네일 없음</div>`}
       </div>
@@ -1671,15 +1641,20 @@ function setThumbCardContent(item){
   `;
 }
 
-window.setClubFilter = function(club){
-  currentClubFilter = club;
-  document.querySelectorAll("#clubFilterBar .filter-btn").forEach(btn=>{
-    btn.classList.toggle("active", btn.dataset.club === club);
+document.getElementById("clubFilterBar").addEventListener("click", (e) => {
+  const btn = e.target.closest(".filter-btn");
+  if(!btn) return;
+  currentClubFilter = btn.dataset.club;
+  document.querySelectorAll("#clubFilterBar .filter-btn").forEach(b => {
+    b.classList.toggle("active", b.dataset.club === currentClubFilter);
   });
   renderArchive();
-};
+});
 
-window.renderArchive = function(){
+document.getElementById("searchInput").addEventListener("input", renderArchive);
+document.getElementById("sortSelect").addEventListener("change", renderArchive);
+
+function renderArchive(){
   const list = document.getElementById("researchList");
   list.innerHTML = "";
 
@@ -1701,7 +1676,11 @@ window.renderArchive = function(){
   }
 
   items.forEach(item => list.innerHTML += setThumbCardContent(item));
-};
+
+  list.querySelectorAll("[data-open-id]").forEach(card => {
+    card.addEventListener("click", () => openResearchDetail(card.dataset.openId));
+  });
+}
 
 function renderRecentResearch(){
   const recentResearch = document.getElementById("recentResearch");
@@ -1712,6 +1691,10 @@ function renderRecentResearch(){
     return;
   }
   items.forEach(item => recentResearch.innerHTML += setThumbCardContent(item));
+
+  recentResearch.querySelectorAll("[data-open-id]").forEach(card => {
+    card.addEventListener("click", () => openResearchDetail(card.dataset.openId));
+  });
 }
 
 function renderTodayExperimentPhoto(){
@@ -1773,6 +1756,7 @@ async function loadNotice(){
         </div>
         <h3>${escapeHtml(item.title)}</h3>
         <p>${renderRichText(item.content || "")}</p>
+        ${renderLinksSection(item.links || [])}
         ${renderAttachments(item.attachments || [])}
         <div class="meta">작성자: ${escapeHtml(item.author || "-")} | 작성일: ${formatDate(item.date)}</div>
       </div>
@@ -1803,7 +1787,7 @@ async function loadResearch(){
   renderTodayExperimentPhoto();
 }
 
-window.openResearchDetail = async function(id){
+async function openResearchDetail(id){
   const snap = await getDoc(doc(db,"research",id));
   if(!snap.exists()){
     alert("글을 찾을 수 없습니다.");
@@ -1837,6 +1821,7 @@ window.openResearchDetail = async function(id){
       <p><strong>결과 예측</strong><br>${renderRichText(data.prediction || "")}</p>
       <p><strong>실험 과정</strong><br>${renderRichText(data.method || "")}</p>
       <p><strong>실험 결과</strong><br>${renderRichText(data.result || "")}</p>
+      ${renderLinksSection(data.links || [])}
       ${renderAttachments(data.attachments || [])}
     `;
   }
@@ -1851,6 +1836,7 @@ window.openResearchDetail = async function(id){
           <p>${renderRichText(section.content || "")}</p>
         </div>
       `).join("")}
+      ${renderLinksSection(data.links || [])}
       ${renderAttachments(data.attachments || [])}
     `;
   }
@@ -1858,9 +1844,14 @@ window.openResearchDetail = async function(id){
   document.getElementById("detailBody").innerHTML = bodyHtml;
   await loadComments("research", id);
   await showPage("detail");
-};
+}
 
-window.submitComment = async function(){
+document.getElementById("backArchiveBtn").addEventListener("click", async () => {
+  await showPage("archive");
+});
+document.getElementById("printBtn").addEventListener("click", () => window.print());
+
+async function submitComment(){
   const user = getUser();
   if(!user){
     alert("먼저 로그인해주세요.");
@@ -1888,7 +1879,8 @@ window.submitComment = async function(){
 
   document.getElementById("commentInput").value = "";
   await loadComments("research", currentDetail.id);
-};
+}
+document.getElementById("submitCommentBtn").addEventListener("click", submitComment);
 
 async function loadComments(postType, postId){
   const list = document.getElementById("commentList");
@@ -1918,9 +1910,107 @@ async function loadComments(postType, postId){
   `).join("");
 }
 
+function saveWriteDraft(){
+  const draft = {
+    writeType: document.getElementById("writeType")?.value || "notice",
+
+    noticeTitleWrite: document.getElementById("noticeTitleWrite")?.value || "",
+    noticeContentWrite: document.getElementById("noticeContentWrite")?.value || "",
+    noticePinned: document.getElementById("noticePinned")?.checked || false,
+
+    researchClub: document.getElementById("researchClub")?.value || "전체",
+    title: document.getElementById("title")?.value || "",
+    tags: document.getElementById("tags")?.value || "",
+    reason: document.getElementById("reason")?.value || "",
+    prediction: document.getElementById("prediction")?.value || "",
+    method: document.getElementById("method")?.value || "",
+    result: document.getElementById("result")?.value || "",
+
+    projectStatus: document.getElementById("projectStatus")?.value || "진행중",
+    projectPurpose: document.getElementById("projectPurpose")?.value || "",
+    projectSummary: document.getElementById("projectSummary")?.value || "",
+    projectSections: collectProjectSections(),
+    linkInput: document.getElementById("linkInput")?.value || ""
+  };
+
+  localStorage.setItem(WRITE_DRAFT_KEY, JSON.stringify(draft));
+}
+
+function loadWriteDraft(){
+  const raw = localStorage.getItem(WRITE_DRAFT_KEY);
+  if(!raw) return;
+
+  try{
+    const draft = JSON.parse(raw);
+
+    document.getElementById("writeType").value = draft.writeType || "notice";
+    changeWriteForm();
+
+    document.getElementById("noticeTitleWrite").value = draft.noticeTitleWrite || "";
+    document.getElementById("noticeContentWrite").value = draft.noticeContentWrite || "";
+    document.getElementById("noticePinned").checked = !!draft.noticePinned;
+
+    document.getElementById("researchClub").value = draft.researchClub || "전체";
+    document.getElementById("title").value = draft.title || "";
+    document.getElementById("tags").value = draft.tags || "";
+    document.getElementById("reason").value = draft.reason || "";
+    document.getElementById("prediction").value = draft.prediction || "";
+    document.getElementById("method").value = draft.method || "";
+    document.getElementById("result").value = draft.result || "";
+
+    document.getElementById("projectStatus").value = draft.projectStatus || "진행중";
+    document.getElementById("projectPurpose").value = draft.projectPurpose || "";
+    document.getElementById("projectSummary").value = draft.projectSummary || "";
+    document.getElementById("linkInput").value = draft.linkInput || "";
+
+    document.getElementById("projectSections").innerHTML = "";
+    (draft.projectSections || []).forEach(section => {
+      addProjectSection(section.title || "", section.content || "");
+    });
+
+    changeWriteForm();
+  }catch(error){
+    console.error("초안 불러오기 실패:", error);
+  }
+}
+
+function clearWriteDraft(){
+  localStorage.removeItem(WRITE_DRAFT_KEY);
+}
+
+function bindWriteDraftAutoSave(){
+  const ids = [
+    "writeType",
+    "noticeTitleWrite",
+    "noticeContentWrite",
+    "noticePinned",
+    "researchClub",
+    "title",
+    "tags",
+    "reason",
+    "prediction",
+    "method",
+    "result",
+    "projectStatus",
+    "projectPurpose",
+    "projectSummary",
+    "linkInput"
+  ];
+
+  ids.forEach(id => {
+    const el = document.getElementById(id);
+    if(!el) return;
+    const eventName = (el.type === "checkbox" || el.tagName === "SELECT") ? "change" : "input";
+    el.addEventListener(eventName, saveWriteDraft);
+  });
+
+  document.getElementById("projectSections").addEventListener("input", saveWriteDraft);
+}
+
 function resetWriteForm(){
   editState = { isEditing:false, category:null, id:null };
   keptAttachments = [];
+  keptLinks = [];
 
   document.getElementById("writeTitleText").textContent = "글 작성";
   document.getElementById("editModeInfo").textContent = "공지나 탐구 글을 작성할 수 있습니다.";
@@ -1945,17 +2035,23 @@ function resetWriteForm(){
   document.getElementById("projectPurpose").value = "";
   document.getElementById("projectSummary").value = "";
   document.getElementById("projectSections").innerHTML = "";
+  document.getElementById("imageInput").value = "";
   document.getElementById("fileInput").value = "";
+  document.getElementById("linkInput").value = "";
 
   document.getElementById("existingAttachmentsBox").classList.add("hidden");
   document.getElementById("existingAttachmentsList").innerHTML = "";
+  document.getElementById("existingLinksBox").classList.add("hidden");
+  document.getElementById("existingLinksList").innerHTML = "";
 
   changeWriteForm();
 }
 
-window.cancelEdit = function(){
+function cancelEdit(){
+  clearWriteDraft();
   resetWriteForm();
-};
+}
+document.getElementById("cancelEditBtn").addEventListener("click", cancelEdit);
 
 function renderExistingAttachments(){
   const box = document.getElementById("existingAttachmentsBox");
@@ -1983,7 +2079,33 @@ function renderExistingAttachments(){
   });
 }
 
-window.submitWrite = async function(){
+function renderExistingLinks(){
+  const box = document.getElementById("existingLinksBox");
+  const list = document.getElementById("existingLinksList");
+  list.innerHTML = "";
+
+  if(!keptLinks.length){
+    box.classList.add("hidden");
+    return;
+  }
+
+  box.classList.remove("hidden");
+  keptLinks.forEach((link, index) => {
+    const div = document.createElement("div");
+    div.className = "attach-manage-item";
+    div.innerHTML = `
+      <span style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${escapeHtml(link)}</span>
+      <button type="button" class="danger-btn small">제거</button>
+    `;
+    div.querySelector("button").addEventListener("click", ()=>{
+      keptLinks.splice(index,1);
+      renderExistingLinks();
+    });
+    list.appendChild(div);
+  });
+}
+
+async function submitWrite(){
   const user = getUser();
   if(!user){
     alert("먼저 로그인해주세요.");
@@ -1991,7 +2113,11 @@ window.submitWrite = async function(){
   }
 
   const type = document.getElementById("writeType").value;
-  const uploadedFiles = await uploadFiles(Array.from(document.getElementById("fileInput").files || []), "irhos-posts");
+  const imageFiles = Array.from(document.getElementById("imageInput").files || []);
+  const normalFiles = Array.from(document.getElementById("fileInput").files || []);
+  const uploadedImages = await uploadFiles(imageFiles, "irhos-images");
+  const uploadedFiles = await uploadFiles(normalFiles, "irhos-files");
+  const links = [...keptLinks, ...parseLinks(document.getElementById("linkInput").value)];
 
   if(type === "notice"){
     if(!canWriteNotice()){
@@ -2007,7 +2133,8 @@ window.submitWrite = async function(){
       authorId:user.id,
       club:user.club,
       date:new Date().toISOString(),
-      attachments:[...keptAttachments, ...uploadedFiles]
+      attachments:[...keptAttachments, ...uploadedImages, ...uploadedFiles],
+      links
     };
 
     if(!noticeData.title || !noticeData.content){
@@ -2038,7 +2165,8 @@ window.submitWrite = async function(){
       authorId:user.id,
       views:0,
       createdAt:new Date().toISOString(),
-      attachments:[...keptAttachments, ...uploadedFiles]
+      attachments:[...keptAttachments, ...uploadedImages, ...uploadedFiles],
+      links
     };
 
     if(!researchData.title){
@@ -2072,7 +2200,8 @@ window.submitWrite = async function(){
       authorId:user.id,
       views:0,
       createdAt:new Date().toISOString(),
-      attachments:[...keptAttachments, ...uploadedFiles]
+      attachments:[...keptAttachments, ...uploadedImages, ...uploadedFiles],
+      links
     };
 
     if(!projectData.title){
@@ -2092,14 +2221,18 @@ window.submitWrite = async function(){
     }
   }
 
+  clearWriteDraft();
   resetWriteForm();
   await loadNotice();
   await loadResearch();
   await loadMyPosts();
   await showPage("home");
-};
+}
+document.getElementById("submitBtn").addEventListener("click", async () => {
+  await submitWrite();
+});
 
-window.removePost = async function(category, id){
+async function removePost(category, id){
   if(!confirm("정말 삭제할까요?")) return;
   const collectionName = category === "notice" ? "notice" : "research";
   await deleteDoc(doc(db, collectionName, id));
@@ -2107,9 +2240,9 @@ window.removePost = async function(category, id){
   await loadResearch();
   await loadMyPosts();
   alert("삭제 완료");
-};
+}
 
-window.editPost = async function(category, id){
+async function editPost(category, id){
   const collectionName = category === "notice" ? "notice" : "research";
   const snap = await getDoc(doc(db, collectionName, id));
   if(!snap.exists()){
@@ -2120,6 +2253,7 @@ window.editPost = async function(category, id){
   const data = snap.data();
   editState = { isEditing:true, category, id };
   keptAttachments = [...(data.attachments || [])];
+  keptLinks = [...(data.links || [])];
 
   document.getElementById("writeTitleText").textContent = "글 수정";
   document.getElementById("editModeInfo").textContent = "수정 모드입니다.";
@@ -2155,10 +2289,12 @@ window.editPost = async function(category, id){
     }
   }
 
+  document.getElementById("linkInput").value = "";
   renderExistingAttachments();
+  renderExistingLinks();
   changeWriteForm();
   await showPage("write");
-};
+}
 
 async function loadMyPosts(){
   const user = getUser();
@@ -2218,17 +2354,32 @@ async function loadMyPosts(){
         <div class="type-badge">${escapeHtml(item.typeLabel)}</div>
         <h3>${escapeHtml(item.title)}</h3>
         <div class="meta">작성자: ${escapeHtml(item.author)} | 동아리: ${escapeHtml(item.club)} | 작성일: ${formatDate(item.createdAt)}</div>
-        <button class="secondary-btn small" onclick="editPost('${item.category}','${item.id}')">수정</button>
-        <button class="danger-btn small" onclick="removePost('${item.category}','${item.id}')">삭제</button>
+        <button type="button" class="secondary-btn small" data-edit="${item.category}|${item.id}">수정</button>
+        <button type="button" class="danger-btn small" data-remove="${item.category}|${item.id}">삭제</button>
       </div>
     `;
   });
+
+  list.querySelectorAll("[data-edit]").forEach(btn => {
+    btn.addEventListener("click", async () => {
+      const [category, id] = btn.dataset.edit.split("|");
+      await editPost(category, id);
+    });
+  });
+  list.querySelectorAll("[data-remove]").forEach(btn => {
+    btn.addEventListener("click", async () => {
+      const [category, id] = btn.dataset.remove.split("|");
+      await removePost(category, id);
+    });
+  });
 }
 
-window.toggleIntroEditor = function(show){
+function toggleIntroEditor(show){
   if(!canEditClubIntro()) return;
   document.getElementById("introEditor").classList.toggle("hidden", !show);
-};
+}
+document.getElementById("editIntroBtn").addEventListener("click", () => toggleIntroEditor(true));
+document.getElementById("cancelIntroBtn").addEventListener("click", () => toggleIntroEditor(false));
 
 function renderHeroSlider(slides = []){
   const wrap = document.getElementById("heroSlidesWrap");
@@ -2252,21 +2403,16 @@ function renderHeroSlider(slides = []){
       </div>
     `;
     dots.innerHTML += `
-      <span class="slider-dot ${index === 0 ? "active" : ""}" onclick="goToHeroSlide(${index})"></span>
+      <span class="slider-dot ${index === 0 ? "active" : ""}" data-hero-dot="${index}"></span>
     `;
+  });
+
+  dots.querySelectorAll("[data-hero-dot]").forEach(dot => {
+    dot.addEventListener("click", () => goToHeroSlide(Number(dot.dataset.heroDot)));
   });
 
   startHeroAutoSlide();
 }
-
-window.scrollToHomeClubIntro = function(){
-  showPage("home");
-  setTimeout(() => {
-    const target = document.getElementById("homeClubIntroBox");
-    if(!target) return;
-    target.scrollIntoView({ behavior:"smooth", block:"start" });
-  }, 120);
-};
 
 function renderHeroSlide(){
   const slides = document.querySelectorAll(".hero-slide");
@@ -2275,19 +2421,22 @@ function renderHeroSlide(){
   dots.forEach((dot, index) => dot.classList.toggle("active", index === heroIndex));
 }
 
-window.moveHeroSlide = function(direction){
+function moveHeroSlide(direction){
   const slides = document.querySelectorAll(".hero-slide");
   if(!slides.length) return;
   heroIndex = (heroIndex + direction + slides.length) % slides.length;
   renderHeroSlide();
   restartHeroAutoSlide();
-};
+}
 
-window.goToHeroSlide = function(index){
+function goToHeroSlide(index){
   heroIndex = index;
   renderHeroSlide();
   restartHeroAutoSlide();
-};
+}
+
+document.getElementById("heroPrevBtn").addEventListener("click", () => moveHeroSlide(-1));
+document.getElementById("heroNextBtn").addEventListener("click", () => moveHeroSlide(1));
 
 function startHeroAutoSlide(){
   clearInterval(heroInterval);
@@ -2413,50 +2562,54 @@ function renderIntroExistingPhotos(){
       <div class="attach-manage-item actions-2">
         <span>${escapeHtml(photo.name || `사진 ${index + 1}`)}</span>
         <div class="attach-actions">
-          <button type="button" class="secondary-btn small" onclick="replaceIntroPhoto(${index})">교체</button>
-          <button type="button" class="danger-btn small" onclick="removeIntroPhoto(${index})">제거</button>
+          <button type="button" class="secondary-btn small" data-replace-intro="${index}">교체</button>
+          <button type="button" class="danger-btn small" data-remove-intro="${index}">제거</button>
         </div>
       </div>
     `).join("")}
   `;
-}
 
-window.removeIntroPhoto = function(index){
-  introPhotos.splice(index,1);
-  renderIntroExistingPhotos();
-  renderIntroSlider(introPhotos);
-};
-
-window.replaceIntroPhoto = function(index){
-  if(!canEditClubIntro()){
-    alert("동아리 소개 사진 수정은 부장만 할 수 있어요.");
-    return;
-  }
-
-  const input = document.createElement("input");
-  input.type = "file";
-  input.accept = ".jpg,.jpeg,.png,.webp";
-
-  input.addEventListener("change", async (e) => {
-    const file = e.target.files?.[0];
-    if(!file) return;
-
-    try{
-      const [uploaded] = await uploadFiles([file], "club-intro");
-      introPhotos[index] = uploaded;
+  box.querySelectorAll("[data-remove-intro]").forEach(btn => {
+    btn.addEventListener("click", () => {
+      introPhotos.splice(Number(btn.dataset.removeIntro), 1);
       renderIntroExistingPhotos();
       renderIntroSlider(introPhotos);
-      alert("사진이 교체되었어요. 저장 버튼을 누르면 최종 반영됩니다.");
-    }catch(error){
-      console.error(error);
-      alert("사진 교체 중 오류가 발생했어요.");
-    }
+    });
   });
 
-  input.click();
-};
+  box.querySelectorAll("[data-replace-intro]").forEach(btn => {
+    btn.addEventListener("click", async () => {
+      if(!canEditClubIntro()){
+        alert("동아리 소개 사진 수정은 부장만 할 수 있어요.");
+        return;
+      }
 
-window.saveClubIntro = async function(){
+      const index = Number(btn.dataset.replaceIntro);
+      const input = document.createElement("input");
+      input.type = "file";
+      input.accept = ".jpg,.jpeg,.png,.webp";
+
+      input.addEventListener("change", async (e) => {
+        const file = e.target.files?.[0];
+        if(!file) return;
+        try{
+          const [uploaded] = await uploadFiles([file], "club-intro");
+          introPhotos[index] = uploaded;
+          renderIntroExistingPhotos();
+          renderIntroSlider(introPhotos);
+          alert("사진이 교체되었어요. 저장 버튼을 누르면 최종 반영됩니다.");
+        }catch(error){
+          console.error(error);
+          alert("사진 교체 중 오류가 발생했어요.");
+        }
+      });
+
+      input.click();
+    });
+  });
+}
+
+async function saveClubIntro(){
   if(!canEditClubIntro()){
     alert("동아리 소개 수정은 부장만 할 수 있어요.");
     return;
@@ -2490,7 +2643,8 @@ window.saveClubIntro = async function(){
   await loadClubIntro();
   toggleIntroEditor(false);
   alert("동아리 소개 저장 완료");
-};
+}
+document.getElementById("saveIntroBtn").addEventListener("click", saveClubIntro);
 
 function renderIntroSlider(photos){
   const wrap = document.getElementById("introSlidesWrap");
@@ -2516,8 +2670,12 @@ function renderIntroSlider(photos){
       </div>
     `;
     dots.innerHTML += `
-      <span class="slider-dot ${index === 0 ? "active" : ""}" onclick="goToIntroSlide(${index})"></span>
+      <span class="slider-dot ${index === 0 ? "active" : ""}" data-intro-dot="${index}"></span>
     `;
+  });
+
+  dots.querySelectorAll("[data-intro-dot]").forEach(dot => {
+    dot.addEventListener("click", () => goToIntroSlide(Number(dot.dataset.introDot)));
   });
 
   introInterval = setInterval(() => {
@@ -2525,7 +2683,7 @@ function renderIntroSlider(photos){
   }, 4000);
 }
 
-window.moveIntroSlide = function(direction){
+function moveIntroSlide(direction){
   const slides = document.querySelectorAll(".intro-slide");
   const dots = document.querySelectorAll("#introDotsWrap .slider-dot");
   if(!slides.length) return;
@@ -2533,9 +2691,8 @@ window.moveIntroSlide = function(direction){
   introIndex = (introIndex + direction + slides.length) % slides.length;
   slides.forEach((slide, index) => slide.classList.toggle("active", index === introIndex));
   dots.forEach((dot, index) => dot.classList.toggle("active", index === introIndex));
-};
-
-window.goToIntroSlide = function(index){
+}
+function goToIntroSlide(index){
   const slides = document.querySelectorAll(".intro-slide");
   const dots = document.querySelectorAll("#introDotsWrap .slider-dot");
   if(!slides.length) return;
@@ -2543,7 +2700,10 @@ window.goToIntroSlide = function(index){
   introIndex = index;
   slides.forEach((slide, i) => slide.classList.toggle("active", i === introIndex));
   dots.forEach((dot, i) => dot.classList.toggle("active", i === introIndex));
-};
+}
+
+document.getElementById("introPrevBtn").addEventListener("click", () => moveIntroSlide(-1));
+document.getElementById("introNextBtn").addEventListener("click", () => moveIntroSlide(1));
 
 async function ensureDictionarySeed(){
   const snap = await getDocs(collection(db,"dictionary"));
@@ -2616,7 +2776,7 @@ async function loadMembers(){
   renderMemberList();
 }
 
-window.renderMemberList = function(){
+function renderMemberList(){
   const list = document.getElementById("memberList");
   const keyword = (document.getElementById("memberSearchInput").value || "").trim().toLowerCase();
 
@@ -2639,14 +2799,24 @@ window.renderMemberList = function(){
         비밀번호: ${escapeHtml(item.password || "-")}
       </div>
       <div class="tool-row">
-        <button class="secondary-btn small" onclick="editMember('${item.docId}')">수정</button>
-        <button class="danger-btn small" onclick="deleteMember('${item.docId}')">삭제</button>
+        <button type="button" class="secondary-btn small" data-edit-member="${item.docId}">수정</button>
+        <button type="button" class="danger-btn small" data-delete-member="${item.docId}">삭제</button>
       </div>
     </div>
   `).join("");
-};
 
-window.resetMemberForm = function(){
+  list.querySelectorAll("[data-edit-member]").forEach(btn => {
+    btn.addEventListener("click", () => editMember(btn.dataset.editMember));
+  });
+
+  list.querySelectorAll("[data-delete-member]").forEach(btn => {
+    btn.addEventListener("click", () => deleteMember(btn.dataset.deleteMember));
+  });
+}
+
+document.getElementById("memberSearchInput").addEventListener("input", renderMemberList);
+
+function resetMemberForm(){
   document.getElementById("memberDocId").value = "";
   document.getElementById("memberIdInput").value = "";
   document.getElementById("memberNameInput").value = "";
@@ -2654,9 +2824,10 @@ window.resetMemberForm = function(){
   document.getElementById("memberRoleInput").value = "부원";
   document.getElementById("memberPasswordInput").value = "";
   document.getElementById("memberIsActiveInput").checked = true;
-};
+}
+document.getElementById("resetMemberBtn").addEventListener("click", resetMemberForm);
 
-window.editMember = function(docId){
+function editMember(docId){
   if(!isAdmin()) return;
   const item = memberItems.find(member => member.docId === docId);
   if(!item) return;
@@ -2669,9 +2840,9 @@ window.editMember = function(docId){
   document.getElementById("memberPasswordInput").value = item.password || "";
   document.getElementById("memberIsActiveInput").checked = item.isActive !== false;
   window.scrollTo({ top: 0, behavior: "smooth" });
-};
+}
 
-window.saveMember = async function(){
+async function saveMember(){
   if(!isAdmin()){
     alert("부장만 명단을 관리할 수 있어요.");
     return;
@@ -2711,9 +2882,10 @@ window.saveMember = async function(){
 
   resetMemberForm();
   await loadMembers();
-};
+}
+document.getElementById("saveMemberBtn").addEventListener("click", saveMember);
 
-window.deleteMember = async function(docId){
+async function deleteMember(docId){
   if(!isAdmin()){
     alert("부장만 명단을 관리할 수 있어요.");
     return;
@@ -2736,9 +2908,9 @@ window.deleteMember = async function(docId){
   await deleteDoc(doc(db,"members",docId));
   alert("명단 삭제 완료");
   await loadMembers();
-};
+}
 
-window.uploadMemberExcel = async function(){
+async function uploadMemberExcel(){
   if(!isAdmin()){
     alert("부장만 명단을 업로드할 수 있어요.");
     return;
@@ -2796,11 +2968,20 @@ window.uploadMemberExcel = async function(){
     console.error(error);
     alert("엑셀 업로드 중 오류가 발생했어요.");
   }
-};
+}
+document.getElementById("uploadExcelBtn").addEventListener("click", uploadMemberExcel);
+
+function renderWriteExistingState(){
+  renderExistingAttachments();
+  renderExistingLinks();
+}
+
+bindWriteDraftAutoSave();
 
 updateProfileUI();
 resetWriteForm();
 resetMemberForm();
+
 await ensureMemberSeed();
 await loadNotice();
 await loadResearch();
@@ -2810,6 +2991,11 @@ await loadDictionary();
 
 const savedPage = getSavedPage();
 await showPage(savedPage);
+
+if(savedPage === "write"){
+  loadWriteDraft();
+  renderWriteExistingState();
+}
 
 setInterval(() => {
   renderDictionaryHero();
