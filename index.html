@@ -291,6 +291,7 @@ textarea{
   cursor:pointer;
 }
 .small{padding:8px 10px;font-size:13px;}
+button:disabled{opacity:.6;cursor:not-allowed;}
 
 .meta{
   color:#667085;
@@ -486,7 +487,8 @@ textarea{
 .notice-badge,
 .type-badge,
 .status-badge,
-.pinned-badge{
+.pinned-badge,
+.year-badge{
   display:inline-block;
   padding:4px 8px;
   border-radius:8px;
@@ -498,6 +500,7 @@ textarea{
 .type-badge{background:#eef2ff;color:#344054;}
 .status-badge{background:#ecfdf3;color:#027a48;}
 .pinned-badge{background:#fee4e2;color:#b42318;}
+.year-badge{background:#ecf2ff;color:#1d4ed8;}
 
 .filter-btn{
   border:none;
@@ -846,7 +849,7 @@ textarea{
         <h2>탐구 아카이브</h2>
 
         <div class="tool-row">
-          <input id="searchInput" placeholder="제목, 작성자, 태그, 동아리로 검색">
+          <input id="searchInput" placeholder="제목, 작성자, 태그, 동아리, 년도로 검색">
           <select id="sortSelect" style="max-width:160px;">
             <option value="latest">최신순</option>
             <option value="oldest">오래된순</option>
@@ -862,6 +865,10 @@ textarea{
           <button class="filter-btn" data-club="지구과학">지구과학</button>
         </div>
 
+        <div class="tool-row" id="yearFilterBar">
+          <button class="filter-btn active" data-year="전체">전체 년도</button>
+        </div>
+
         <div id="researchList" class="thumb-grid"></div>
       </div>
     </section>
@@ -872,6 +879,12 @@ textarea{
         <div class="inline-info" id="editModeInfo">공지나 탐구 글을 작성할 수 있습니다.</div>
         <div class="inline-info">단어 설명은 <strong>[[단어|설명]]</strong> 형식으로 넣을 수 있습니다.</div>
         <div class="inline-info">새로고침 시 작성 중인 텍스트와 링크는 자동 복원되지만, 선택한 사진/파일은 보안상 다시 선택해야 해요.</div>
+
+        <label>작성자 표시명</label>
+        <input id="authorDisplay" placeholder="예: 김가은 / 2024 실험반 / 예전 자료 작성자명">
+        <div class="inline-info">
+          기본값은 현재 로그인한 이름이 들어가지만, 예전 자료 백업용으로 다른 작성자명으로 바꿔서 저장할 수 있어요.
+        </div>
 
         <label>글 종류</label>
         <select id="writeType">
@@ -904,6 +917,9 @@ textarea{
             <option value="생명과학">생명과학</option>
             <option value="지구과학">지구과학</option>
           </select>
+
+          <label>작성 년도</label>
+          <select id="archiveYear"></select>
 
           <label>제목</label>
           <input id="title">
@@ -1166,6 +1182,7 @@ const DEFAULT_HERO_SLIDES = [
 let editState = { isEditing:false, category:null, id:null };
 let archiveItems = [];
 let currentClubFilter = "전체";
+let currentYearFilter = "전체";
 let currentDetail = null;
 let keptAttachments = [];
 let keptLinks = [];
@@ -1242,14 +1259,10 @@ function parseLinks(raw){
   return raw.split("\n").map(v => v.trim()).filter(Boolean);
 }
 
-function linksToTextareaValue(links = []){
-  return links.join("\n");
-}
-
 function isImageFile(file = {}){
   const name = (file.name || "").toLowerCase();
   const type = (file.type || "").toLowerCase();
-  return type.startsWith("image/") || [".jpg",".jpeg",".png",".webp"].some(ext => name.endsWith(ext));
+  return type.startsWith("image/") || [".jpg", ".jpeg", ".png", ".webp"].some(ext => name.endsWith(ext));
 }
 
 function renderRichText(text = ""){
@@ -1323,6 +1336,46 @@ window.addEventListener("scroll", () => {
     isTopbarShrunk = false;
   }
 });
+
+function getArchiveYears(){
+  const years = [];
+  for(let year = 2026; year >= 2019; year--){
+    years.push(String(year));
+  }
+  return years;
+}
+
+function initArchiveYearOptions(){
+  const select = document.getElementById("archiveYear");
+  if(!select) return;
+  select.innerHTML = getArchiveYears().map(year => `<option value="${year}">${year}년</option>`).join("");
+  if(!select.value) select.value = "2026";
+}
+
+function renderYearFilterBar(){
+  const bar = document.getElementById("yearFilterBar");
+  if(!bar) return;
+
+  const years = getArchiveYears();
+  bar.innerHTML = `
+    <button class="filter-btn ${currentYearFilter === "전체" ? "active" : ""}" data-year="전체">전체 년도</button>
+    ${years.map(year => `
+      <button class="filter-btn ${currentYearFilter === year ? "active" : ""}" data-year="${year}">${year}</button>
+    `).join("")}
+  `;
+}
+
+function setSubmitButtonLoading(isLoading){
+  const btn = document.getElementById("submitBtn");
+  btn.disabled = isLoading;
+  btn.textContent = isLoading ? "저장 중..." : (editState.isEditing ? "수정 저장" : "저장");
+}
+
+function getAuthorInputValue(){
+  const user = getUser();
+  const raw = document.getElementById("authorDisplay")?.value?.trim() || "";
+  return raw || user?.name || "작성자 미상";
+}
 
 function renderHomeClubIntro(item){
   const box = document.getElementById("homeClubIntroBox");
@@ -1486,6 +1539,8 @@ async function toggleLogin(){
   }));
 
   updateProfileUI();
+  const authorInput = document.getElementById("authorDisplay");
+  if(authorInput) authorInput.value = member.name;
   document.getElementById("profileMenu").classList.remove("open");
   await loadClubIntro();
   alert(`${member.name}님 로그인 완료 (${member.role} · ${member.club})`);
@@ -1494,6 +1549,8 @@ async function toggleLogin(){
 function logout(){
   localStorage.removeItem("user");
   updateProfileUI();
+  const authorInput = document.getElementById("authorDisplay");
+  if(authorInput) authorInput.value = "";
   document.getElementById("profileMenu").classList.remove("open");
   loadClubIntro();
   alert("로그아웃 완료");
@@ -1627,13 +1684,15 @@ function setThumbCardContent(item){
       <div class="thumb-content">
         <div>
           <span class="type-badge">${typeLabel}</span>
+          <span class="year-badge">${escapeHtml(item.archiveYear || "-")}</span>
           ${item.type === "project" ? `<span class="status-badge">${escapeHtml(item.status || "진행중")}</span>` : ""}
         </div>
         <div class="thumb-title">${escapeHtml(item.title)}</div>
         <div class="meta">
           작성자: ${escapeHtml(item.author || "-")}<br>
           동아리: ${escapeHtml(item.club || "-")}<br>
-          작성일: ${formatDate(item.createdAt)}
+          작성 년도: ${escapeHtml(item.archiveYear || "-")}<br>
+          등록일: ${formatDate(item.createdAt)}
         </div>
         <div class="thumb-summary">${summary || "내용 요약 없음"}</div>
       </div>
@@ -1651,6 +1710,16 @@ document.getElementById("clubFilterBar").addEventListener("click", (e) => {
   renderArchive();
 });
 
+document.getElementById("yearFilterBar").addEventListener("click", (e) => {
+  const btn = e.target.closest(".filter-btn");
+  if(!btn) return;
+  currentYearFilter = btn.dataset.year;
+  document.querySelectorAll("#yearFilterBar .filter-btn").forEach(b => {
+    b.classList.toggle("active", b.dataset.year === currentYearFilter);
+  });
+  renderArchive();
+});
+
 document.getElementById("searchInput").addEventListener("input", renderArchive);
 document.getElementById("sortSelect").addEventListener("change", renderArchive);
 
@@ -1662,8 +1731,11 @@ function renderArchive(){
   const sort = document.getElementById("sortSelect").value;
 
   let items = [...archiveItems].filter(item => {
-    const searchable = [item.title || "", item.author || "", item.club || "", ...(item.tags || [])].join(" ").toLowerCase();
-    return searchable.includes(keyword) && (currentClubFilter === "전체" || item.club === currentClubFilter);
+    const searchable = [item.title || "", item.author || "", item.club || "", item.archiveYear || "", ...(item.tags || [])].join(" ").toLowerCase();
+    const matchKeyword = searchable.includes(keyword);
+    const matchClub = (currentClubFilter === "전체" || item.club === currentClubFilter);
+    const matchYear = (currentYearFilter === "전체" || String(item.archiveYear || "") === currentYearFilter);
+    return matchKeyword && matchClub && matchYear;
   });
 
   if(sort === "latest") items.sort((a,b)=>new Date(b.createdAt)-new Date(a.createdAt));
@@ -1722,7 +1794,8 @@ function renderTodayExperimentPhoto(){
   metaEl.innerHTML = `
     작성자: ${escapeHtml(picked.author || "-")}<br>
     동아리: ${escapeHtml(picked.club || "-")}<br>
-    작성일: ${formatDate(picked.createdAt)}
+    작성 년도: ${escapeHtml(picked.archiveYear || "-")}<br>
+    등록일: ${formatDate(picked.createdAt)}
   `;
 }
 
@@ -1758,7 +1831,7 @@ async function loadNotice(){
         <p>${renderRichText(item.content || "")}</p>
         ${renderLinksSection(item.links || [])}
         ${renderAttachments(item.attachments || [])}
-        <div class="meta">작성자: ${escapeHtml(item.author || "-")} | 작성일: ${formatDate(item.date)}</div>
+        <div class="meta">작성자: ${escapeHtml(item.author || "-")} | 등록자: ${escapeHtml(item.savedBy || item.author || "-")} | 작성일: ${formatDate(item.date)}</div>
       </div>
     `;
   });
@@ -1780,7 +1853,9 @@ async function loadResearch(){
   snap.forEach(docu => {
     const data = docu.data();
     if(shouldHideResearch(data.title)) return;
-    archiveItems.push({ id:docu.id, ...data });
+
+    const fallbackYear = data.archiveYear || (data.createdAt ? String(new Date(data.createdAt).getFullYear()) : "");
+    archiveItems.push({ id:docu.id, ...data, archiveYear: fallbackYear });
   });
   renderArchive();
   renderRecentResearch();
@@ -1803,13 +1878,15 @@ async function openResearchDetail(id){
 
   document.getElementById("detailBadges").innerHTML = `
     <span class="type-badge">${data.type === "project" ? "장기 프로젝트" : "실험 보고서"}</span>
+    <span class="year-badge">${escapeHtml(data.archiveYear || "-")}</span>
     ${data.type === "project" ? `<span class="status-badge">${escapeHtml(data.status || "진행중")}</span>` : ""}
   `;
   document.getElementById("detailTitle").textContent = data.title || "";
   document.getElementById("detailMeta").innerHTML = `
     작성자: ${escapeHtml(data.author || "-")} |
     동아리: ${escapeHtml(data.club || "-")} |
-    작성일: ${formatDate(data.createdAt)} |
+    작성 년도: ${escapeHtml(data.archiveYear || "-")} |
+    등록일: ${formatDate(data.createdAt)} |
     조회수: ${data.views || 0}
   `;
 
@@ -1823,6 +1900,7 @@ async function openResearchDetail(id){
       <p><strong>실험 결과</strong><br>${renderRichText(data.result || "")}</p>
       ${renderLinksSection(data.links || [])}
       ${renderAttachments(data.attachments || [])}
+      <div class="meta">등록자: ${escapeHtml(data.savedBy || "-")}</div>
     `;
   }
   if(data.type === "project"){
@@ -1838,6 +1916,7 @@ async function openResearchDetail(id){
       `).join("")}
       ${renderLinksSection(data.links || [])}
       ${renderAttachments(data.attachments || [])}
+      <div class="meta">등록자: ${escapeHtml(data.savedBy || "-")}</div>
     `;
   }
 
@@ -1913,12 +1992,14 @@ async function loadComments(postType, postId){
 function saveWriteDraft(){
   const draft = {
     writeType: document.getElementById("writeType")?.value || "notice",
+    authorDisplay: document.getElementById("authorDisplay")?.value || "",
 
     noticeTitleWrite: document.getElementById("noticeTitleWrite")?.value || "",
     noticeContentWrite: document.getElementById("noticeContentWrite")?.value || "",
     noticePinned: document.getElementById("noticePinned")?.checked || false,
 
     researchClub: document.getElementById("researchClub")?.value || "전체",
+    archiveYear: document.getElementById("archiveYear")?.value || "2026",
     title: document.getElementById("title")?.value || "",
     tags: document.getElementById("tags")?.value || "",
     reason: document.getElementById("reason")?.value || "",
@@ -1944,6 +2025,7 @@ function loadWriteDraft(){
     const draft = JSON.parse(raw);
 
     document.getElementById("writeType").value = draft.writeType || "notice";
+    document.getElementById("authorDisplay").value = draft.authorDisplay || "";
     changeWriteForm();
 
     document.getElementById("noticeTitleWrite").value = draft.noticeTitleWrite || "";
@@ -1951,6 +2033,7 @@ function loadWriteDraft(){
     document.getElementById("noticePinned").checked = !!draft.noticePinned;
 
     document.getElementById("researchClub").value = draft.researchClub || "전체";
+    document.getElementById("archiveYear").value = draft.archiveYear || "2026";
     document.getElementById("title").value = draft.title || "";
     document.getElementById("tags").value = draft.tags || "";
     document.getElementById("reason").value = draft.reason || "";
@@ -1981,10 +2064,12 @@ function clearWriteDraft(){
 function bindWriteDraftAutoSave(){
   const ids = [
     "writeType",
+    "authorDisplay",
     "noticeTitleWrite",
     "noticeContentWrite",
     "noticePinned",
     "researchClub",
+    "archiveYear",
     "title",
     "tags",
     "reason",
@@ -2012,6 +2097,8 @@ function resetWriteForm(){
   keptAttachments = [];
   keptLinks = [];
 
+  const user = getUser();
+
   document.getElementById("writeTitleText").textContent = "글 작성";
   document.getElementById("editModeInfo").textContent = "공지나 탐구 글을 작성할 수 있습니다.";
   document.getElementById("submitBtn").textContent = "저장";
@@ -2020,11 +2107,14 @@ function resetWriteForm(){
   document.getElementById("writeType").disabled = false;
   document.getElementById("writeType").value = "notice";
 
+  document.getElementById("authorDisplay").value = user?.name || "";
+
   document.getElementById("noticeTitleWrite").value = "";
   document.getElementById("noticeContentWrite").value = "";
   document.getElementById("noticePinned").checked = false;
 
   document.getElementById("researchClub").value = "전체";
+  document.getElementById("archiveYear").value = "2026";
   document.getElementById("title").value = "";
   document.getElementById("tags").value = "";
   document.getElementById("reason").value = "";
@@ -2113,120 +2203,168 @@ async function submitWrite(){
   }
 
   const type = document.getElementById("writeType").value;
+  const authorName = getAuthorInputValue();
+
   const imageFiles = Array.from(document.getElementById("imageInput").files || []);
   const normalFiles = Array.from(document.getElementById("fileInput").files || []);
-  const uploadedImages = await uploadFiles(imageFiles, "irhos-images");
-  const uploadedFiles = await uploadFiles(normalFiles, "irhos-files");
   const links = [...keptLinks, ...parseLinks(document.getElementById("linkInput").value)];
 
-  if(type === "notice"){
-    if(!canWriteNotice()){
-      alert("공지는 부장, 차장, 선생님만 작성할 수 있어요.");
-      return;
+  try{
+    setSubmitButtonLoading(true);
+
+    if(type === "notice"){
+      if(!canWriteNotice()){
+        alert("공지는 부장, 차장, 선생님만 작성할 수 있어요.");
+        return;
+      }
+
+      const title = document.getElementById("noticeTitleWrite").value.trim();
+      const content = document.getElementById("noticeContentWrite").value.trim();
+
+      if(!title || !content){
+        alert("공지 제목과 내용을 모두 입력해주세요.");
+        return;
+      }
+
+      const [uploadedImages, uploadedFiles] = await Promise.all([
+        uploadFiles(imageFiles, "irhos-images"),
+        uploadFiles(normalFiles, "irhos-files")
+      ]);
+
+      const noticeData = {
+        title,
+        content,
+        pinned:document.getElementById("noticePinned").checked,
+        author:authorName,
+        authorId:user.id,
+        originalWriterName: authorName,
+        savedBy:user.name,
+        savedById:user.id,
+        club:user.club,
+        date:new Date().toISOString(),
+        attachments:[...keptAttachments, ...uploadedImages, ...uploadedFiles],
+        links
+      };
+
+      if(editState.isEditing && editState.category === "notice"){
+        const oldSnap = await getDoc(doc(db,"notice",editState.id));
+        const oldData = oldSnap.exists() ? oldSnap.data() : {};
+        noticeData.date = oldData.date || new Date().toISOString();
+        await updateDoc(doc(db,"notice",editState.id), noticeData);
+        alert("공지 수정 완료");
+      }else{
+        await addDoc(collection(db,"notice"), noticeData);
+        alert("공지 등록 완료");
+      }
     }
 
-    const noticeData = {
-      title:document.getElementById("noticeTitleWrite").value.trim(),
-      content:document.getElementById("noticeContentWrite").value.trim(),
-      pinned:document.getElementById("noticePinned").checked,
-      author:user.name,
-      authorId:user.id,
-      club:user.club,
-      date:new Date().toISOString(),
-      attachments:[...keptAttachments, ...uploadedImages, ...uploadedFiles],
-      links
-    };
+    if(type === "experiment"){
+      const title = document.getElementById("title").value.trim();
 
-    if(!noticeData.title || !noticeData.content){
-      alert("공지 제목과 내용을 모두 입력해주세요.");
-      return;
+      if(!title){
+        alert("제목을 입력해주세요.");
+        return;
+      }
+
+      const [uploadedImages, uploadedFiles] = await Promise.all([
+        uploadFiles(imageFiles, "irhos-images"),
+        uploadFiles(normalFiles, "irhos-files")
+      ]);
+
+      const researchData = {
+        title,
+        tags:parseTags(document.getElementById("tags").value),
+        club:document.getElementById("researchClub").value,
+        archiveYear: document.getElementById("archiveYear").value,
+        type:"experiment",
+        reason:document.getElementById("reason").value.trim(),
+        prediction:document.getElementById("prediction").value.trim(),
+        method:document.getElementById("method").value.trim(),
+        result:document.getElementById("result").value.trim(),
+        author:authorName,
+        authorId:user.id,
+        originalWriterName: authorName,
+        savedBy:user.name,
+        savedById:user.id,
+        views:0,
+        createdAt:new Date().toISOString(),
+        attachments:[...keptAttachments, ...uploadedImages, ...uploadedFiles],
+        links
+      };
+
+      if(editState.isEditing && editState.category === "research"){
+        const oldSnap = await getDoc(doc(db,"research",editState.id));
+        const oldData = oldSnap.exists() ? oldSnap.data() : {};
+        researchData.views = oldData.views || 0;
+        researchData.createdAt = oldData.createdAt || new Date().toISOString();
+        await updateDoc(doc(db,"research",editState.id), researchData);
+        alert("실험 보고서 수정 완료");
+      }else{
+        await addDoc(collection(db,"research"), researchData);
+        alert("실험 보고서 저장 완료");
+      }
     }
 
-    if(editState.isEditing && editState.category === "notice"){
-      await updateDoc(doc(db,"notice",editState.id), noticeData);
-      alert("공지 수정 완료");
-    }else{
-      await addDoc(collection(db,"notice"), noticeData);
-      alert("공지 등록 완료");
+    if(type === "project"){
+      const title = document.getElementById("title").value.trim();
+
+      if(!title){
+        alert("제목을 입력해주세요.");
+        return;
+      }
+
+      const [uploadedImages, uploadedFiles] = await Promise.all([
+        uploadFiles(imageFiles, "irhos-images"),
+        uploadFiles(normalFiles, "irhos-files")
+      ]);
+
+      const projectData = {
+        title,
+        tags:parseTags(document.getElementById("tags").value),
+        club:document.getElementById("researchClub").value,
+        archiveYear: document.getElementById("archiveYear").value,
+        type:"project",
+        purpose:document.getElementById("projectPurpose").value.trim(),
+        summary:document.getElementById("projectSummary").value.trim(),
+        status:document.getElementById("projectStatus").value,
+        sections:collectProjectSections(),
+        author:authorName,
+        authorId:user.id,
+        originalWriterName: authorName,
+        savedBy:user.name,
+        savedById:user.id,
+        views:0,
+        createdAt:new Date().toISOString(),
+        attachments:[...keptAttachments, ...uploadedImages, ...uploadedFiles],
+        links
+      };
+
+      if(editState.isEditing && editState.category === "research"){
+        const oldSnap = await getDoc(doc(db,"research",editState.id));
+        const oldData = oldSnap.exists() ? oldSnap.data() : {};
+        projectData.views = oldData.views || 0;
+        projectData.createdAt = oldData.createdAt || new Date().toISOString();
+        await updateDoc(doc(db,"research",editState.id), projectData);
+        alert("장기 프로젝트 수정 완료");
+      }else{
+        await addDoc(collection(db,"research"), projectData);
+        alert("장기 프로젝트 저장 완료");
+      }
     }
+
+    clearWriteDraft();
+    resetWriteForm();
+    await loadNotice();
+    await loadResearch();
+    await loadMyPosts();
+    await showPage("home");
+
+  }catch(error){
+    console.error("저장 중 오류:", error);
+    alert("저장 중 오류가 발생했어요.\n첨부파일이 포함된 경우 Firebase Storage 규칙도 확인해주세요.\n콘솔(F12)에서 에러 내용을 확인할 수 있어요.");
+  }finally{
+    setSubmitButtonLoading(false);
   }
-
-  if(type === "experiment"){
-    const researchData = {
-      title:document.getElementById("title").value.trim(),
-      tags:parseTags(document.getElementById("tags").value),
-      club:document.getElementById("researchClub").value,
-      type:"experiment",
-      reason:document.getElementById("reason").value.trim(),
-      prediction:document.getElementById("prediction").value.trim(),
-      method:document.getElementById("method").value.trim(),
-      result:document.getElementById("result").value.trim(),
-      author:user.name,
-      authorId:user.id,
-      views:0,
-      createdAt:new Date().toISOString(),
-      attachments:[...keptAttachments, ...uploadedImages, ...uploadedFiles],
-      links
-    };
-
-    if(!researchData.title){
-      alert("제목을 입력해주세요.");
-      return;
-    }
-
-    if(editState.isEditing && editState.category === "research"){
-      const oldSnap = await getDoc(doc(db,"research",editState.id));
-      const oldData = oldSnap.exists() ? oldSnap.data() : {};
-      researchData.views = oldData.views || 0;
-      await updateDoc(doc(db,"research",editState.id), researchData);
-      alert("실험 보고서 수정 완료");
-    }else{
-      await addDoc(collection(db,"research"), researchData);
-      alert("실험 보고서 저장 완료");
-    }
-  }
-
-  if(type === "project"){
-    const projectData = {
-      title:document.getElementById("title").value.trim(),
-      tags:parseTags(document.getElementById("tags").value),
-      club:document.getElementById("researchClub").value,
-      type:"project",
-      purpose:document.getElementById("projectPurpose").value.trim(),
-      summary:document.getElementById("projectSummary").value.trim(),
-      status:document.getElementById("projectStatus").value,
-      sections:collectProjectSections(),
-      author:user.name,
-      authorId:user.id,
-      views:0,
-      createdAt:new Date().toISOString(),
-      attachments:[...keptAttachments, ...uploadedImages, ...uploadedFiles],
-      links
-    };
-
-    if(!projectData.title){
-      alert("제목을 입력해주세요.");
-      return;
-    }
-
-    if(editState.isEditing && editState.category === "research"){
-      const oldSnap = await getDoc(doc(db,"research",editState.id));
-      const oldData = oldSnap.exists() ? oldSnap.data() : {};
-      projectData.views = oldData.views || 0;
-      await updateDoc(doc(db,"research",editState.id), projectData);
-      alert("장기 프로젝트 수정 완료");
-    }else{
-      await addDoc(collection(db,"research"), projectData);
-      alert("장기 프로젝트 저장 완료");
-    }
-  }
-
-  clearWriteDraft();
-  resetWriteForm();
-  await loadNotice();
-  await loadResearch();
-  await loadMyPosts();
-  await showPage("home");
 }
 document.getElementById("submitBtn").addEventListener("click", async () => {
   await submitWrite();
@@ -2259,6 +2397,7 @@ async function editPost(category, id){
   document.getElementById("editModeInfo").textContent = "수정 모드입니다.";
   document.getElementById("submitBtn").textContent = "수정 저장";
   document.getElementById("cancelEditBtn").classList.remove("hidden");
+  document.getElementById("authorDisplay").value = data.author || "";
 
   if(category === "notice"){
     document.getElementById("writeType").value = "notice";
@@ -2270,6 +2409,7 @@ async function editPost(category, id){
     document.getElementById("writeType").value = data.type || "experiment";
     document.getElementById("writeType").disabled = true;
     document.getElementById("researchClub").value = data.club || "전체";
+    document.getElementById("archiveYear").value = data.archiveYear || "2026";
     document.getElementById("title").value = data.title || "";
     document.getElementById("tags").value = (data.tags || []).join(" ");
 
@@ -2311,7 +2451,7 @@ async function loadMyPosts(){
   const noticeSnap = await getDocs(collection(db,"notice"));
   noticeSnap.forEach(docu => {
     const data = docu.data();
-    if(data.authorId === user.id){
+    if(data.savedById === user.id || data.authorId === user.id){
       allItems.push({
         id:docu.id,
         category:"notice",
@@ -2328,7 +2468,7 @@ async function loadMyPosts(){
   researchSnap.forEach(docu => {
     const data = docu.data();
     if(shouldHideResearch(data.title)) return;
-    if(data.authorId === user.id){
+    if(data.savedById === user.id || data.authorId === user.id){
       allItems.push({
         id:docu.id,
         category:"research",
@@ -2336,7 +2476,8 @@ async function loadMyPosts(){
         typeLabel:data.type === "project" ? "장기 프로젝트" : "실험 보고서",
         createdAt:data.createdAt,
         club:data.club || "-",
-        author:data.author || "-"
+        author:data.author || "-",
+        archiveYear:data.archiveYear || "-"
       });
     }
   });
@@ -2352,6 +2493,7 @@ async function loadMyPosts(){
     list.innerHTML += `
       <div class="post">
         <div class="type-badge">${escapeHtml(item.typeLabel)}</div>
+        ${item.archiveYear ? `<div class="year-badge">${escapeHtml(item.archiveYear)}</div>` : ""}
         <h3>${escapeHtml(item.title)}</h3>
         <div class="meta">작성자: ${escapeHtml(item.author)} | 동아리: ${escapeHtml(item.club)} | 작성일: ${formatDate(item.createdAt)}</div>
         <button type="button" class="secondary-btn small" data-edit="${item.category}|${item.id}">수정</button>
@@ -2979,6 +3121,8 @@ function renderWriteExistingState(){
 bindWriteDraftAutoSave();
 
 updateProfileUI();
+initArchiveYearOptions();
+renderYearFilterBar();
 resetWriteForm();
 resetMemberForm();
 
