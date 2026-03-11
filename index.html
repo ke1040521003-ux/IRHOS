@@ -31,6 +31,7 @@
     .nav-text{display:flex;flex-direction:column;align-items:center;line-height:1.1;font-size:12px;transition:all .38s ease;overflow:hidden;}
     .nav-text small{font-size:9px;opacity:.78;font-weight:400;transition:all .38s ease;}
     .topbar.shrink .nav-text{opacity:0;max-height:0;transform:translateY(-6px);pointer-events:none;}
+    .topbar.shrink .nav-text small{opacity:0;}
     .profile-wrap{position:relative;min-width:170px;transition:all .38s ease;}
     .profile-summary{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:8px 10px;background:rgba(255,255,255,0.1);border-radius:12px;cursor:pointer;transition:all .38s ease,opacity .3s ease,transform .3s ease;}
     .profile-left{display:flex;align-items:center;gap:8px;min-width:0;}
@@ -56,6 +57,7 @@
     .secondary-btn{border:none;background:#e7edf6;color:#1d3557;padding:10px 16px;border-radius:10px;cursor:pointer;}
     .danger-btn{border:none;background:#b42318;color:#fff;padding:8px 12px;border-radius:10px;cursor:pointer;}
     .small{padding:8px 10px;font-size:13px;}
+    button:disabled{opacity:.6;cursor:not-allowed;}
     .meta{color:#667085;font-size:13px;margin:8px 0;line-height:1.5;}
     .inline-info{color:#667085;font-size:14px;margin-bottom:10px;}
     .hero-slider,.intro-slider{position:relative;width:100%;height:420px;overflow:hidden;border-radius:18px;background:#dfe7f3;}
@@ -101,6 +103,7 @@
     .attachment-image{width:100%;max-width:360px;border-radius:12px;border:1px solid #ddd;display:block;margin:8px 0;}
     .section-box{border:1px solid #dbe2ea;border-radius:12px;background:#fafcff;padding:14px;margin-bottom:14px;}
     .attach-manage-item{display:flex;justify-content:space-between;gap:8px;align-items:center;border:1px solid #e5e7eb;border-radius:10px;padding:8px 10px;margin-bottom:8px;}
+    .attach-manage-item.actions-2{align-items:center;}
     .attach-actions{display:flex;gap:8px;flex-wrap:wrap;}
     .term-note{color:#1d4ed8;cursor:pointer;text-decoration:underline dotted;font-weight:600;}
     .term-popup{position:fixed;inset:0;background:rgba(0,0,0,.35);display:flex;align-items:center;justify-content:center;z-index:9999;}
@@ -108,9 +111,11 @@
     .detail-actions{display:flex;gap:10px;flex-wrap:wrap;}
     .comment-box{border-top:1px solid #eee;padding-top:14px;margin-top:16px;}
     .comment-item{border-top:1px solid #eee;padding:10px 0;}
+    .comment-item:first-child{border-top:none;}
     .photo-limit-note{font-size:13px;color:#667085;margin:8px 0 12px 0;}
     .member-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
     .member-item{border:1px solid #e5e7eb;border-radius:12px;padding:12px;margin-bottom:10px;background:#fff;}
+    .member-item h4{margin:0 0 8px 0;}
     .warn-box{background:#fff8e6;border:1px solid #f0d38a;color:#7a5b00;padding:12px 14px;border-radius:12px;margin-bottom:14px;}
     @media (max-width:1100px){.topbar{flex-wrap:wrap;align-items:stretch;}.brand{width:100%;}.side-nav{width:100%;grid-template-columns:repeat(5,minmax(0,1fr));}.profile-wrap{width:100%;min-width:0;}}
     @media (max-width:900px){.member-grid{grid-template-columns:1fr;}}
@@ -119,69 +124,875 @@
   </style>
 </head>
 <body>
-  <div class="app">
-    <header class="topbar" id="topbar">
-      <div class="brand">
-        <h1>🔬 IRHOS</h1>
-        <p>실험과 탐구로 성장하는 학생 과학 동아리</p>
+<div class="app">
+  <header class="topbar" id="topbar">
+    <div class="brand">
+      <h1>🔬 IRHOS</h1>
+      <p>실험과 탐구로 성장하는 학생 과학 동아리</p>
+    </div>
+    <div class="side-nav" id="sideNav">
+      <button data-page="home"><span class="nav-icon">🏠</span><span class="nav-text">홈 <small>메인 화면</small></span></button>
+      <button id="introNavBtn" data-page="intro"><span class="nav-icon">👥</span><span class="nav-text">동아리 소개 <small>소개글 · 슬라이드</small></span></button>
+      <button data-page="notice"><span class="nav-icon">📢</span><span class="nav-text">공지 <small>중요 안내</small></span></button>
+      <button data-page="archive"><span class="nav-icon">🧪</span><span class="nav-text">탐구 아카이브 <small>실험 · 프로젝트</small></span></button>
+      <button data-page="write"><span class="nav-icon">✍️</span><span class="nav-text">글 작성 <small>새 글 등록</small></span></button>
+    </div>
+    <div class="profile-wrap">
+      <div class="profile-menu" id="profileMenu">
+        <button id="loginBtn">로그인</button>
+        <button id="logoutBtn">로그아웃</button>
+        <button id="myPostsBtn">내 글 관리</button>
+        <button id="adminMenuBtn" class="hidden">관리자 페이지</button>
       </div>
-      <div class="side-nav" id="sideNav">
-        <button data-page="home"><span class="nav-icon">🏠</span><span class="nav-text">홈 <small>메인 화면</small></span></button>
-        <button id="introNavBtn" data-page="intro"><span class="nav-icon">👥</span><span class="nav-text">동아리 소개 <small>소개글 · 슬라이드</small></span></button>
-        <button data-page="notice"><span class="nav-icon">📢</span><span class="nav-text">공지 <small>중요 안내</small></span></button>
-        <button data-page="archive"><span class="nav-icon">🧪</span><span class="nav-text">탐구 아카이브 <small>실험 · 프로젝트</small></span></button>
-        <button data-page="write"><span class="nav-icon">✍️</span><span class="nav-text">글 작성 <small>새 글 등록</small></span></button>
-      </div>
-      <div class="profile-wrap">
-        <div class="profile-menu" id="profileMenu">
-          <button id="loginBtn">로그인</button>
-          <button id="logoutBtn">로그아웃</button>
-          <button id="myPostsBtn">내 글 관리</button>
-          <button id="adminMenuBtn" class="hidden">관리자 페이지</button>
+      <div class="profile-summary" id="profileSummary">
+        <div class="profile-left">
+          <div class="profile-avatar" id="profileAvatar">G</div>
+          <div>
+            <div class="profile-name" id="profileName">게스트</div>
+            <div class="profile-role" id="profileRole">로그인 안 됨</div>
+          </div>
         </div>
-        <div class="profile-summary" id="profileSummary">
-          <div class="profile-left">
-            <div class="profile-avatar" id="profileAvatar">G</div>
-            <div>
-              <div class="profile-name" id="profileName">게스트</div>
-              <div class="profile-role" id="profileRole">로그인 안 됨</div>
+        <div>▾</div>
+      </div>
+    </div>
+  </header>
+
+  <main class="main">
+    <section id="page-home" class="page active">
+      <div class="card">
+        <div class="hero-slider" id="heroSlider">
+          <div id="heroSlidesWrap"></div>
+          <button class="slider-nav prev" id="heroPrevBtn">❮</button>
+          <button class="slider-nav next" id="heroNextBtn">❯</button>
+          <div class="slider-dots" id="heroDotsWrap"></div>
+        </div>
+        <div class="home-intro-box">
+          <h2 style="margin-top:0;">IRHOS 과학동아리</h2>
+          <p style="margin:0;line-height:1.7;">IRHOS 과학동아리는 실험과 연구 기록을 바탕으로 과학적 사고를 키우고, 다양한 탐구 활동을 함께 만들어가는 학생 연구 동아리입니다.</p>
+        </div>
+        <div id="homeClubIntroBox" class="card" style="display:none; margin-top:18px;"><div id="homeClubIntroContent"></div></div>
+        <div class="row" style="margin-top:20px;">
+          <div class="col">
+            <div class="dictionary-box">
+              <div class="section-label">오늘의 과학 용어</div>
+              <div class="big-title" id="dictionaryHeroTerm">과학 용어 불러오는 중...</div>
+              <div id="dictionaryHeroDesc" style="line-height:1.7;">잠시만 기다려주세요.</div>
             </div>
           </div>
-          <div>▾</div>
+          <div class="col">
+            <div class="today-photo-box">
+              <img id="todayPhotoImg" src="" alt="오늘의 실험 사진" style="display:none;">
+              <div class="today-photo-content">
+                <div class="section-label">오늘의 실험 사진</div>
+                <div class="big-title" id="todayPhotoTitle">실험 사진 불러오는 중...</div>
+                <div id="todayPhotoMeta" style="line-height:1.7;"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row" style="margin-top:20px;">
+          <div class="col"><h3>📢 최근 공지</h3><div id="noticePreview"></div></div>
+          <div class="col"><h3>🧪 최근 탐구</h3><div id="recentResearch" class="thumb-grid"></div></div>
         </div>
       </div>
-    </header>
+    </section>
 
-    <main class="main">
-      <section id="page-home" class="page active"><div class="card"><p>이 캔버스는 예전 UI 복원용 시작 파일입니다. 요청하신 기준 UI 골격은 복원해 두었습니다. 다음 단계에서 현재 파이어베이스 기능을 이 구조에 맞춰 이어서 붙일 수 있습니다.</p></div></section>
-      <section id="page-intro" class="page"><div class="card"><h2>동아리 소개</h2></div></section>
-      <section id="page-notice" class="page"><div class="card"><h2>공지</h2></div></section>
-      <section id="page-archive" class="page"><div class="card"><h2>탐구 아카이브</h2></div></section>
-      <section id="page-write" class="page"><div class="card"><h2>글 작성</h2></div></section>
-      <section id="page-myPosts" class="page"><div class="card"><h2>내 글 관리</h2></div></section>
-      <section id="page-admin" class="page"><div class="card"><h2>관리자 페이지</h2></div></section>
-      <section id="page-detail" class="page"><div class="card"><h2>상세 보기</h2></div></section>
-    </main>
-  </div>
-  <script>
-    document.querySelectorAll('#sideNav button').forEach(btn => {
-      btn.addEventListener('click', () => {
-        document.querySelectorAll('.page').forEach(page => page.classList.remove('active'));
-        const target = document.getElementById(`page-${btn.dataset.page}`);
-        if (target) target.classList.add('active');
-        document.querySelectorAll('#sideNav button').forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
+    <section id="page-intro" class="page">
+      <div class="card">
+        <div class="tool-row" style="justify-content:space-between;">
+          <div>
+            <h2 style="margin:0 0 8px 0;">동아리 소개</h2>
+            <div class="inline-info">사진 슬라이드와 동아리 소개 내용을 볼 수 있습니다. 소개 수정은 부장만 가능합니다.</div>
+          </div>
+          <button class="secondary-btn" id="editIntroBtn" style="display:none;">소개 수정</button>
+        </div>
+        <div class="intro-slider" id="introSlider">
+          <div id="introSlidesWrap"></div>
+          <button class="slider-nav prev" id="introPrevBtn">❮</button>
+          <button class="slider-nav next" id="introNextBtn">❯</button>
+          <div class="slider-dots" id="introDotsWrap"></div>
+        </div>
+        <div id="introView" style="margin-top:18px;"></div>
+        <div id="introEditor" class="hidden" style="margin-top:18px;">
+          <label>동아리 목표</label><textarea id="introGoal"></textarea>
+          <label>활동 내용</label><textarea id="introActivities"></textarea>
+          <label>주요 연구 분야</label><textarea id="introFields"></textarea>
+          <label>활동 사진</label><input id="introPhotoInput" type="file" accept=".jpg,.jpeg,.png,.webp" multiple>
+          <div class="photo-limit-note">슬라이드 사진은 최대 5장까지 등록할 수 있어요. 기존 사진도 교체할 수 있습니다.</div>
+          <div id="introExistingPhotos" class="section-box hidden"></div>
+          <div class="tool-row">
+            <button type="button" class="primary-btn" id="saveIntroBtn">저장</button>
+            <button type="button" class="secondary-btn" id="cancelIntroBtn">취소</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="page-notice" class="page"><div class="card"><h2>공지</h2><div id="noticeList"></div></div></section>
+
+    <section id="page-archive" class="page">
+      <div class="card">
+        <h2>탐구 아카이브</h2>
+        <div class="tool-row">
+          <input id="searchInput" placeholder="제목, 작성자, 태그, 동아리, 년도로 검색">
+          <select id="sortSelect" style="max-width:160px;">
+            <option value="latest">최신순</option>
+            <option value="oldest">오래된순</option>
+            <option value="views">조회수순</option>
+          </select>
+        </div>
+        <div class="tool-row" id="clubFilterBar">
+          <button class="filter-btn active" data-club="전체">전체</button>
+          <button class="filter-btn" data-club="융합과학탐구1">융합과학탐구1</button>
+          <button class="filter-btn" data-club="융합과학탐구2">융합과학탐구2</button>
+          <button class="filter-btn" data-club="생명과학">생명과학</button>
+          <button class="filter-btn" data-club="지구과학">지구과학</button>
+        </div>
+        <div class="tool-row" id="yearFilterBar"><button class="filter-btn active" data-year="전체">전체 년도</button></div>
+        <div id="researchList" class="thumb-grid"></div>
+      </div>
+    </section>
+
+    <section id="page-write" class="page">
+      <div class="card">
+        <h2 id="writeTitleText">글 작성</h2>
+        <div class="inline-info" id="editModeInfo">공지나 탐구 글을 작성할 수 있습니다.</div>
+        <div class="inline-info">단어 설명은 <strong>[[단어|설명]]</strong> 형식으로 넣을 수 있습니다.</div>
+        <div class="inline-info">새로고침 시 작성 중인 텍스트와 링크는 자동 복원되지만, 선택한 사진/파일은 보안상 다시 선택해야 해요.</div>
+        <label>작성자 표시명</label><input id="authorDisplay" placeholder="예: 김가은 / 2024 실험반 / 예전 자료 작성자명">
+        <div class="inline-info">기본값은 현재 로그인한 이름이 들어가지만, 예전 자료 백업용으로 다른 작성자명으로 바꿔서 저장할 수 있어요.</div>
+        <label>글 종류</label>
+        <select id="writeType">
+          <option value="notice">공지</option>
+          <option value="experiment">실험 보고서</option>
+          <option value="project">장기 프로젝트</option>
+        </select>
+        <div id="noticeForm">
+          <label>공지 제목</label><input id="noticeTitleWrite">
+          <label>공지 내용</label><textarea id="noticeContentWrite"></textarea>
+          <div class="tool-row"><label style="display:flex;align-items:center;gap:8px;"><input type="checkbox" id="noticePinned" style="width:auto;"> 상단 고정 공지</label></div>
+        </div>
+        <div id="researchForm" class="hidden">
+          <label>공개 범위 / 동아리</label>
+          <select id="researchClub"><option value="전체">전체</option><option value="융합과학탐구1">융합과학탐구1</option><option value="융합과학탐구2">융합과학탐구2</option><option value="생명과학">생명과학</option><option value="지구과학">지구과학</option></select>
+          <label>작성 년도</label><select id="archiveYear"></select>
+          <label>제목</label><input id="title">
+          <label>태그</label><input id="tags" placeholder="#화학 #실험 #생명과학">
+          <div id="experimentForm">
+            <label>실험 이유</label><textarea id="reason"></textarea>
+            <label>결과 예측</label><textarea id="prediction"></textarea>
+            <label>실험 과정</label><textarea id="method"></textarea>
+            <label>실험 결과</label><textarea id="result"></textarea>
+          </div>
+          <div id="projectForm" class="hidden">
+            <label>프로젝트 상태</label><select id="projectStatus"><option value="진행중">진행중</option><option value="완료">완료</option><option value="보류">보류</option></select>
+            <label>연구 목적</label><textarea id="projectPurpose"></textarea>
+            <label>프로젝트 요약</label><textarea id="projectSummary"></textarea>
+            <h3>세부 기록 섹션</h3>
+            <div id="projectSections"></div>
+            <button type="button" class="secondary-btn" id="addProjectSectionBtn">+ 섹션 추가</button>
+          </div>
+        </div>
+        <hr>
+        <label>사진 첨부</label><input id="imageInput" type="file" multiple accept=".jpg,.jpeg,.png,.webp,image/*">
+        <label style="margin-top:12px;display:block;">문서 / 자료 파일 첨부</label><input id="fileInput" type="file" multiple accept=".pdf,.ppt,.pptx,.doc,.docx,.hwp,.txt">
+        <label style="margin-top:12px;display:block;">참고 링크</label><textarea id="linkInput" placeholder="논문, 뉴스, 기사 링크를 한 줄에 하나씩 입력하세요&#10;예: https://example.com/article"></textarea>
+        <div id="existingAttachmentsBox" class="hidden" style="margin-top:14px;"><h3>기존 첨부파일</h3><div id="existingAttachmentsList"></div></div>
+        <div id="existingLinksBox" class="hidden" style="margin-top:14px;"><h3>기존 링크</h3><div id="existingLinksList"></div></div>
+        <div class="tool-row" style="margin-top:16px;">
+          <button type="button" class="primary-btn" id="submitBtn">저장</button>
+          <button type="button" class="secondary-btn hidden" id="cancelEditBtn">수정 취소</button>
+        </div>
+      </div>
+    </section>
+
+    <section id="page-myPosts" class="page"><div class="card"><h2>내 글 관리</h2><div id="myPostList"></div></div></section>
+
+    <section id="page-admin" class="page">
+      <div class="card">
+        <h2>관리자 페이지</h2>
+        <div id="currentAdminInfo" class="section-box" style="margin-bottom:16px;"></div>
+        <div class="warn-box">처음 실행 시 members 컬렉션이 비어 있으면 아래 seed 명단이 자동 생성됩니다. 실제 사용 전 꼭 학번, 이름, 역할을 수정해주세요. 기본 비밀번호 규칙은 <strong>atom학번</strong> 입니다.</div>
+        <div class="member-grid">
+          <div class="col">
+            <div class="section-box">
+              <h3 style="margin-top:0;">명단 추가 / 수정</h3>
+              <input type="hidden" id="memberDocId">
+              <label>학번 / 코드</label><input id="memberIdInput" placeholder="예: 20602 또는 T001">
+              <label>이름</label><input id="memberNameInput" placeholder="이름">
+              <label>동아리</label><select id="memberClubInput"><option value="융합과학탐구1">융합과학탐구1</option><option value="융합과학탐구2">융합과학탐구2</option><option value="생명과학">생명과학</option><option value="지구과학">지구과학</option><option value="전체">전체</option></select>
+              <label>역할</label><select id="memberRoleInput"><option value="부원">부원</option><option value="차장">차장</option><option value="부장">부장</option><option value="선생님">선생님</option></select>
+              <label>비밀번호</label><input id="memberPasswordInput" placeholder="예: atom20602">
+              <div class="inline-info">추천 규칙: atom학번</div>
+              <label style="display:flex;align-items:center;gap:8px;margin:12px 0;"><input type="checkbox" id="memberIsActiveInput" checked style="width:auto;"> 재학 / 재직 중(활성 상태)</label>
+              <div class="tool-row"><button type="button" class="primary-btn" id="saveMemberBtn">저장</button><button type="button" class="secondary-btn" id="resetMemberBtn">입력 초기화</button></div>
+              <hr style="margin:18px 0;">
+              <h3 style="margin-top:0;">명단 엑셀 업로드</h3>
+              <div class="inline-info">열 이름은 <strong>id, name, club, role, password, isActive</strong> 로 맞춰주세요.</div>
+              <input id="memberExcelInput" type="file" accept=".csv,.xlsx">
+              <div class="tool-row" style="margin-top:12px;"><button type="button" class="secondary-btn" id="uploadExcelBtn">엑셀 업로드</button></div>
+            </div>
+          </div>
+          <div class="col"><div class="section-box"><h3 style="margin-top:0;">명단 관리</h3><input id="memberSearchInput" placeholder="학번, 이름, 역할, 동아리 검색"><div style="margin-top:12px;" id="memberList">불러오는 중...</div></div></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="page-detail" class="page">
+      <div class="card">
+        <div class="tool-row" style="justify-content:space-between;">
+          <div><div id="detailBadges"></div><h2 id="detailTitle" style="margin:0 0 8px 0;"></h2><div class="meta" id="detailMeta"></div></div>
+          <div class="detail-actions"><button type="button" class="secondary-btn" id="backArchiveBtn">아카이브로</button><button type="button" class="secondary-btn" id="printBtn">PDF 저장 / 인쇄</button></div>
+        </div>
+        <div id="detailBody"></div>
+        <div class="comment-box"><h3>댓글</h3><div id="commentList"></div><textarea id="commentInput" placeholder="댓글을 입력하세요"></textarea><div class="tool-row"><button type="button" class="primary-btn" id="submitCommentBtn">댓글 등록</button></div></div>
+      </div>
+    </section>
+  </main>
+</div>
+
+<script type="module">
+  import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js';
+  import { getFirestore, collection, addDoc, getDocs, getDoc, doc, updateDoc, deleteDoc, query, where } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js';
+  import { getStorage, ref, uploadBytes, getDownloadURL } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-storage.js';
+  import { getAuth, signInAnonymously } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js';
+
+  const firebaseConfig = {
+    apiKey: 'AIzaSyDXVVSPhvErz9JfjXKjMaZIBNYu6d3j8dg',
+    authDomain: 'irhos-science-lab.firebaseapp.com',
+    projectId: 'irhos-science-lab',
+    storageBucket: 'irhos-science-lab.firebasestorage.app',
+    messagingSenderId: '54955251430',
+    appId: '1:54955251430:web:5396c836ccc33f981d4d27',
+    measurementId: 'G-378MZ34JSE'
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const db = getFirestore(app);
+  const storage = getStorage(app);
+  const auth = getAuth(app);
+
+  const NOTICE_ALLOWED_ROLES = ['부장', '차장', '선생님'];
+  const INTRO_ALLOWED_ROLES = ['부장'];
+  const HIDDEN_RESEARCH_KEYWORDS = ['산염기', '산-염기'];
+  const WRITE_DRAFT_KEY = 'irhos-write-draft';
+  const MEMBER_SEED = [
+    { id: '20602', name: '김가은', club: '융합과학탐구1', role: '부장', password: 'atom20602', isActive: true },
+    { id: '20702', name: '김희원', club: '융합과학탐구1', role: '차장', password: 'atom20702', isActive: true },
+    { id: '20101', name: '학생1', club: '융합과학탐구2', role: '부원', password: 'atom20101', isActive: true },
+    { id: '20201', name: '학생2', club: '생명과학', role: '부원', password: 'atom20201', isActive: true },
+    { id: '20301', name: '학생3', club: '지구과학', role: '부원', password: 'atom20301', isActive: true },
+    { id: 'T001', name: '지도교사', club: '전체', role: '선생님', password: 'atomT001', isActive: true }
+  ];
+  const DEFAULT_HERO_SLIDES = [
+    { name:'기본 대표 사진', url:'https://i.imgur.com/PtA3Uwz.jpeg', title:'IRHOS 과학동아리', desc:'실험과 탐구를 통해 과학적 사고를 확장하는 학생 연구 동아리' },
+    { name:'기본 실험 활동 사진', url:'https://i.imgur.com/lwXX7wS.jpg', title:'실험 중심 활동', desc:'직접 실험하고 기록하며 결과를 분석하는 탐구 활동을 진행합니다.' },
+    { name:'기본 연구 기록 사진', url:'https://i.imgur.com/WUmRtAy.jpg', title:'연구 기록과 발표', desc:'탐구 과정을 정리하고 발표하며 함께 성장하는 과학 동아리입니다.' }
+  ];
+
+  let editState = { isEditing:false, category:null, id:null };
+  let archiveItems = [];
+  let currentClubFilter = '전체';
+  let currentYearFilter = '전체';
+  let currentDetail = null;
+  let keptAttachments = [];
+  let keptLinks = [];
+  let dictionaryItems = [];
+  let dictionaryIndex = 0;
+  let introDocId = null;
+  let introPhotos = [];
+  let heroIndex = 0;
+  let heroInterval = null;
+  let introIndex = 0;
+  let introInterval = null;
+  let memberItems = [];
+  let isTopbarShrunk = false;
+
+  const $ = (id) => document.getElementById(id);
+  const escapeHtml = (text='') => String(text).replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;').replaceAll('"','&quot;').replaceAll("'",'&#039;');
+  const formatDate = (v) => v ? new Date(v).toLocaleDateString('ko-KR') : '-';
+  const normalizeTitle = (title='') => String(title).replace(/[\s\-–—_]/g,'').trim().toLowerCase();
+  const shouldHideResearch = (title='') => HIDDEN_RESEARCH_KEYWORDS.some(k => normalizeTitle(title).includes(normalizeTitle(k)));
+  const getUser = () => JSON.parse(localStorage.getItem('user') || 'null');
+  const saveCurrentPage = (page) => localStorage.setItem('irhos-current-page', page);
+  const getSavedPage = () => localStorage.getItem('irhos-current-page') || 'home';
+  const canEditClubIntro = () => { const u=getUser(); return !!u && INTRO_ALLOWED_ROLES.includes(u.role); };
+  const canWriteNotice = () => { const u=getUser(); return !!u && NOTICE_ALLOWED_ROLES.includes(u.role); };
+  const isAdmin = () => { const u=getUser(); return !!u && u.role === '부장'; };
+  const parseTags = (raw) => raw.trim() ? raw.split(/\s+/).map(t=>t.trim()).filter(Boolean) : [];
+  const parseLinks = (raw) => raw.trim() ? raw.split('\n').map(v=>v.trim()).filter(Boolean) : [];
+  const isImageFile = (file={}) => ((file.type||'').toLowerCase().startsWith('image/')) || ['.jpg','.jpeg','.png','.webp','.gif'].some(ext => (file.name||'').toLowerCase().endsWith(ext));
+
+  async function ensureAuth(){ if(!auth.currentUser) await signInAnonymously(auth); }
+
+  function renderRichText(text=''){
+    const escaped = escapeHtml(text);
+    const parsed = escaped.replace(/\[\[([^|\]]+)\|([^\]]+)\]\]/g, (_,term,desc) => `<span class="term-note" data-desc="${desc}" tabindex="0">${term}</span>`);
+    return parsed.replaceAll('\n','<br>');
+  }
+
+  function renderLinksSection(links=[]){
+    if(!links.length) return '';
+    return `<div class="section-box"><strong>참고 링크</strong><ul>${links.map(link => `<li><a href="${escapeHtml(link)}" target="_blank" rel="noopener noreferrer">${escapeHtml(link)}</a></li>`).join('')}</ul></div>`;
+  }
+
+  function renderAttachments(files=[]){
+    if(!files.length) return '';
+    const docs = files.filter(file => !isImageFile(file));
+    const images = files.filter(file => isImageFile(file));
+    return `<div class="section-box"><strong>첨부파일</strong>${docs.length ? `<ul>${docs.map(file => `<li><a href="${file.url}" target="_blank" rel="noopener noreferrer">${escapeHtml(file.name)}</a></li>`).join('')}</ul>` : ''}${images.map(file => `<div><a href="${file.url}" target="_blank" rel="noopener noreferrer">${escapeHtml(file.name)}</a><img src="${file.url}" alt="${escapeHtml(file.name)}" class="attachment-image"></div>`).join('')}</div>`;
+  }
+
+  function openTermPopup(term, desc){
+    const popup = document.createElement('div');
+    popup.className = 'term-popup';
+    popup.innerHTML = `<div class="term-popup-box"><h3>${escapeHtml(term)}</h3><p>${renderRichText(desc)}</p><button type="button" class="primary-btn">닫기</button></div>`;
+    popup.addEventListener('click', (e) => { if(e.target === popup) popup.remove(); });
+    popup.querySelector('button').addEventListener('click', () => popup.remove());
+    document.body.appendChild(popup);
+  }
+
+  document.addEventListener('click', (e) => {
+    const t = e.target.closest('.term-note');
+    if(t) openTermPopup(t.textContent || '', t.dataset.desc || '');
+  });
+
+  $('profileSummary').addEventListener('click', () => $('profileMenu').classList.toggle('open'));
+  document.addEventListener('click', (e) => {
+    const wrap = document.querySelector('.profile-wrap');
+    if(wrap && !wrap.contains(e.target)) $('profileMenu').classList.remove('open');
+  });
+
+  window.addEventListener('scroll', () => {
+    const y = window.scrollY;
+    const topbar = $('topbar');
+    if(!isTopbarShrunk && y > 140){ topbar.classList.add('shrink'); isTopbarShrunk = true; }
+    else if(isTopbarShrunk && y < 70){ topbar.classList.remove('shrink'); isTopbarShrunk = false; }
+  });
+
+  function updateProfileUI(){
+    const user = getUser();
+    $('profileAvatar').textContent = user?.name?.[0] || 'G';
+    $('profileName').textContent = user?.name || '게스트';
+    $('profileRole').textContent = user ? `${user.role} · ${user.club}` : '로그인 안 됨';
+    $('editIntroBtn').style.display = canEditClubIntro() ? 'inline-block' : 'none';
+    $('introNavBtn').style.display = isAdmin() ? 'flex' : 'none';
+    $('adminMenuBtn').classList.toggle('hidden', !isAdmin());
+  }
+
+  function setActiveNav(page){ document.querySelectorAll('#sideNav button').forEach(btn => btn.classList.toggle('active', btn.dataset.page === page)); }
+
+  async function showPage(page){
+    if(page === 'intro' && !isAdmin()) page = 'home';
+    if(page === 'admin' && !isAdmin()) page = 'home';
+    document.querySelectorAll('.page').forEach(el => el.classList.remove('active'));
+    document.getElementById(`page-${page}`).classList.add('active');
+    setActiveNav(page);
+    saveCurrentPage(page);
+    if(page === 'home' || page === 'intro') await loadClubIntro();
+    if(page === 'archive') renderArchive();
+    if(page === 'myPosts') await loadMyPosts();
+    if(page === 'admin') await loadMembers();
+  }
+  window.showPage = showPage;
+
+  document.querySelectorAll('#sideNav button').forEach(btn => btn.addEventListener('click', () => showPage(btn.dataset.page)));
+  $('myPostsBtn').addEventListener('click', async () => { await showPage('myPosts'); $('profileMenu').classList.remove('open'); });
+  $('adminMenuBtn').addEventListener('click', async () => { await showPage('admin'); $('profileMenu').classList.remove('open'); });
+
+  async function ensureMemberSeed(){
+    const snap = await getDocs(collection(db,'members'));
+    if(!snap.empty) return;
+    for(const member of MEMBER_SEED) await addDoc(collection(db,'members'), member);
+  }
+
+  async function findMemberForLogin(id, name, password){
+    const q = query(collection(db,'members'), where('id','==', String(id).trim()));
+    const snap = await getDocs(q);
+    let found = null;
+    snap.forEach(docu => {
+      const data = docu.data();
+      if(data.name === String(name).trim() && data.password === String(password).trim() && data.isActive !== false) found = { docId: docu.id, ...data };
+    });
+    return found;
+  }
+
+  async function toggleLogin(){
+    const id = prompt('학번(또는 교사용 코드)을 입력하세요'); if(!id?.trim()) return;
+    const name = prompt('이름을 입력하세요'); if(!name?.trim()) return;
+    const password = prompt('비밀번호를 입력하세요\n예: atom20602'); if(!password?.trim()) return;
+    await ensureMemberSeed();
+    const member = await findMemberForLogin(id, name, password);
+    if(!member){ alert('로그인 정보가 일치하지 않아요. 학번, 이름, 비밀번호를 다시 확인해주세요.'); return; }
+    localStorage.setItem('user', JSON.stringify({ id:member.id, name:member.name, club:member.club, role:member.role, memberDocId:member.docId }));
+    updateProfileUI();
+    $('authorDisplay').value = member.name;
+    $('profileMenu').classList.remove('open');
+    await loadClubIntro();
+    alert(`${member.name}님 로그인 완료 (${member.role} · ${member.club})`);
+  }
+  function logout(){ localStorage.removeItem('user'); updateProfileUI(); $('authorDisplay').value=''; $('profileMenu').classList.remove('open'); loadClubIntro(); alert('로그아웃 완료'); }
+  $('loginBtn').addEventListener('click', toggleLogin);
+  $('logoutBtn').addEventListener('click', logout);
+
+  function getArchiveYears(){ const years=[]; for(let y=2026;y>=2019;y--) years.push(String(y)); return years; }
+  function initArchiveYearOptions(){ $('archiveYear').innerHTML = getArchiveYears().map(y => `<option value="${y}">${y}년</option>`).join(''); if(!$('archiveYear').value) $('archiveYear').value='2026'; }
+  function renderYearFilterBar(){ $('yearFilterBar').innerHTML = `<button class="filter-btn ${currentYearFilter === '전체' ? 'active' : ''}" data-year="전체">전체 년도</button>${getArchiveYears().map(year => `<button class="filter-btn ${currentYearFilter === year ? 'active' : ''}" data-year="${year}">${year}</button>`).join('')}`; }
+  function setSubmitButtonLoading(isLoading){ const btn=$('submitBtn'); btn.disabled=isLoading; btn.textContent=isLoading ? '저장 중...' : (editState.isEditing ? '수정 저장' : '저장'); }
+  function getAuthorInputValue(){ const user=getUser(); const raw=$('authorDisplay')?.value?.trim() || ''; return raw || user?.name || '작성자 미상'; }
+
+  function getThumbnailUrl(item){ const image=(item.attachments||[]).find(file => isImageFile(file)); return image ? image.url : ''; }
+  function getFirstSentence(item){
+    let source='';
+    if(item.type === 'experiment') source = item.reason || item.method || item.result || '';
+    else if(item.type === 'project') source = item.summary || item.purpose || ((item.sections||[])[0]?.content || '');
+    else source = item.content || '';
+    const cleaned = source.replace(/\[\[([^|\]]+)\|([^\]]+)\]\]/g,'$1').trim();
+    const sentence = cleaned.split(/(?<=[.!?。]|다\.)\s+/)[0] || cleaned;
+    return sentence.length > 90 ? sentence.slice(0,90) + '...' : sentence;
+  }
+
+  function setThumbCardContent(item){
+    const thumbUrl = getThumbnailUrl(item);
+    const summary = escapeHtml(getFirstSentence(item));
+    const typeLabel = item.type === 'project' ? '장기 프로젝트' : '실험 보고서';
+    return `<div class="thumb-card" data-open-id="${item.id}"><div class="thumb-image-wrap">${thumbUrl ? `<img src="${thumbUrl}" alt="${escapeHtml(item.title)}">` : `<div class="thumb-image-fallback">썸네일 없음</div>`}</div><div class="thumb-content"><div><span class="type-badge">${typeLabel}</span><span class="year-badge">${escapeHtml(item.archiveYear || '-')}</span>${item.type === 'project' ? `<span class="status-badge">${escapeHtml(item.status || '진행중')}</span>` : ''}</div><div class="thumb-title">${escapeHtml(item.title)}</div><div class="meta">작성자: ${escapeHtml(item.author || '-')}<br>동아리: ${escapeHtml(item.club || '-')}<br>작성 년도: ${escapeHtml(item.archiveYear || '-')}<br>등록일: ${formatDate(item.createdAt)}</div><div class="thumb-summary">${summary || '내용 요약 없음'}</div></div></div>`;
+  }
+
+  function renderArchive(){
+    const list = $('researchList');
+    list.innerHTML = '';
+    const keyword = $('searchInput').value.toLowerCase();
+    const sort = $('sortSelect').value;
+    let items = [...archiveItems].filter(item => {
+      const searchable = [item.title || '', item.author || '', item.club || '', item.archiveYear || '', ...(item.tags || [])].join(' ').toLowerCase();
+      return searchable.includes(keyword) && (currentClubFilter === '전체' || item.club === currentClubFilter) && (currentYearFilter === '전체' || String(item.archiveYear || '') === currentYearFilter);
+    });
+    if(sort === 'latest') items.sort((a,b) => new Date(b.createdAt) - new Date(a.createdAt));
+    if(sort === 'oldest') items.sort((a,b) => new Date(a.createdAt) - new Date(b.createdAt));
+    if(sort === 'views') items.sort((a,b) => (b.views||0)-(a.views||0));
+    if(!items.length){ list.innerHTML = '<p>조건에 맞는 탐구 글이 없습니다.</p>'; return; }
+    items.forEach(item => list.innerHTML += setThumbCardContent(item));
+    list.querySelectorAll('[data-open-id]').forEach(card => card.addEventListener('click', () => openResearchDetail(card.dataset.openId)));
+  }
+
+  function renderRecentResearch(){
+    const wrap = $('recentResearch');
+    wrap.innerHTML='';
+    const items = [...archiveItems].sort((a,b)=>new Date(b.createdAt)-new Date(a.createdAt)).slice(0,3);
+    if(!items.length){ wrap.innerHTML='<p>최근 탐구 글이 없습니다.</p>'; return; }
+    items.forEach(item => wrap.innerHTML += setThumbCardContent(item));
+    wrap.querySelectorAll('[data-open-id]').forEach(card => card.addEventListener('click', () => openResearchDetail(card.dataset.openId)));
+  }
+
+  function renderTodayExperimentPhoto(){
+    const imageEl = $('todayPhotoImg');
+    const titleEl = $('todayPhotoTitle');
+    const metaEl = $('todayPhotoMeta');
+    const experimentPosts = archiveItems.filter(item => item.type === 'experiment' && (item.attachments||[]).some(file => isImageFile(file)));
+    if(!experimentPosts.length){ imageEl.style.display='none'; titleEl.textContent='등록된 실험 사진이 없습니다.'; metaEl.textContent=''; return; }
+    const picked = experimentPosts[Math.floor(Math.random()*experimentPosts.length)];
+    const image = (picked.attachments||[]).find(file => isImageFile(file));
+    imageEl.src = image.url; imageEl.style.display='block';
+    titleEl.textContent = picked.title || '실험 사진';
+    metaEl.innerHTML = `작성자: ${escapeHtml(picked.author || '-')}<br>동아리: ${escapeHtml(picked.club || '-')}<br>작성 년도: ${escapeHtml(picked.archiveYear || '-')}<br>등록일: ${formatDate(picked.createdAt)}`;
+  }
+
+  function renderHomeClubIntro(item){
+    $('homeClubIntroBox').style.display='block';
+    $('homeClubIntroContent').innerHTML = !item
+      ? `<h3 style="margin-top:0;">📘 동아리 소개</h3><div class="section-box"><h4>동아리 목표</h4><p>아직 등록되지 않았습니다.</p></div><div class="section-box"><h4>활동 내용</h4><p>아직 등록되지 않았습니다.</p></div><div class="section-box"><h4>주요 연구 분야</h4><p>아직 등록되지 않았습니다.</p></div>`
+      : `<h3 style="margin-top:0;">📘 동아리 소개</h3><div class="section-box"><h4>동아리 목표</h4><p>${renderRichText(item.goal || '')}</p></div><div class="section-box"><h4>활동 내용</h4><p>${renderRichText(item.activities || '')}</p></div><div class="section-box"><h4>주요 연구 분야</h4><p>${renderRichText(item.fields || '')}</p></div>`;
+  }
+
+  async function loadNotice(){
+    const list=$('noticeList'), preview=$('noticePreview');
+    list.innerHTML=''; preview.innerHTML='';
+    const snap=await getDocs(collection(db,'notice')); const items=[];
+    snap.forEach(docu => items.push({ id:docu.id, ...docu.data() }));
+    items.sort((a,b)=> (Number(!!b.pinned)-Number(!!a.pinned)) || (new Date(b.date)-new Date(a.date)));
+    if(!items.length){ list.innerHTML='<p>등록된 공지가 없습니다.</p>'; preview.innerHTML='<p>최근 공지가 없습니다.</p>'; return; }
+    items.forEach(item => {
+      list.innerHTML += `<div class="post"><div><span class="notice-badge">공지</span>${item.pinned ? `<span class="pinned-badge">상단 고정</span>` : ''}</div><h3>${escapeHtml(item.title)}</h3><p>${renderRichText(item.content || '')}</p>${renderLinksSection(item.links || [])}${renderAttachments(item.attachments || [])}<div class="meta">작성자: ${escapeHtml(item.author || '-')} | 등록자: ${escapeHtml(item.savedBy || item.author || '-')} | 작성일: ${formatDate(item.date)}</div></div>`;
+    });
+    items.slice(0,4).forEach(item => preview.innerHTML += `<div class="post">${item.pinned ? `<span class="pinned-badge">고정</span>` : ''}<h4>${escapeHtml(item.title)}</h4><div class="meta">${formatDate(item.date)}</div></div>`);
+  }
+
+  async function loadResearch(){
+    const snap=await getDocs(collection(db,'research')); archiveItems=[];
+    snap.forEach(docu => {
+      const data=docu.data();
+      if(shouldHideResearch(data.title)) return;
+      const fallbackYear = data.archiveYear || (data.createdAt ? String(new Date(data.createdAt).getFullYear()) : '');
+      archiveItems.push({ id:docu.id, ...data, archiveYear:fallbackYear });
+    });
+    renderArchive(); renderRecentResearch(); renderTodayExperimentPhoto();
+  }
+
+  async function openResearchDetail(id){
+    const snap=await getDoc(doc(db,'research',id));
+    if(!snap.exists()){ alert('글을 찾을 수 없습니다.'); return; }
+    const data={ id:snap.id, ...snap.data() };
+    currentDetail = data;
+    const currentViews = data.views || 0;
+    await updateDoc(doc(db,'research',id), { views: currentViews + 1 });
+    data.views = currentViews + 1;
+    $('detailBadges').innerHTML = `<span class="type-badge">${data.type === 'project' ? '장기 프로젝트' : '실험 보고서'}</span><span class="year-badge">${escapeHtml(data.archiveYear || '-')}</span>${data.type === 'project' ? `<span class="status-badge">${escapeHtml(data.status || '진행중')}</span>` : ''}`;
+    $('detailTitle').textContent = data.title || '';
+    $('detailMeta').innerHTML = `작성자: ${escapeHtml(data.author || '-')} | 동아리: ${escapeHtml(data.club || '-')} | 작성 년도: ${escapeHtml(data.archiveYear || '-')} | 등록일: ${formatDate(data.createdAt)} | 조회수: ${data.views || 0}`;
+    let bodyHtml='';
+    if(data.type === 'experiment') bodyHtml = `<div>${(data.tags||[]).map(tag => `<span class="tag">${escapeHtml(tag)}</span>`).join('')}</div><p><strong>실험 이유</strong><br>${renderRichText(data.reason || '')}</p><p><strong>결과 예측</strong><br>${renderRichText(data.prediction || '')}</p><p><strong>실험 과정</strong><br>${renderRichText(data.method || '')}</p><p><strong>실험 결과</strong><br>${renderRichText(data.result || '')}</p>${renderLinksSection(data.links || [])}${renderAttachments(data.attachments || [])}<div class="meta">등록자: ${escapeHtml(data.savedBy || '-')}</div>`;
+    if(data.type === 'project') bodyHtml = `<div>${(data.tags||[]).map(tag => `<span class="tag">${escapeHtml(tag)}</span>`).join('')}</div><p><strong>연구 목적</strong><br>${renderRichText(data.purpose || '')}</p><p><strong>프로젝트 요약</strong><br>${renderRichText(data.summary || '')}</p>${(data.sections || []).map(section => `<div class="section-box"><h4>${escapeHtml(section.title || '제목 없음')}</h4><p>${renderRichText(section.content || '')}</p></div>`).join('')}${renderLinksSection(data.links || [])}${renderAttachments(data.attachments || [])}<div class="meta">등록자: ${escapeHtml(data.savedBy || '-')}</div>`;
+    $('detailBody').innerHTML = bodyHtml;
+    await loadComments('research', id);
+    await showPage('detail');
+  }
+
+  $('backArchiveBtn').addEventListener('click', async () => showPage('archive'));
+  $('printBtn').addEventListener('click', () => {
+    const element = $('detailBody');
+    if(!element.innerHTML.trim()){ window.print(); return; }
+    html2pdf().set({ margin:10, filename:`${(currentDetail?.title || 'detail').replace(/[\\/:*?"<>|]/g,'_')}.pdf`, image:{type:'jpeg',quality:0.98}, html2canvas:{scale:2,useCORS:true,scrollY:0}, jsPDF:{unit:'mm',format:'a4',orientation:'portrait'} }).from(element).save();
+  });
+
+  async function loadComments(postType, postId){
+    const list=$('commentList'); list.innerHTML='<p>불러오는 중...</p>';
+    const q = query(collection(db,'comments'), where('postType','==',postType), where('postId','==',postId));
+    const snap=await getDocs(q); const items=[]; snap.forEach(docu => items.push({ id:docu.id, ...docu.data() }));
+    items.sort((a,b)=>new Date(a.createdAt)-new Date(b.createdAt));
+    list.innerHTML = items.length ? items.map(item => `<div class="comment-item"><div class="meta">${escapeHtml(item.author || '-')} · ${formatDate(item.createdAt)}</div><div>${renderRichText(item.content || '')}</div></div>`).join('') : '<p>아직 댓글이 없습니다.</p>';
+  }
+
+  async function submitComment(){
+    const user = getUser();
+    if(!user){ alert('먼저 로그인해주세요.'); return; }
+    if(!currentDetail){ alert('글을 먼저 열어주세요.'); return; }
+    const content = $('commentInput').value.trim();
+    if(!content){ alert('댓글 내용을 입력해주세요.'); return; }
+    await addDoc(collection(db,'comments'), { postType:'research', postId:currentDetail.id, author:user.name, authorId:user.id, content, createdAt:new Date().toISOString() });
+    $('commentInput').value='';
+    await loadComments('research', currentDetail.id);
+  }
+  $('submitCommentBtn').addEventListener('click', submitComment);
+
+  function saveWriteDraft(){
+    const draft = {
+      writeType:$('writeType')?.value || 'notice', authorDisplay:$('authorDisplay')?.value || '',
+      noticeTitleWrite:$('noticeTitleWrite')?.value || '', noticeContentWrite:$('noticeContentWrite')?.value || '', noticePinned:$('noticePinned')?.checked || false,
+      researchClub:$('researchClub')?.value || '전체', archiveYear:$('archiveYear')?.value || '2026', title:$('title')?.value || '', tags:$('tags')?.value || '', reason:$('reason')?.value || '', prediction:$('prediction')?.value || '', method:$('method')?.value || '', result:$('result')?.value || '',
+      projectStatus:$('projectStatus')?.value || '진행중', projectPurpose:$('projectPurpose')?.value || '', projectSummary:$('projectSummary')?.value || '', projectSections: collectProjectSections(), linkInput:$('linkInput')?.value || ''
+    };
+    localStorage.setItem(WRITE_DRAFT_KEY, JSON.stringify(draft));
+  }
+
+  function collectProjectSections(){
+    return [...document.querySelectorAll('.project-section-item')].map(item => ({ title:item.querySelector('.section-title').value.trim(), content:item.querySelector('.section-content').value.trim() })).filter(s => s.title || s.content);
+  }
+
+  function createProjectSectionElement(title='', content=''){
+    const wrapper = document.createElement('div');
+    wrapper.className = 'section-box project-section-item';
+    wrapper.innerHTML = `<label>섹션 제목</label><input class="section-title" value="${escapeHtml(title)}"><label>섹션 내용</label><textarea class="section-content">${escapeHtml(content)}</textarea><button type="button" class="danger-btn small remove-section-btn">섹션 삭제</button>`;
+    wrapper.querySelector('.remove-section-btn').addEventListener('click', ()=>{ wrapper.remove(); saveWriteDraft(); });
+    return wrapper;
+  }
+  function addProjectSection(title='', content=''){ $('projectSections').appendChild(createProjectSectionElement(title, content)); saveWriteDraft(); }
+  $('addProjectSectionBtn').addEventListener('click', () => addProjectSection());
+
+  function loadWriteDraft(){
+    const raw = localStorage.getItem(WRITE_DRAFT_KEY); if(!raw) return;
+    try{
+      const draft = JSON.parse(raw);
+      $('writeType').value = draft.writeType || 'notice'; $('authorDisplay').value = draft.authorDisplay || ''; changeWriteForm();
+      $('noticeTitleWrite').value = draft.noticeTitleWrite || ''; $('noticeContentWrite').value = draft.noticeContentWrite || ''; $('noticePinned').checked = !!draft.noticePinned;
+      $('researchClub').value = draft.researchClub || '전체'; $('archiveYear').value = draft.archiveYear || '2026'; $('title').value = draft.title || ''; $('tags').value = draft.tags || '';
+      $('reason').value = draft.reason || ''; $('prediction').value = draft.prediction || ''; $('method').value = draft.method || ''; $('result').value = draft.result || '';
+      $('projectStatus').value = draft.projectStatus || '진행중'; $('projectPurpose').value = draft.projectPurpose || ''; $('projectSummary').value = draft.projectSummary || ''; $('linkInput').value = draft.linkInput || '';
+      $('projectSections').innerHTML=''; (draft.projectSections || []).forEach(section => addProjectSection(section.title || '', section.content || ''));
+      changeWriteForm();
+    }catch(error){ console.error('초안 불러오기 실패:', error); }
+  }
+  const clearWriteDraft = () => localStorage.removeItem(WRITE_DRAFT_KEY);
+
+  function bindWriteDraftAutoSave(){ ['writeType','authorDisplay','noticeTitleWrite','noticeContentWrite','noticePinned','researchClub','archiveYear','title','tags','reason','prediction','method','result','projectStatus','projectPurpose','projectSummary','linkInput'].forEach(id => {
+      const el = $(id); if(!el) return; const eventName = (el.type === 'checkbox' || el.tagName === 'SELECT') ? 'change' : 'input'; el.addEventListener(eventName, saveWriteDraft);
+    });
+    $('projectSections').addEventListener('input', saveWriteDraft);
+  }
+
+  function changeWriteForm(){
+    const type = $('writeType').value;
+    const noticeForm = $('noticeForm'), researchForm = $('researchForm'), experimentForm = $('experimentForm'), projectForm = $('projectForm');
+    if(type === 'notice'){
+      if(!canWriteNotice()){ alert('공지는 부장, 차장, 선생님만 작성할 수 있어요.'); $('writeType').value='experiment'; return changeWriteForm(); }
+      noticeForm.classList.remove('hidden'); researchForm.classList.add('hidden');
+    } else {
+      noticeForm.classList.add('hidden'); researchForm.classList.remove('hidden');
+      if(type === 'experiment'){ experimentForm.classList.remove('hidden'); projectForm.classList.add('hidden'); }
+      else { experimentForm.classList.add('hidden'); projectForm.classList.remove('hidden'); }
+    }
+  }
+  $('writeType').addEventListener('change', () => { changeWriteForm(); saveWriteDraft(); });
+
+  function renderExistingAttachments(){
+    const box = $('existingAttachmentsBox'), list = $('existingAttachmentsList'); list.innerHTML='';
+    if(!keptAttachments.length){ box.classList.add('hidden'); return; }
+    box.classList.remove('hidden');
+    keptAttachments.forEach((file,index) => {
+      const div = document.createElement('div');
+      div.className='attach-manage-item';
+      div.innerHTML = `<span>${escapeHtml(file.name || '첨부파일')}</span><button type="button" class="danger-btn small">제거</button>`;
+      div.querySelector('button').addEventListener('click', ()=>{ keptAttachments.splice(index,1); renderExistingAttachments(); });
+      list.appendChild(div);
+    });
+  }
+
+  function renderExistingLinks(){
+    const box = $('existingLinksBox'), list = $('existingLinksList'); list.innerHTML='';
+    if(!keptLinks.length){ box.classList.add('hidden'); return; }
+    box.classList.remove('hidden');
+    keptLinks.forEach((link,index) => {
+      const div = document.createElement('div');
+      div.className='attach-manage-item';
+      div.innerHTML = `<span style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${escapeHtml(link)}</span><button type="button" class="danger-btn small">제거</button>`;
+      div.querySelector('button').addEventListener('click', ()=>{ keptLinks.splice(index,1); renderExistingLinks(); });
+      list.appendChild(div);
+    });
+  }
+
+  function resetWriteForm(){
+    editState = { isEditing:false, category:null, id:null };
+    keptAttachments=[]; keptLinks=[];
+    const user = getUser();
+    $('writeTitleText').textContent='글 작성'; $('editModeInfo').textContent='공지나 탐구 글을 작성할 수 있습니다.'; $('submitBtn').textContent='저장'; $('cancelEditBtn').classList.add('hidden');
+    $('writeType').disabled=false; $('writeType').value='notice'; $('authorDisplay').value=user?.name || '';
+    $('noticeTitleWrite').value=''; $('noticeContentWrite').value=''; $('noticePinned').checked=false;
+    $('researchClub').value='전체'; $('archiveYear').value='2026'; $('title').value=''; $('tags').value=''; $('reason').value=''; $('prediction').value=''; $('method').value=''; $('result').value='';
+    $('projectStatus').value='진행중'; $('projectPurpose').value=''; $('projectSummary').value=''; $('projectSections').innerHTML='';
+    $('imageInput').value=''; $('fileInput').value=''; $('linkInput').value=''; $('existingAttachmentsBox').classList.add('hidden'); $('existingAttachmentsList').innerHTML=''; $('existingLinksBox').classList.add('hidden'); $('existingLinksList').innerHTML='';
+    changeWriteForm();
+  }
+  function cancelEdit(){ clearWriteDraft(); resetWriteForm(); }
+  $('cancelEditBtn').addEventListener('click', cancelEdit);
+
+  async function uploadFiles(files, folder='attachments'){
+    await ensureAuth();
+    const uploaded=[];
+    for(const file of files){
+      const fileName = `${Date.now()}_${Math.random().toString(36).slice(2)}_${file.name}`;
+      const fileRef = ref(storage, `${folder}/${fileName}`);
+      await uploadBytes(fileRef, file);
+      const url = await getDownloadURL(fileRef);
+      uploaded.push({ name:file.name, url, type:file.type || '', size:file.size || 0 });
+    }
+    return uploaded;
+  }
+
+  async function submitWrite(){
+    const user=getUser();
+    if(!user){ alert('먼저 로그인해주세요.'); return; }
+    const type = $('writeType').value;
+    const authorName = getAuthorInputValue();
+    const imageFiles = Array.from($('imageInput').files || []);
+    const normalFiles = Array.from($('fileInput').files || []);
+    const links = [...keptLinks, ...parseLinks($('linkInput').value)];
+    try{
+      setSubmitButtonLoading(true);
+      if(type === 'notice'){
+        if(!canWriteNotice()){ alert('공지는 부장, 차장, 선생님만 작성할 수 있어요.'); return; }
+        const title = $('noticeTitleWrite').value.trim();
+        const content = $('noticeContentWrite').value.trim();
+        if(!title || !content){ alert('공지 제목과 내용을 모두 입력해주세요.'); return; }
+        const [uploadedImages, uploadedFiles] = await Promise.all([uploadFiles(imageFiles,'irhos-images'), uploadFiles(normalFiles,'irhos-files')]);
+        const noticeData = { title, content, pinned:$('noticePinned').checked, author:authorName, authorId:user.id, originalWriterName:authorName, savedBy:user.name, savedById:user.id, club:user.club, date:new Date().toISOString(), attachments:[...keptAttachments, ...uploadedImages, ...uploadedFiles], links };
+        if(editState.isEditing && editState.category === 'notice'){
+          const oldSnap=await getDoc(doc(db,'notice',editState.id)); const oldData=oldSnap.exists()?oldSnap.data():{}; noticeData.date = oldData.date || new Date().toISOString();
+          await updateDoc(doc(db,'notice',editState.id), noticeData); alert('공지 수정 완료');
+        } else { await addDoc(collection(db,'notice'), noticeData); alert('공지 등록 완료'); }
+      }
+      if(type === 'experiment'){
+        const title = $('title').value.trim(); if(!title){ alert('제목을 입력해주세요.'); return; }
+        const [uploadedImages, uploadedFiles] = await Promise.all([uploadFiles(imageFiles,'irhos-images'), uploadFiles(normalFiles,'irhos-files')]);
+        const researchData = { title, tags:parseTags($('tags').value), club:$('researchClub').value, archiveYear:$('archiveYear').value, type:'experiment', reason:$('reason').value.trim(), prediction:$('prediction').value.trim(), method:$('method').value.trim(), result:$('result').value.trim(), author:authorName, authorId:user.id, originalWriterName:authorName, savedBy:user.name, savedById:user.id, views:0, createdAt:new Date().toISOString(), attachments:[...keptAttachments, ...uploadedImages, ...uploadedFiles], links };
+        if(editState.isEditing && editState.category === 'research'){
+          const oldSnap=await getDoc(doc(db,'research',editState.id)); const oldData=oldSnap.exists()?oldSnap.data():{}; researchData.views=oldData.views||0; researchData.createdAt=oldData.createdAt||new Date().toISOString();
+          await updateDoc(doc(db,'research',editState.id), researchData); alert('실험 보고서 수정 완료');
+        } else { await addDoc(collection(db,'research'), researchData); alert('실험 보고서 저장 완료'); }
+      }
+      if(type === 'project'){
+        const title = $('title').value.trim(); if(!title){ alert('제목을 입력해주세요.'); return; }
+        const [uploadedImages, uploadedFiles] = await Promise.all([uploadFiles(imageFiles,'irhos-images'), uploadFiles(normalFiles,'irhos-files')]);
+        const projectData = { title, tags:parseTags($('tags').value), club:$('researchClub').value, archiveYear:$('archiveYear').value, type:'project', purpose:$('projectPurpose').value.trim(), summary:$('projectSummary').value.trim(), status:$('projectStatus').value, sections:collectProjectSections(), author:authorName, authorId:user.id, originalWriterName:authorName, savedBy:user.name, savedById:user.id, views:0, createdAt:new Date().toISOString(), attachments:[...keptAttachments, ...uploadedImages, ...uploadedFiles], links };
+        if(editState.isEditing && editState.category === 'research'){
+          const oldSnap=await getDoc(doc(db,'research',editState.id)); const oldData=oldSnap.exists()?oldSnap.data():{}; projectData.views=oldData.views||0; projectData.createdAt=oldData.createdAt||new Date().toISOString();
+          await updateDoc(doc(db,'research',editState.id), projectData); alert('장기 프로젝트 수정 완료');
+        } else { await addDoc(collection(db,'research'), projectData); alert('장기 프로젝트 저장 완료'); }
+      }
+      clearWriteDraft(); resetWriteForm(); await loadNotice(); await loadResearch(); await loadMyPosts(); await showPage('home');
+    } catch(error){ console.error('저장 중 오류:', error); alert('저장 중 오류가 발생했어요. Firebase Storage 규칙도 확인해주세요.'); }
+    finally{ setSubmitButtonLoading(false); }
+  }
+  $('submitBtn').addEventListener('click', submitWrite);
+
+  async function removePost(category, id){ if(!confirm('정말 삭제할까요?')) return; const collectionName = category === 'notice' ? 'notice' : 'research'; await deleteDoc(doc(db,collectionName,id)); await loadNotice(); await loadResearch(); await loadMyPosts(); alert('삭제 완료'); }
+
+  async function editPost(category, id){
+    const collectionName = category === 'notice' ? 'notice' : 'research';
+    const snap = await getDoc(doc(db,collectionName,id));
+    if(!snap.exists()){ alert('글을 찾을 수 없습니다.'); return; }
+    const data = snap.data();
+    editState = { isEditing:true, category, id };
+    keptAttachments = [...(data.attachments || [])]; keptLinks = [...(data.links || [])];
+    $('writeTitleText').textContent='글 수정'; $('editModeInfo').textContent='수정 모드입니다.'; $('submitBtn').textContent='수정 저장'; $('cancelEditBtn').classList.remove('hidden'); $('authorDisplay').value=data.author || '';
+    if(category === 'notice'){
+      $('writeType').value='notice'; $('writeType').disabled=true; $('noticeTitleWrite').value=data.title || ''; $('noticeContentWrite').value=data.content || ''; $('noticePinned').checked=!!data.pinned;
+    } else {
+      $('writeType').value=data.type || 'experiment'; $('writeType').disabled=true; $('researchClub').value=data.club || '전체'; $('archiveYear').value=data.archiveYear || '2026'; $('title').value=data.title || ''; $('tags').value=(data.tags||[]).join(' ');
+      if(data.type === 'experiment'){ $('reason').value=data.reason || ''; $('prediction').value=data.prediction || ''; $('method').value=data.method || ''; $('result').value=data.result || ''; }
+      if(data.type === 'project'){ $('projectStatus').value=data.status || '진행중'; $('projectPurpose').value=data.purpose || ''; $('projectSummary').value=data.summary || ''; $('projectSections').innerHTML=''; (data.sections||[]).forEach(section => addProjectSection(section.title || '', section.content || '')); }
+    }
+    $('linkInput').value=''; renderExistingAttachments(); renderExistingLinks(); changeWriteForm(); await showPage('write');
+  }
+
+  async function loadMyPosts(){
+    const user=getUser(); const list=$('myPostList'); list.innerHTML='';
+    if(!user){ list.innerHTML='<p>먼저 로그인해주세요.</p>'; return; }
+    const allItems=[];
+    const noticeSnap=await getDocs(collection(db,'notice'));
+    noticeSnap.forEach(docu => { const data=docu.data(); if(data.savedById === user.id || data.authorId === user.id) allItems.push({ id:docu.id, category:'notice', title:data.title, typeLabel:'공지', createdAt:data.date, club:data.club || '-', author:data.author || '-' }); });
+    const researchSnap=await getDocs(collection(db,'research'));
+    researchSnap.forEach(docu => { const data=docu.data(); if(shouldHideResearch(data.title)) return; if(data.savedById === user.id || data.authorId === user.id) allItems.push({ id:docu.id, category:'research', title:data.title, typeLabel:data.type === 'project' ? '장기 프로젝트' : '실험 보고서', createdAt:data.createdAt, club:data.club || '-', author:data.author || '-', archiveYear:data.archiveYear || '-' }); });
+    allItems.sort((a,b)=>new Date(b.createdAt)-new Date(a.createdAt));
+    if(!allItems.length){ list.innerHTML='<p>작성한 글이 없습니다.</p>'; return; }
+    allItems.forEach(item => {
+      list.innerHTML += `<div class="post"><div class="type-badge">${escapeHtml(item.typeLabel)}</div>${item.archiveYear ? `<div class="year-badge">${escapeHtml(item.archiveYear)}</div>` : ''}<h3>${escapeHtml(item.title)}</h3><div class="meta">작성자: ${escapeHtml(item.author)} | 동아리: ${escapeHtml(item.club)} | 작성일: ${formatDate(item.createdAt)}</div><button type="button" class="secondary-btn small" data-edit="${item.category}|${item.id}">수정</button> <button type="button" class="danger-btn small" data-remove="${item.category}|${item.id}">삭제</button></div>`;
+    });
+    list.querySelectorAll('[data-edit]').forEach(btn => btn.addEventListener('click', async () => { const [category,id] = btn.dataset.edit.split('|'); await editPost(category,id); }));
+    list.querySelectorAll('[data-remove]').forEach(btn => btn.addEventListener('click', async () => { const [category,id] = btn.dataset.remove.split('|'); await removePost(category,id); }));
+  }
+
+  function toggleIntroEditor(show){ if(!canEditClubIntro()) return; $('introEditor').classList.toggle('hidden', !show); }
+  $('editIntroBtn').addEventListener('click', () => toggleIntroEditor(true));
+  $('cancelIntroBtn').addEventListener('click', () => toggleIntroEditor(false));
+
+  function renderHeroSlide(){ document.querySelectorAll('.hero-slide').forEach((slide,index)=>slide.classList.toggle('active', index===heroIndex)); document.querySelectorAll('#heroDotsWrap .slider-dot').forEach((dot,index)=>dot.classList.toggle('active', index===heroIndex)); }
+  function moveHeroSlide(direction){ const slides=document.querySelectorAll('.hero-slide'); if(!slides.length) return; heroIndex=(heroIndex+direction+slides.length)%slides.length; renderHeroSlide(); restartHeroAutoSlide(); }
+  function goToHeroSlide(index){ heroIndex=index; renderHeroSlide(); restartHeroAutoSlide(); }
+  $('heroPrevBtn').addEventListener('click', () => moveHeroSlide(-1));
+  $('heroNextBtn').addEventListener('click', () => moveHeroSlide(1));
+  function startHeroAutoSlide(){ clearInterval(heroInterval); heroInterval=setInterval(()=>{ const slides=document.querySelectorAll('.hero-slide'); if(!slides.length) return; heroIndex=(heroIndex+1)%slides.length; renderHeroSlide(); }, 4500); }
+  function restartHeroAutoSlide(){ clearInterval(heroInterval); startHeroAutoSlide(); }
+
+  function renderHeroSlider(slides=[]){
+    const wrap=$('heroSlidesWrap'), dots=$('heroDotsWrap'); wrap.innerHTML=''; dots.innerHTML=''; heroIndex=0; clearInterval(heroInterval);
+    const safeSlides = slides.length ? slides : DEFAULT_HERO_SLIDES;
+    safeSlides.forEach((slide,index) => {
+      wrap.innerHTML += `<div class="hero-slide ${index===0 ? 'active' : ''}"><img src="${slide.url}" alt="${escapeHtml(slide.name || slide.title || '슬라이드 사진')}"><div class="hero-overlay"></div><div class="hero-text"><h2>${escapeHtml(slide.title || 'IRHOS 과학동아리')}</h2><p>${escapeHtml(slide.desc || '실험과 탐구를 통해 과학적 사고를 확장하는 학생 연구 동아리')}</p></div></div>`;
+      dots.innerHTML += `<span class="slider-dot ${index===0 ? 'active' : ''}" data-hero-dot="${index}"></span>`;
+    });
+    dots.querySelectorAll('[data-hero-dot]').forEach(dot => dot.addEventListener('click', () => goToHeroSlide(Number(dot.dataset.heroDot))));
+    startHeroAutoSlide();
+  }
+
+  function renderIntroSlider(photos){
+    const wrap=$('introSlidesWrap'), dots=$('introDotsWrap'); wrap.innerHTML=''; dots.innerHTML=''; introIndex=0; clearInterval(introInterval);
+    if(!photos.length){ wrap.innerHTML=`<div class="intro-slide active"><img src="https://i.imgur.com/PtA3Uwz.jpeg" alt="기본 동아리 사진"></div>`; return; }
+    photos.forEach((photo,index) => { wrap.innerHTML += `<div class="intro-slide ${index===0 ? 'active' : ''}"><img src="${photo.url}" alt="${escapeHtml(photo.name || '활동 사진')}"></div>`; dots.innerHTML += `<span class="slider-dot ${index===0 ? 'active' : ''}" data-intro-dot="${index}"></span>`; });
+    dots.querySelectorAll('[data-intro-dot]').forEach(dot => dot.addEventListener('click', () => goToIntroSlide(Number(dot.dataset.introDot))));
+    introInterval = setInterval(() => moveIntroSlide(1), 4000);
+  }
+  function moveIntroSlide(direction){ const slides=document.querySelectorAll('.intro-slide'); const dots=document.querySelectorAll('#introDotsWrap .slider-dot'); if(!slides.length) return; introIndex=(introIndex+direction+slides.length)%slides.length; slides.forEach((slide,index)=>slide.classList.toggle('active', index===introIndex)); dots.forEach((dot,index)=>dot.classList.toggle('active', index===introIndex)); }
+  function goToIntroSlide(index){ const slides=document.querySelectorAll('.intro-slide'); const dots=document.querySelectorAll('#introDotsWrap .slider-dot'); if(!slides.length) return; introIndex=index; slides.forEach((slide,i)=>slide.classList.toggle('active', i===introIndex)); dots.forEach((dot,i)=>dot.classList.toggle('active', i===introIndex)); }
+  $('introPrevBtn').addEventListener('click', () => moveIntroSlide(-1));
+  $('introNextBtn').addEventListener('click', () => moveIntroSlide(1));
+
+  function renderIntroExistingPhotos(){
+    const box=$('introExistingPhotos');
+    if(!introPhotos.length){ box.classList.add('hidden'); box.innerHTML=''; return; }
+    box.classList.remove('hidden');
+    box.innerHTML = `<strong>기존 활동 사진 (${introPhotos.length}/5)</strong>${introPhotos.map((photo,index) => `<div class="attach-manage-item actions-2"><span>${escapeHtml(photo.name || `사진 ${index+1}`)}</span><div class="attach-actions"><button type="button" class="secondary-btn small" data-replace-intro="${index}">교체</button><button type="button" class="danger-btn small" data-remove-intro="${index}">제거</button></div></div>`).join('')}`;
+    box.querySelectorAll('[data-remove-intro]').forEach(btn => btn.addEventListener('click', () => { introPhotos.splice(Number(btn.dataset.removeIntro),1); renderIntroExistingPhotos(); renderIntroSlider(introPhotos); }));
+    box.querySelectorAll('[data-replace-intro]').forEach(btn => btn.addEventListener('click', async () => {
+      if(!canEditClubIntro()){ alert('동아리 소개 사진 수정은 부장만 할 수 있어요.'); return; }
+      const index=Number(btn.dataset.replaceIntro); const input=document.createElement('input'); input.type='file'; input.accept='.jpg,.jpeg,.png,.webp';
+      input.addEventListener('change', async (e) => {
+        const file=e.target.files?.[0]; if(!file) return;
+        try{ const [uploaded] = await uploadFiles([file], 'club-intro'); introPhotos[index]=uploaded; renderIntroExistingPhotos(); renderIntroSlider(introPhotos); alert('사진이 교체되었어요. 저장 버튼을 누르면 최종 반영됩니다.'); }
+        catch(error){ console.error(error); alert('사진 교체 중 오류가 발생했어요.'); }
       });
-    });
-    const profileSummary = document.getElementById('profileSummary');
-    const profileMenu = document.getElementById('profileMenu');
-    profileSummary?.addEventListener('click', () => profileMenu.classList.toggle('open'));
-    window.addEventListener('scroll', () => {
-      const topbar = document.getElementById('topbar');
-      if (!topbar) return;
-      if (window.scrollY > 140) topbar.classList.add('shrink');
-      else if (window.scrollY < 70) topbar.classList.remove('shrink');
-    });
-  </script>
+      input.click();
+    }));
+  }
+
+  async function loadClubIntro(){
+    const view=$('introView'); const snap=await getDocs(collection(db,'clubIntro')); let item=null; introDocId=null;
+    snap.forEach(docu => { if(!item){ introDocId=docu.id; item={ id:docu.id, ...docu.data() }; } });
+    if(!item){
+      view.innerHTML = `<div class="section-box"><h3>동아리 목표</h3><p>아직 등록되지 않았습니다.</p></div><div class="section-box"><h3>활동 내용</h3><p>아직 등록되지 않았습니다.</p></div><div class="section-box"><h3>주요 연구 분야</h3><p>아직 등록되지 않았습니다.</p></div>`;
+      introPhotos=[]; $('introGoal').value=''; $('introActivities').value=''; $('introFields').value=''; renderIntroSlider([]); $('introExistingPhotos').classList.add('hidden'); renderHeroSlider(DEFAULT_HERO_SLIDES); renderHomeClubIntro(null); return;
+    }
+    introPhotos=[...(item.photos||[])]; renderIntroSlider(introPhotos);
+    const customHeroSlides = (item.photos || []).slice(0,5).map((photo,index) => index === 0 ? { name:photo.name || '대표 사진', url:photo.url, title:'IRHOS 과학동아리', desc:'실험과 탐구를 통해 과학적 사고를 확장하는 학생 연구 동아리' } : index === 1 ? { name:photo.name || '실험 활동 사진', url:photo.url, title:'실험 중심 활동', desc:'직접 실험하고 기록하며 결과를 분석하는 탐구 활동을 진행합니다.' } : { name:photo.name || `활동 사진 ${index+1}`, url:photo.url, title:'연구 기록과 발표', desc:'탐구 과정을 정리하고 발표하며 함께 성장하는 과학 동아리입니다.' });
+    renderHeroSlider(customHeroSlides.length ? customHeroSlides : DEFAULT_HERO_SLIDES);
+    view.innerHTML = `<div class="section-box"><h3>동아리 목표</h3><p>${renderRichText(item.goal || '')}</p></div><div class="section-box"><h3>활동 내용</h3><p>${renderRichText(item.activities || '')}</p></div><div class="section-box"><h3>주요 연구 분야</h3><p>${renderRichText(item.fields || '')}</p></div>`;
+    $('introGoal').value=item.goal || ''; $('introActivities').value=item.activities || ''; $('introFields').value=item.fields || '';
+    renderIntroExistingPhotos(); renderHomeClubIntro(item);
+  }
+
+  async function saveClubIntro(){
+    if(!canEditClubIntro()){ alert('동아리 소개 수정은 부장만 할 수 있어요.'); return; }
+    const newFiles = Array.from($('introPhotoInput').files || []);
+    if(introPhotos.length + newFiles.length > 5){ alert(`슬라이드 사진은 최대 5장까지 등록할 수 있어요. 현재 ${introPhotos.length}장이 들어 있어요.`); return; }
+    const photos = await uploadFiles(newFiles, 'club-intro');
+    const data = { goal:$('introGoal').value.trim(), activities:$('introActivities').value.trim(), fields:$('introFields').value.trim(), photos:[...introPhotos, ...photos].slice(0,5), updatedAt:new Date().toISOString() };
+    if(introDocId) await updateDoc(doc(db,'clubIntro',introDocId), data); else introDocId = (await addDoc(collection(db,'clubIntro'), data)).id;
+    $('introPhotoInput').value=''; await loadClubIntro(); toggleIntroEditor(false); alert('동아리 소개 저장 완료');
+  }
+  $('saveIntroBtn').addEventListener('click', saveClubIntro);
+
+  async function ensureDictionarySeed(){ const snap=await getDocs(collection(db,'dictionary')); if(!snap.empty) return; for(const item of [{term:'중화반응',desc:'산과 염기가 반응하여 물과 염을 생성하는 반응입니다.'},{term:'종말점',desc:'지시약의 색 변화가 끝났다고 관찰되는 시점입니다.'},{term:'당량점',desc:'산과 염기가 화학량론적으로 정확히 반응한 지점입니다.'},{term:'코아세르베이트',desc:'액체 속에서 형성되는 미세한 액적 구조로, 생명 기원 연구에서 자주 언급됩니다.'}]) await addDoc(collection(db,'dictionary'), item); }
+  async function loadDictionary(){ await ensureDictionarySeed(); const snap=await getDocs(collection(db,'dictionary')); dictionaryItems=[]; snap.forEach(docu => dictionaryItems.push({ id:docu.id, ...docu.data() })); renderDictionaryHero(); }
+  function renderDictionaryHero(){ if(!dictionaryItems.length) return; const item=dictionaryItems[dictionaryIndex % dictionaryItems.length]; $('dictionaryHeroTerm').textContent=item.term || ''; $('dictionaryHeroDesc').textContent=item.desc || ''; dictionaryIndex++; }
+
+  function renderCurrentAdminInfo(){ const box=$('currentAdminInfo'); const user=getUser(); box.innerHTML = !user ? '<strong>현재 로그인:</strong> 로그인되지 않음' : `<strong>현재 로그인</strong><br>이름: ${escapeHtml(user.name || '-')}<br>학번/코드: ${escapeHtml(user.id || '-')}<br>역할: ${escapeHtml(user.role || '-')}<br>동아리: ${escapeHtml(user.club || '-')}`; }
+  async function loadMembers(){ if(!isAdmin()) return; await ensureMemberSeed(); const snap=await getDocs(collection(db,'members')); memberItems=[]; snap.forEach(docu => memberItems.push({ docId:docu.id, ...docu.data() })); memberItems.sort((a,b) => (['부장','차장','선생님','부원'].indexOf(a.role || '부원') - ['부장','차장','선생님','부원'].indexOf(b.role || '부원')) || String(a.id || '').localeCompare(String(b.id || ''))); renderCurrentAdminInfo(); renderMemberList(); }
+  function renderMemberList(){ const list=$('memberList'); const keyword=($('memberSearchInput').value || '').trim().toLowerCase(); const filtered=memberItems.filter(item => [item.id,item.name,item.club,item.role,item.isActive === false ? '비활성' : '활성'].join(' ').toLowerCase().includes(keyword)); if(!filtered.length){ list.innerHTML='<p>조건에 맞는 명단이 없습니다.</p>'; return; } list.innerHTML = filtered.map(item => `<div class="member-item"><h4>${escapeHtml(item.name || '-')} <span class="type-badge">${escapeHtml(item.role || '-')}</span> ${item.isActive === false ? '<span class="pinned-badge">비활성</span>' : '<span class="status-badge">활성</span>'}</h4><div class="meta">학번/코드: ${escapeHtml(item.id || '-')}<br>동아리: ${escapeHtml(item.club || '-')}<br>비밀번호: ${escapeHtml(item.password || '-')}</div><div class="tool-row"><button type="button" class="secondary-btn small" data-edit-member="${item.docId}">수정</button><button type="button" class="danger-btn small" data-delete-member="${item.docId}">삭제</button></div></div>`).join(''); list.querySelectorAll('[data-edit-member]').forEach(btn => btn.addEventListener('click', () => editMember(btn.dataset.editMember))); list.querySelectorAll('[data-delete-member]').forEach(btn => btn.addEventListener('click', () => deleteMember(btn.dataset.deleteMember))); }
+  $('memberSearchInput').addEventListener('input', renderMemberList);
+  function resetMemberForm(){ $('memberDocId').value=''; $('memberIdInput').value=''; $('memberNameInput').value=''; $('memberClubInput').value='융합과학탐구1'; $('memberRoleInput').value='부원'; $('memberPasswordInput').value=''; $('memberIsActiveInput').checked=true; }
+  $('resetMemberBtn').addEventListener('click', resetMemberForm);
+  function editMember(docId){ if(!isAdmin()) return; const item=memberItems.find(member => member.docId===docId); if(!item) return; $('memberDocId').value=item.docId; $('memberIdInput').value=item.id || ''; $('memberNameInput').value=item.name || ''; $('memberClubInput').value=item.club || '융합과학탐구1'; $('memberRoleInput').value=item.role || '부원'; $('memberPasswordInput').value=item.password || ''; $('memberIsActiveInput').checked=item.isActive !== false; window.scrollTo({ top:0, behavior:'smooth' }); }
+  async function saveMember(){ if(!isAdmin()){ alert('부장만 명단을 관리할 수 있어요.'); return; } const docId=$('memberDocId').value.trim(); const id=$('memberIdInput').value.trim(); const name=$('memberNameInput').value.trim(); const club=$('memberClubInput').value; const role=$('memberRoleInput').value; const password=$('memberPasswordInput').value.trim(); const isActive=$('memberIsActiveInput').checked; if(!id || !name || !password){ alert('학번/코드, 이름, 비밀번호를 모두 입력해주세요.'); return; } const duplicate=memberItems.find(item => item.id === id && item.docId !== docId); if(duplicate){ alert('같은 학번/코드가 이미 등록되어 있어요.'); return; } const data={ id,name,club,role,password,isActive }; if(docId){ await updateDoc(doc(db,'members',docId), data); alert('명단 수정 완료'); } else { await addDoc(collection(db,'members'), data); alert('명단 추가 완료'); } resetMemberForm(); await loadMembers(); }
+  $('saveMemberBtn').addEventListener('click', saveMember);
+  async function deleteMember(docId){ if(!isAdmin()){ alert('부장만 명단을 관리할 수 있어요.'); return; } const item=memberItems.find(member => member.docId===docId); if(!item) return; if(item.role === '부장' && memberItems.filter(member => member.role === '부장').length <= 1){ alert('마지막 부장은 삭제할 수 없어요.'); return; } const ok=confirm(`${item.name} (${item.id}) 명단을 정말 삭제할까요?\n졸업자라면 삭제 대신 비활성으로 바꾸는 것도 가능합니다.`); if(!ok) return; await deleteDoc(doc(db,'members',docId)); alert('명단 삭제 완료'); await loadMembers(); }
+  async function uploadMemberExcel(){ if(!isAdmin()){ alert('부장만 명단을 업로드할 수 있어요.'); return; } const file=$('memberExcelInput').files?.[0]; if(!file){ alert('엑셀 또는 CSV 파일을 선택해주세요.'); return; } try{ const data=await file.arrayBuffer(); const workbook=XLSX.read(data,{type:'array'}); const firstSheet=workbook.Sheets[workbook.SheetNames[0]]; const rows=XLSX.utils.sheet_to_json(firstSheet,{defval:''}); if(!rows.length){ alert('업로드할 데이터가 없습니다.'); return; } for(const row of rows){ const memberId=String(row.id || '').trim(); const memberName=String(row.name || '').trim(); const club=String(row.club || '').trim(); const role=String(row.role || '부원').trim(); const password=String(row.password || '').trim(); const isActive=String(row.isActive).toLowerCase() !== 'false'; if(!memberId || !memberName || !club || !password) continue; const exists=memberItems.find(item => item.id === memberId); const payload={ id:memberId, name:memberName, club, role, password, isActive }; if(exists) await updateDoc(doc(db,'members',exists.docId), payload); else await addDoc(collection(db,'members'), payload); } $('memberExcelInput').value=''; await loadMembers(); alert('명단 업로드 완료'); } catch(error){ console.error(error); alert('엑셀 업로드 중 오류가 발생했어요.'); } }
+  $('uploadExcelBtn').addEventListener('click', uploadMemberExcel);
+
+  bindWriteDraftAutoSave();
+  updateProfileUI();
+  initArchiveYearOptions();
+  renderYearFilterBar();
+  resetWriteForm();
+  resetMemberForm();
+  await ensureAuth();
+  await ensureMemberSeed();
+  await loadNotice();
+  await loadResearch();
+  await loadMyPosts();
+  await loadClubIntro();
+  await loadDictionary();
+  const savedPage = getSavedPage();
+  await showPage(savedPage);
+  if(savedPage === 'write'){ loadWriteDraft(); renderExistingAttachments(); renderExistingLinks(); }
+  setInterval(renderDictionaryHero, 3500);
+
+  $('clubFilterBar').addEventListener('click', (e) => {
+    const btn=e.target.closest('.filter-btn'); if(!btn) return; currentClubFilter=btn.dataset.club; document.querySelectorAll('#clubFilterBar .filter-btn').forEach(b => b.classList.toggle('active', b.dataset.club === currentClubFilter)); renderArchive();
+  });
+  $('yearFilterBar').addEventListener('click', (e) => {
+    const btn=e.target.closest('.filter-btn'); if(!btn) return; currentYearFilter=btn.dataset.year; document.querySelectorAll('#yearFilterBar .filter-btn').forEach(b => b.classList.toggle('active', b.dataset.year === currentYearFilter)); renderArchive();
+  });
+  $('searchInput').addEventListener('input', renderArchive);
+  $('sortSelect').addEventListener('change', renderArchive);
+</script>
 </body>
 </html>
