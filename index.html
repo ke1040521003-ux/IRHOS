@@ -111,6 +111,13 @@
     .detail-actions{display:flex;gap:10px;flex-wrap:wrap;}
     .comment-box{border-top:1px solid #eee;padding-top:14px;margin-top:16px;}
     .comment-item{border-top:1px solid #eee;padding:10px 0;}
+    .comment-like-row{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-top:8px;}
+    .comment-like-btn{border:none;background:#f2f4f7;color:#344054;padding:8px 12px;border-radius:999px;cursor:pointer;display:inline-flex;align-items:center;gap:6px;font-weight:700;transition:transform .16s ease, background .2s ease, color .2s ease, box-shadow .2s ease;}
+    .comment-like-btn:hover{transform:translateY(-1px);background:#eceff5;}
+    .comment-like-btn.liked{background:#fee4e2;color:#b42318;box-shadow:0 4px 12px rgba(180,35,24,.15);}
+    .comment-like-btn.pop{animation:commentHeartPop .28s ease;}
+    .comment-sort-select{max-width:180px;}
+    @keyframes commentHeartPop{0%{transform:scale(1);}50%{transform:scale(1.14);}100%{transform:scale(1);}}
     .comment-item:first-child{border-top:none;}
     .photo-limit-note{font-size:13px;color:#667085;margin:8px 0 12px 0;}
     .member-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
@@ -345,7 +352,7 @@
           <div class="detail-actions"><button type="button" class="secondary-btn" id="backArchiveBtn">아카이브로</button><button type="button" class="secondary-btn" id="printBtn">PDF 저장 / 인쇄</button></div>
         </div>
         <div id="detailBody"></div>
-        <div class="comment-box"><h3>댓글</h3><div id="commentList"></div><textarea id="commentInput" placeholder="댓글을 입력하세요"></textarea><div class="tool-row"><button type="button" class="primary-btn" id="submitCommentBtn">댓글 등록</button></div></div>
+        <div class="comment-box"><div class="tool-row" style="justify-content:space-between;align-items:center;"><h3 style="margin:0;">댓글</h3><select id="commentSortSelect" class="comment-sort-select"><option value="latest">최신순</option><option value="oldest">오래된순</option><option value="likes">인기순</option></select></div><div id="commentList"></div><textarea id="commentInput" placeholder="댓글을 입력하세요"></textarea><div class="tool-row"><button type="button" class="primary-btn" id="submitCommentBtn">댓글 등록</button></div></div>
       </div>
     </section>
   </main>
@@ -405,6 +412,7 @@
   let introInterval = null;
   let memberItems = [];
   let isTopbarShrunk = false;
+  let lastLikedCommentId = null;
 
   const $ = (id) => document.getElementById(id);
   const escapeHtml = (text='') => String(text).replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;').replaceAll('"','&quot;').replaceAll("'",'&#039;');
@@ -631,7 +639,7 @@
     const snap=await getDoc(doc(db,'research',id));
     if(!snap.exists()){ alert('글을 찾을 수 없습니다.'); return; }
     const data={ id:snap.id, ...snap.data() };
-    currentDetail = data;
+    currentDetail = { ...data, type: data.type || type };
     const currentViews = data.views || 0;
     await updateDoc(doc(db,'research',id), { views: currentViews + 1 });
     data.views = currentViews + 1;
@@ -652,7 +660,7 @@
     }
     if(data.type === 'project') bodyHtml = `<div>${(data.tags||[]).map(tag => `<span class="tag">${escapeHtml(tag)}</span>`).join('')}</div><p><strong>연구 목적</strong><br>${renderRichText(data.purpose || '')}</p><p><strong>프로젝트 요약</strong><br>${renderRichText(data.summary || '')}</p>${(data.sections || []).map(section => `<div class="section-box"><h4>${escapeHtml(section.title || '제목 없음')}</h4><p>${renderRichText(section.content || '')}</p></div>`).join('')}${renderLinksSection(data.links || [])}${renderAttachments(data.attachments || [])}<div class="meta">등록자: ${escapeHtml(data.savedBy || '-')}</div>`;
     $('detailBody').innerHTML = bodyHtml;
-    await loadComments('research', id);
+    await loadComments(data.type || type, id);
     await showPage('detail');
   }
 
@@ -664,11 +672,71 @@
   });
 
   async function loadComments(postType, postId){
-    const list=$('commentList'); list.innerHTML='<p>불러오는 중...</p>';
+    const list=$('commentList');
+    list.innerHTML='<p>불러오는 중...</p>';
     const q = query(collection(db,'comments'), where('postType','==',postType), where('postId','==',postId));
-    const snap=await getDocs(q); const items=[]; snap.forEach(docu => items.push({ id:docu.id, ...docu.data() }));
-    items.sort((a,b)=>new Date(a.createdAt)-new Date(b.createdAt));
-    list.innerHTML = items.length ? items.map(item => `<div class="comment-item"><div class="meta">${escapeHtml(item.author || '-')} · ${formatDate(item.createdAt)}</div><div>${renderRichText(item.content || '')}</div></div>`).join('') : '<p>아직 댓글이 없습니다.</p>';
+    const snap=await getDocs(q);
+    const items=[];
+    snap.forEach(docu => items.push({ id:docu.id, ...docu.data() }));
+
+    const sortType = $('commentSortSelect')?.value || 'latest';
+    if(sortType === 'oldest') items.sort((a,b)=>new Date(a.createdAt)-new Date(b.createdAt));
+    else if(sortType === 'likes') items.sort((a,b)=>((b.likesCount||0)-(a.likesCount||0)) || (new Date(b.createdAt)-new Date(a.createdAt)));
+    else items.sort((a,b)=>new Date(b.createdAt)-new Date(a.createdAt));
+
+    if(!items.length){
+      list.innerHTML = '<p>아직 댓글이 없습니다.</p>';
+      return;
+    }
+
+    const user = getUser();
+    list.innerHTML = items.map(item => {
+      const liked = !!user && (item.likedUsers || []).includes(user.id);
+      const shouldPop = lastLikedCommentId === item.id;
+      return `<div class="comment-item"><div class="meta">${escapeHtml(item.author || '-')} · ${formatDate(item.createdAt)}</div><div>${renderRichText(item.content || '')}</div><div class="comment-like-row"><div class="meta">좋아요 ${item.likesCount || 0}</div><button type="button" class="comment-like-btn ${liked ? 'liked' : ''} ${shouldPop ? 'pop' : ''}" data-comment-like-id="${item.id}"><span>${liked ? '❤️' : '🤍'}</span><span>${item.likesCount || 0}</span></button></div></div>`;
+    }).join('');
+
+    list.querySelectorAll('[data-comment-like-id]').forEach(btn => {
+      btn.addEventListener('click', async () => {
+        await toggleCommentLike(btn.dataset.commentLikeId);
+      });
+    });
+
+    lastLikedCommentId = null;
+  }
+
+  async function toggleCommentLike(commentId){
+    const user = getUser();
+    if(!user){
+      alert('로그인 후 이용해주세요.');
+      return;
+    }
+
+    const refDoc = doc(db,'comments',commentId);
+    const snap = await getDoc(refDoc);
+    if(!snap.exists()) return;
+
+    const data = snap.data();
+    const likedUsers = data.likedUsers || [];
+    const hasLiked = likedUsers.includes(user.id);
+    let newLikes = data.likesCount || 0;
+
+    if(hasLiked){
+      newLikes = Math.max(0, newLikes - 1);
+      await updateDoc(refDoc, {
+        likesCount: newLikes,
+        likedUsers: likedUsers.filter(id => id !== user.id)
+      });
+    } else {
+      newLikes += 1;
+      await updateDoc(refDoc, {
+        likesCount: newLikes,
+        likedUsers: [...likedUsers, user.id]
+      });
+    }
+
+    lastLikedCommentId = commentId;
+    await loadComments((currentDetail.type || 'research'), currentDetail.id);
   }
 
   async function submitComment(){
@@ -677,13 +745,14 @@
     if(!currentDetail){ alert('글을 먼저 열어주세요.'); return; }
     const content = $('commentInput').value.trim();
     if(!content){ alert('댓글 내용을 입력해주세요.'); return; }
-   await addDoc(collection(db,'comments'), {
-  postType:currentDetail.type,
-  postId:currentDetail.id,, author:user.name, authorId:user.id, content, createdAt:new Date().toISOString() });
+    await addDoc(collection(db,'comments'), { postType:(currentDetail.type || 'research'), postId:currentDetail.id, author:user.name, authorId:user.id, content, createdAt:new Date().toISOString(), likesCount:0, likedUsers:[] });
     $('commentInput').value='';
-    await loadComments(currentDetail.type, currentDetail.id);
+    await loadComments('research', currentDetail.id);
   }
   $('submitCommentBtn').addEventListener('click', submitComment);
+  $('commentSortSelect').addEventListener('change', async () => {
+    if(currentDetail?.id) await loadComments('research', currentDetail.id);
+  });
 
   function saveWriteDraft(){
     const draft = {
