@@ -677,9 +677,11 @@
     if(!currentDetail){ alert('글을 먼저 열어주세요.'); return; }
     const content = $('commentInput').value.trim();
     if(!content){ alert('댓글 내용을 입력해주세요.'); return; }
-    await addDoc(collection(db,'comments'), { postType:'research', postId:currentDetail.id, author:user.name, authorId:user.id, content, createdAt:new Date().toISOString() });
+   await addDoc(collection(db,'comments'), {
+  postType:currentDetail.type,
+  postId:currentDetail.id,, author:user.name, authorId:user.id, content, createdAt:new Date().toISOString() });
     $('commentInput').value='';
-    await loadComments('research', currentDetail.id);
+    await loadComments(currentDetail.type, currentDetail.id);
   }
   $('submitCommentBtn').addEventListener('click', submitComment);
 
