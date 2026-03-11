@@ -611,18 +611,58 @@
       : `<h3 style="margin-top:0;">📘 동아리 소개</h3><div class="section-box"><h4>동아리 목표</h4><p>${renderRichText(item.goal || '')}</p></div><div class="section-box"><h4>활동 내용</h4><p>${renderRichText(item.activities || '')}</p></div><div class="section-box"><h4>주요 연구 분야</h4><p>${renderRichText(item.fields || '')}</p></div>`;
   }
 
-  async function loadNotice(){
-    const list=$('noticeList'), preview=$('noticePreview');
-    list.innerHTML=''; preview.innerHTML='';
-    const snap=await getDocs(collection(db,'notice')); const items=[];
-    snap.forEach(docu => items.push({ id:docu.id, ...docu.data() }));
-    items.sort((a,b)=> (Number(!!b.pinned)-Number(!!a.pinned)) || (new Date(b.date)-new Date(a.date)));
-    if(!items.length){ list.innerHTML='<p>등록된 공지가 없습니다.</p>'; preview.innerHTML='<p>최근 공지가 없습니다.</p>'; return; }
-    items.forEach(item => {
-      list.innerHTML += `<div class="post"><div><span class="notice-badge">공지</span>${item.pinned ? `<span class="pinned-badge">상단 고정</span>` : ''}</div><h3>${escapeHtml(item.title)}</h3><p>${renderRichText(item.content || '')}</p>${renderLinksSection(item.links || [])}${renderAttachments(item.attachments || [])}<div class="meta">작성자: ${escapeHtml(item.author || '-')} | 등록자: ${escapeHtml(item.savedBy || item.author || '-')} | 작성일: ${formatDate(item.date)}</div></div>`;
-    });
-    items.slice(0,4).forEach(item => preview.innerHTML += `<div class="post">${item.pinned ? `<span class="pinned-badge">고정</span>` : ''}<h4>${escapeHtml(item.title)}</h4><div class="meta">${formatDate(item.date)}</div></div>`);
+async function loadNotice(){
+  const list=$('noticeList'), preview=$('noticePreview');
+  list.innerHTML=''; preview.innerHTML='';
+  const snap=await getDocs(collection(db,'notice'));
+  const items=[];
+  snap.forEach(docu => items.push({ id:docu.id, ...docu.data() }));
+  items.sort((a,b)=> (Number(!!b.pinned)-Number(!!a.pinned)) || (new Date(b.date)-new Date(a.date)));
+
+  if(!items.length){
+    list.innerHTML='<p>등록된 공지가 없습니다.</p>';
+    preview.innerHTML='<p>최근 공지가 없습니다.</p>';
+    return;
   }
+
+  items.forEach(item => {
+    list.innerHTML += `
+      <div class="post" data-notice-id="${item.id}" style="cursor:pointer;">
+        <div>
+          <span class="notice-badge">공지</span>
+          ${item.pinned ? `<span class="pinned-badge">상단 고정</span>` : ''}
+        </div>
+        <h3>${escapeHtml(item.title)}</h3>
+        <p>${renderRichText(item.content || '')}</p>
+        ${renderLinksSection(item.links || [])}
+        ${renderAttachments(item.attachments || [])}
+        <div class="meta">
+          작성자: ${escapeHtml(item.author || '-')} |
+          등록자: ${escapeHtml(item.savedBy || item.author || '-')} |
+          작성일: ${formatDate(item.date)}
+        </div>
+      </div>
+    `;
+  });
+
+  list.querySelectorAll('[data-notice-id]').forEach(card => {
+    card.addEventListener('click', () => openNoticeDetail(card.dataset.noticeId));
+  });
+
+  items.slice(0,4).forEach(item => {
+    preview.innerHTML += `
+      <div class="post" data-notice-id="${item.id}" style="cursor:pointer;">
+        ${item.pinned ? `<span class="pinned-badge">고정</span>` : ''}
+        <h4>${escapeHtml(item.title)}</h4>
+        <div class="meta">${formatDate(item.date)}</div>
+      </div>
+    `;
+  });
+
+  preview.querySelectorAll('[data-notice-id]').forEach(card => {
+    card.addEventListener('click', () => openNoticeDetail(card.dataset.noticeId));
+  });
+}
 
   async function loadResearch(){
     const snap=await getDocs(collection(db,'research')); archiveItems=[];
@@ -635,29 +675,115 @@
     renderArchive(); renderRecentResearch(); renderTodayExperimentPhoto();
   }
 
-  async function openResearchDetail(id){
-    const snap=await getDoc(doc(db,'research',id));
-    if(!snap.exists()){ alert('글을 찾을 수 없습니다.'); return; }
-    const data={ id:snap.id, ...snap.data() };
-    currentDetail = { ...data, type: data.type || type };
-    const currentViews = data.views || 0;
-    await updateDoc(doc(db,'research',id), { views: currentViews + 1 });
-    data.views = currentViews + 1;
-    $('detailBadges').innerHTML = `<span class="type-badge">${data.type === 'project' ? '장기 프로젝트' : '실험 보고서'}</span><span class="year-badge">${escapeHtml(data.archiveYear || '-')}</span>${data.type === 'project' ? `<span class="status-badge">${escapeHtml(data.status || '진행중')}</span>` : ''}`;
-    $('detailTitle').textContent = data.title || '';
-    $('detailMeta').innerHTML = `작성자: ${escapeHtml(data.author || '-')} | 동아리: ${escapeHtml(data.club || '-')} | 작성 년도: ${escapeHtml(data.archiveYear || '-')} | 등록일: ${formatDate(data.createdAt)} | 조회수: ${data.views || 0}`;
-    let bodyHtml='';
-    if(data.type === 'experiment'){
-      const expSections = (data.sections && data.sections.length)
-        ? data.sections
-        : [
-            { title:'실험 이유', content:data.reason || '' },
-            { title:'결과 예측', content:data.prediction || '' },
-            { title:'실험 과정', content:data.method || '' },
-            { title:'실험 결과', content:data.result || '' }
-          ].filter(section => section.content);
-      bodyHtml = `<div>${(data.tags||[]).map(tag => `<span class="tag">${escapeHtml(tag)}</span>`).join('')}</div>${expSections.map(section => `<div class="section-box"><h4>${escapeHtml(section.title || '제목 없음')}</h4><p>${renderRichText(section.content || '')}</p></div>`).join('')}${renderLinksSection(data.links || [])}${renderAttachments(data.attachments || [])}<div class="meta">등록자: ${escapeHtml(data.savedBy || '-')}</div>`;
-    }
+ async function openResearchDetail(id){
+  const snap=await getDoc(doc(db,'research',id));
+  if(!snap.exists()){
+    alert('글을 찾을 수 없습니다.');
+    return;
+  }
+
+  const data={ id:snap.id, ...snap.data() };
+  currentDetail = { ...data, type: data.type || 'research' };
+
+  const currentViews = data.views || 0;
+  await updateDoc(doc(db,'research',id), { views: currentViews + 1 });
+  data.views = currentViews + 1;
+
+  $('detailBadges').innerHTML = `
+    <span class="type-badge">${data.type === 'project' ? '장기 프로젝트' : '실험 보고서'}</span>
+    <span class="year-badge">${escapeHtml(data.archiveYear || '-')}</span>
+    ${data.type === 'project' ? `<span class="status-badge">${escapeHtml(data.status || '진행중')}</span>` : ''}
+  `;
+
+  $('detailTitle').textContent = data.title || '';
+  $('detailMeta').innerHTML = `
+    작성자: ${escapeHtml(data.author || '-')} |
+    동아리: ${escapeHtml(data.club || '-')} |
+    작성 년도: ${escapeHtml(data.archiveYear || '-')} |
+    등록일: ${formatDate(data.createdAt)} |
+    조회수: ${data.views || 0}
+  `;
+
+  let bodyHtml='';
+
+  if(data.type === 'experiment'){
+    const expSections = (data.sections && data.sections.length)
+      ? data.sections
+      : [
+          { title:'실험 이유', content:data.reason || '' },
+          { title:'결과 예측', content:data.prediction || '' },
+          { title:'실험 과정', content:data.method || '' },
+          { title:'실험 결과', content:data.result || '' }
+        ].filter(section => section.content);
+
+    bodyHtml = `
+      <div>${(data.tags||[]).map(tag => `<span class="tag">${escapeHtml(tag)}</span>`).join('')}</div>
+      ${expSections.map(section => `
+        <div class="section-box">
+          <h4>${escapeHtml(section.title || '제목 없음')}</h4>
+          <p>${renderRichText(section.content || '')}</p>
+        </div>
+      `).join('')}
+      ${renderLinksSection(data.links || [])}
+      ${renderAttachments(data.attachments || [])}
+      <div class="meta">등록자: ${escapeHtml(data.savedBy || '-')}</div>
+    `;
+  }
+
+  if(data.type === 'project'){
+    bodyHtml = `
+      <div>${(data.tags||[]).map(tag => `<span class="tag">${escapeHtml(tag)}</span>`).join('')}</div>
+      <p><strong>연구 목적</strong><br>${renderRichText(data.purpose || '')}</p>
+      <p><strong>프로젝트 요약</strong><br>${renderRichText(data.summary || '')}</p>
+      ${(data.sections || []).map(section => `
+        <div class="section-box">
+          <h4>${escapeHtml(section.title || '제목 없음')}</h4>
+          <p>${renderRichText(section.content || '')}</p>
+        </div>
+      `).join('')}
+      ${renderLinksSection(data.links || [])}
+      ${renderAttachments(data.attachments || [])}
+      <div class="meta">등록자: ${escapeHtml(data.savedBy || '-')}</div>
+    `;
+  }
+
+  $('detailBody').innerHTML = bodyHtml;
+  await loadComments(data.type || 'research', id);
+  await showPage('detail');
+}
+  async function openNoticeDetail(id){
+  const snap = await getDoc(doc(db,'notice',id));
+  if(!snap.exists()){
+    alert('공지를 찾을 수 없습니다.');
+    return;
+  }
+
+  const data = { id:snap.id, ...snap.data(), type:'notice' };
+  currentDetail = data;
+
+  $('detailBadges').innerHTML = `
+    <span class="notice-badge">공지</span>
+    ${data.pinned ? `<span class="pinned-badge">상단 고정</span>` : ''}
+  `;
+
+  $('detailTitle').textContent = data.title || '';
+  $('detailMeta').innerHTML = `
+    작성자: ${escapeHtml(data.author || '-')} |
+    등록자: ${escapeHtml(data.savedBy || data.author || '-')} |
+    작성일: ${formatDate(data.date)}
+  `;
+
+  $('detailBody').innerHTML = `
+    <div class="section-box">
+      <p>${renderRichText(data.content || '')}</p>
+    </div>
+    ${renderLinksSection(data.links || [])}
+    ${renderAttachments(data.attachments || [])}
+  `;
+
+  await loadComments('notice', id);
+  await showPage('detail');
+}
     if(data.type === 'project') bodyHtml = `<div>${(data.tags||[]).map(tag => `<span class="tag">${escapeHtml(tag)}</span>`).join('')}</div><p><strong>연구 목적</strong><br>${renderRichText(data.purpose || '')}</p><p><strong>프로젝트 요약</strong><br>${renderRichText(data.summary || '')}</p>${(data.sections || []).map(section => `<div class="section-box"><h4>${escapeHtml(section.title || '제목 없음')}</h4><p>${renderRichText(section.content || '')}</p></div>`).join('')}${renderLinksSection(data.links || [])}${renderAttachments(data.attachments || [])}<div class="meta">등록자: ${escapeHtml(data.savedBy || '-')}</div>`;
     $('detailBody').innerHTML = bodyHtml;
     await loadComments(data.type || type, id);
@@ -739,20 +865,43 @@
     await loadComments((currentDetail.type || 'research'), currentDetail.id);
   }
 
-  async function submitComment(){
-    const user = getUser();
-    if(!user){ alert('먼저 로그인해주세요.'); return; }
-    if(!currentDetail){ alert('글을 먼저 열어주세요.'); return; }
-    const content = $('commentInput').value.trim();
-    if(!content){ alert('댓글 내용을 입력해주세요.'); return; }
-    await addDoc(collection(db,'comments'), { postType:(currentDetail.type || 'research'), postId:currentDetail.id, author:user.name, authorId:user.id, content, createdAt:new Date().toISOString(), likesCount:0, likedUsers:[] });
-    $('commentInput').value='';
-    await loadComments('research', currentDetail.id);
+async function submitComment(){
+  const user = getUser();
+  if(!user){
+    alert('먼저 로그인해주세요.');
+    return;
   }
-  $('submitCommentBtn').addEventListener('click', submitComment);
-  $('commentSortSelect').addEventListener('change', async () => {
-    if(currentDetail?.id) await loadComments('research', currentDetail.id);
+  if(!currentDetail){
+    alert('글을 먼저 열어주세요.');
+    return;
+  }
+
+  const content = $('commentInput').value.trim();
+  if(!content){
+    alert('댓글 내용을 입력해주세요.');
+    return;
+  }
+
+  await addDoc(collection(db,'comments'), {
+    postType: currentDetail.type || 'research',
+    postId: currentDetail.id,
+    author: user.name,
+    authorId: user.id,
+    content,
+    createdAt: new Date().toISOString(),
+    likesCount: 0,
+    likedUsers: []
   });
+
+  $('commentInput').value = '';
+  await loadComments(currentDetail.type || 'research', currentDetail.id);
+}
+  $('submitCommentBtn').addEventListener('click', submitComment);
+$('commentSortSelect').addEventListener('change', async () => {
+  if(currentDetail?.id){
+    await loadComments(currentDetail.type || 'research', currentDetail.id);
+  }
+});
 
   function saveWriteDraft(){
     const draft = {
@@ -913,7 +1062,21 @@
         const content = $('noticeContentWrite').value.trim();
         if(!title || !content){ alert('공지 제목과 내용을 모두 입력해주세요.'); return; }
         const [uploadedImages, uploadedFiles] = await Promise.all([uploadFiles(imageFiles,'irhos-images'), uploadFiles(normalFiles,'irhos-files')]);
-        const noticeData = { title, content, pinned:$('noticePinned').checked, author:authorName, authorId:user.id, originalWriterName:authorName, savedBy:user.name, savedById:user.id, club:user.club, date:new Date().toISOString(), attachments:[...keptAttachments, ...uploadedImages, ...uploadedFiles], links };
+        const noticeData = {
+  type:'notice',
+  title,
+  content,
+  pinned:$('noticePinned').checked,
+  author:authorName,
+  authorId:user.id,
+  originalWriterName:authorName,
+  savedBy:user.name,
+  savedById:user.id,
+  club:user.club,
+  date:new Date().toISOString(),
+  attachments:[...keptAttachments, ...uploadedImages, ...uploadedFiles],
+  links
+};
         if(editState.isEditing && editState.category === 'notice'){
           const oldSnap=await getDoc(doc(db,'notice',editState.id)); const oldData=oldSnap.exists()?oldSnap.data():{}; noticeData.date = oldData.date || new Date().toISOString();
           await updateDoc(doc(db,'notice',editState.id), noticeData); alert('공지 수정 완료');
