@@ -279,10 +279,10 @@
           <label>제목</label><input id="title">
           <label>태그</label><input id="tags" placeholder="#화학 #실험 #생명과학">
           <div id="experimentForm">
-            <label>실험 이유</label><textarea id="reason"></textarea>
-            <label>결과 예측</label><textarea id="prediction"></textarea>
-            <label>실험 과정</label><textarea id="method"></textarea>
-            <label>실험 결과</label><textarea id="result"></textarea>
+            <div class="inline-info">태그만 고정하고, 본문은 작성자가 원하는 형식으로 자유롭게 추가할 수 있어요.</div>
+            <h3>실험 기록 섹션</h3>
+            <div id="experimentSections"></div>
+            <button type="button" class="secondary-btn" id="addExperimentSectionBtn">+ 섹션 추가</button>
           </div>
           <div id="projectForm" class="hidden">
             <label>프로젝트 상태</label><select id="projectStatus"><option value="진행중">진행중</option><option value="완료">완료</option><option value="보류">보류</option></select>
@@ -639,7 +639,17 @@
     $('detailTitle').textContent = data.title || '';
     $('detailMeta').innerHTML = `작성자: ${escapeHtml(data.author || '-')} | 동아리: ${escapeHtml(data.club || '-')} | 작성 년도: ${escapeHtml(data.archiveYear || '-')} | 등록일: ${formatDate(data.createdAt)} | 조회수: ${data.views || 0}`;
     let bodyHtml='';
-    if(data.type === 'experiment') bodyHtml = `<div>${(data.tags||[]).map(tag => `<span class="tag">${escapeHtml(tag)}</span>`).join('')}</div><p><strong>실험 이유</strong><br>${renderRichText(data.reason || '')}</p><p><strong>결과 예측</strong><br>${renderRichText(data.prediction || '')}</p><p><strong>실험 과정</strong><br>${renderRichText(data.method || '')}</p><p><strong>실험 결과</strong><br>${renderRichText(data.result || '')}</p>${renderLinksSection(data.links || [])}${renderAttachments(data.attachments || [])}<div class="meta">등록자: ${escapeHtml(data.savedBy || '-')}</div>`;
+    if(data.type === 'experiment'){
+      const expSections = (data.sections && data.sections.length)
+        ? data.sections
+        : [
+            { title:'실험 이유', content:data.reason || '' },
+            { title:'결과 예측', content:data.prediction || '' },
+            { title:'실험 과정', content:data.method || '' },
+            { title:'실험 결과', content:data.result || '' }
+          ].filter(section => section.content);
+      bodyHtml = `<div>${(data.tags||[]).map(tag => `<span class="tag">${escapeHtml(tag)}</span>`).join('')}</div>${expSections.map(section => `<div class="section-box"><h4>${escapeHtml(section.title || '제목 없음')}</h4><p>${renderRichText(section.content || '')}</p></div>`).join('')}${renderLinksSection(data.links || [])}${renderAttachments(data.attachments || [])}<div class="meta">등록자: ${escapeHtml(data.savedBy || '-')}</div>`;
+    }
     if(data.type === 'project') bodyHtml = `<div>${(data.tags||[]).map(tag => `<span class="tag">${escapeHtml(tag)}</span>`).join('')}</div><p><strong>연구 목적</strong><br>${renderRichText(data.purpose || '')}</p><p><strong>프로젝트 요약</strong><br>${renderRichText(data.summary || '')}</p>${(data.sections || []).map(section => `<div class="section-box"><h4>${escapeHtml(section.title || '제목 없음')}</h4><p>${renderRichText(section.content || '')}</p></div>`).join('')}${renderLinksSection(data.links || [])}${renderAttachments(data.attachments || [])}<div class="meta">등록자: ${escapeHtml(data.savedBy || '-')}</div>`;
     $('detailBody').innerHTML = bodyHtml;
     await loadComments('research', id);
@@ -677,7 +687,8 @@
     const draft = {
       writeType:$('writeType')?.value || 'notice', authorDisplay:$('authorDisplay')?.value || '',
       noticeTitleWrite:$('noticeTitleWrite')?.value || '', noticeContentWrite:$('noticeContentWrite')?.value || '', noticePinned:$('noticePinned')?.checked || false,
-      researchClub:$('researchClub')?.value || '전체', archiveYear:$('archiveYear')?.value || '2026', title:$('title')?.value || '', tags:$('tags')?.value || '', reason:$('reason')?.value || '', prediction:$('prediction')?.value || '', method:$('method')?.value || '', result:$('result')?.value || '',
+      researchClub:$('researchClub')?.value || '전체', archiveYear:$('archiveYear')?.value || '2026', title:$('title')?.value || '', tags:$('tags')?.value || '',
+      experimentSections: collectExperimentSections(),
       projectStatus:$('projectStatus')?.value || '진행중', projectPurpose:$('projectPurpose')?.value || '', projectSummary:$('projectSummary')?.value || '', projectSections: collectProjectSections(), linkInput:$('linkInput')?.value || ''
     };
     localStorage.setItem(WRITE_DRAFT_KEY, JSON.stringify(draft));
@@ -686,6 +697,19 @@
   function collectProjectSections(){
     return [...document.querySelectorAll('.project-section-item')].map(item => ({ title:item.querySelector('.section-title').value.trim(), content:item.querySelector('.section-content').value.trim() })).filter(s => s.title || s.content);
   }
+
+  function createExperimentSectionElement(title='', content=''){
+    const wrapper = document.createElement('div');
+    wrapper.className = 'section-box experiment-section-item';
+    wrapper.innerHTML = `<label>섹션 제목</label><input class="experiment-section-title" value="${escapeHtml(title)}"><label>섹션 내용</label><textarea class="experiment-section-content">${escapeHtml(content)}</textarea><button type="button" class="danger-btn small remove-experiment-section-btn">섹션 삭제</button>`;
+    wrapper.querySelector('.remove-experiment-section-btn').addEventListener('click', ()=>{ wrapper.remove(); saveWriteDraft(); });
+    return wrapper;
+  }
+  function addExperimentSection(title='', content=''){ $('experimentSections').appendChild(createExperimentSectionElement(title, content)); saveWriteDraft(); }
+  function collectExperimentSections(){
+    return [...document.querySelectorAll('.experiment-section-item')].map(item => ({ title:item.querySelector('.experiment-section-title').value.trim(), content:item.querySelector('.experiment-section-content').value.trim() })).filter(s => s.title || s.content);
+  }
+  $('addExperimentSectionBtn').addEventListener('click', () => addExperimentSection());
 
   function createProjectSectionElement(title='', content=''){
     const wrapper = document.createElement('div');
@@ -704,7 +728,8 @@
       $('writeType').value = draft.writeType || 'notice'; $('authorDisplay').value = draft.authorDisplay || ''; changeWriteForm();
       $('noticeTitleWrite').value = draft.noticeTitleWrite || ''; $('noticeContentWrite').value = draft.noticeContentWrite || ''; $('noticePinned').checked = !!draft.noticePinned;
       $('researchClub').value = draft.researchClub || '전체'; $('archiveYear').value = draft.archiveYear || '2026'; $('title').value = draft.title || ''; $('tags').value = draft.tags || '';
-      $('reason').value = draft.reason || ''; $('prediction').value = draft.prediction || ''; $('method').value = draft.method || ''; $('result').value = draft.result || '';
+      $('experimentSections').innerHTML='';
+      (draft.experimentSections || []).forEach(section => addExperimentSection(section.title || '', section.content || ''));
       $('projectStatus').value = draft.projectStatus || '진행중'; $('projectPurpose').value = draft.projectPurpose || ''; $('projectSummary').value = draft.projectSummary || ''; $('linkInput').value = draft.linkInput || '';
       $('projectSections').innerHTML=''; (draft.projectSections || []).forEach(section => addProjectSection(section.title || '', section.content || ''));
       changeWriteForm();
@@ -712,9 +737,10 @@
   }
   const clearWriteDraft = () => localStorage.removeItem(WRITE_DRAFT_KEY);
 
-  function bindWriteDraftAutoSave(){ ['writeType','authorDisplay','noticeTitleWrite','noticeContentWrite','noticePinned','researchClub','archiveYear','title','tags','reason','prediction','method','result','projectStatus','projectPurpose','projectSummary','linkInput'].forEach(id => {
+  function bindWriteDraftAutoSave(){ ['writeType','authorDisplay','noticeTitleWrite','noticeContentWrite','noticePinned','researchClub','archiveYear','title','tags','projectStatus','projectPurpose','projectSummary','linkInput'].forEach(id => {
       const el = $(id); if(!el) return; const eventName = (el.type === 'checkbox' || el.tagName === 'SELECT') ? 'change' : 'input'; el.addEventListener(eventName, saveWriteDraft);
     });
+    $('experimentSections').addEventListener('input', saveWriteDraft);
     $('projectSections').addEventListener('input', saveWriteDraft);
   }
 
@@ -765,7 +791,7 @@
     $('writeTitleText').textContent='글 작성'; $('editModeInfo').textContent='공지나 탐구 글을 작성할 수 있습니다.'; $('submitBtn').textContent='저장'; $('cancelEditBtn').classList.add('hidden');
     $('writeType').disabled=false; $('writeType').value='notice'; $('authorDisplay').value=user?.name || '';
     $('noticeTitleWrite').value=''; $('noticeContentWrite').value=''; $('noticePinned').checked=false;
-    $('researchClub').value='전체'; $('archiveYear').value='2026'; $('title').value=''; $('tags').value=''; $('reason').value=''; $('prediction').value=''; $('method').value=''; $('result').value='';
+    $('researchClub').value='전체'; $('archiveYear').value='2026'; $('title').value=''; $('tags').value=''; $('experimentSections').innerHTML='';
     $('projectStatus').value='진행중'; $('projectPurpose').value=''; $('projectSummary').value=''; $('projectSections').innerHTML='';
     $('imageInput').value=''; $('fileInput').value=''; $('linkInput').value=''; $('existingAttachmentsBox').classList.add('hidden'); $('existingAttachmentsList').innerHTML=''; $('existingLinksBox').classList.add('hidden'); $('existingLinksList').innerHTML='';
     changeWriteForm();
@@ -825,7 +851,8 @@
       if(type === 'experiment'){
         const title = $('title').value.trim(); if(!title){ alert('제목을 입력해주세요.'); return; }
         const [uploadedImages, uploadedFiles] = await Promise.all([uploadFiles(imageFiles,'irhos-images'), uploadFiles(normalFiles,'irhos-files')]);
-        const researchData = { title, tags:parseTags($('tags').value), club:$('researchClub').value, archiveYear:$('archiveYear').value, type:'experiment', reason:$('reason').value.trim(), prediction:$('prediction').value.trim(), method:$('method').value.trim(), result:$('result').value.trim(), author:authorName, authorId:user.id, originalWriterName:authorName, savedBy:user.name, savedById:user.id, views:0, createdAt:new Date().toISOString(), attachments:[...keptAttachments, ...uploadedImages, ...uploadedFiles], links };
+        const experimentSections = collectExperimentSections();
+        const researchData = { title, tags:parseTags($('tags').value), club:$('researchClub').value, archiveYear:$('archiveYear').value, type:'experiment', sections:experimentSections, reason:'', prediction:'', method:'', result:'', author:authorName, authorId:user.id, originalWriterName:authorName, savedBy:user.name, savedById:user.id, views:0, createdAt:new Date().toISOString(), attachments:[...keptAttachments, ...uploadedImages, ...uploadedFiles], links };
         if(editState.isEditing && editState.category === 'research'){
           const oldSnap=await getDoc(doc(db,'research',editState.id)); const oldData=oldSnap.exists()?oldSnap.data():{}; researchData.views=oldData.views||0; researchData.createdAt=oldData.createdAt||new Date().toISOString();
           await updateDoc(doc(db,'research',editState.id), researchData); alert('실험 보고서 수정 완료');
@@ -860,7 +887,19 @@
       $('writeType').value='notice'; $('writeType').disabled=true; $('noticeTitleWrite').value=data.title || ''; $('noticeContentWrite').value=data.content || ''; $('noticePinned').checked=!!data.pinned;
     } else {
       $('writeType').value=data.type || 'experiment'; $('writeType').disabled=true; $('researchClub').value=data.club || '전체'; $('archiveYear').value=data.archiveYear || '2026'; $('title').value=data.title || ''; $('tags').value=(data.tags||[]).join(' ');
-      if(data.type === 'experiment'){ $('reason').value=data.reason || ''; $('prediction').value=data.prediction || ''; $('method').value=data.method || ''; $('result').value=data.result || ''; }
+      if(data.type === 'experiment'){
+        $('experimentSections').innerHTML='';
+        const expSections = (data.sections && data.sections.length)
+          ? data.sections
+          : [
+              { title:'실험 이유', content:data.reason || '' },
+              { title:'결과 예측', content:data.prediction || '' },
+              { title:'실험 과정', content:data.method || '' },
+              { title:'실험 결과', content:data.result || '' }
+            ].filter(section => section.content);
+        if(!expSections.length) addExperimentSection('실험 내용', '');
+        else expSections.forEach(section => addExperimentSection(section.title || '', section.content || ''));
+      }
       if(data.type === 'project'){ $('projectStatus').value=data.status || '진행중'; $('projectPurpose').value=data.purpose || ''; $('projectSummary').value=data.summary || ''; $('projectSections').innerHTML=''; (data.sections||[]).forEach(section => addProjectSection(section.title || '', section.content || '')); }
     }
     $('linkInput').value=''; renderExistingAttachments(); renderExistingLinks(); changeWriteForm(); await showPage('write');
