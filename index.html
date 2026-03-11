@@ -747,10 +747,7 @@ async function loadNotice(){
     `;
   }
 
-  $('detailBody').innerHTML = bodyHtml;
-  await loadComments(data.type || 'research', id);
-  await showPage('detail');
-}
+
   async function openNoticeDetail(id){
   const snap = await getDoc(doc(db,'notice',id));
   if(!snap.exists()){
