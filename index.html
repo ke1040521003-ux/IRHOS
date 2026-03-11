@@ -113,6 +113,9 @@
     .comment-item{border-top:1px solid #eee;padding:10px 0;}
     .comment-item:first-child{border-top:none;}
     .comment-like-row{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-top:8px;}
+    .comment-actions{display:flex;gap:8px;flex-wrap:wrap;align-items:center;}
+    .comment-action-btn{border:none;background:#eef2ff;color:#1d3557;padding:6px 10px;border-radius:999px;cursor:pointer;font-size:12px;font-weight:700;}
+    .comment-delete-btn{background:#fee4e2;color:#b42318;}
     .comment-like-btn{border:none;background:#f2f4f7;color:#344054;padding:8px 12px;border-radius:999px;cursor:pointer;display:inline-flex;align-items:center;gap:6px;font-weight:700;transition:transform .16s ease, background .2s ease, color .2s ease, box-shadow .2s ease;}
     .comment-like-btn:hover{transform:translateY(-1px);background:#eceff5;}
     .comment-like-btn.liked{background:#fee4e2;color:#b42318;box-shadow:0 4px 12px rgba(180,35,24,.15);}
@@ -823,12 +826,24 @@
     list.innerHTML = items.map(item => {
       const liked = !!user && (item.likedUsers || []).includes(user.id);
       const shouldPop = lastLikedCommentId === item.id;
-      return `<div class="comment-item"><div class="meta">${escapeHtml(item.author || '-')} · ${formatDate(item.createdAt)}</div><div>${renderRichText(item.content || '')}</div><div class="comment-like-row"><div class="meta">좋아요 ${item.likesCount || 0}</div><button type="button" class="comment-like-btn ${liked ? 'liked' : ''} ${shouldPop ? 'pop' : ''}" data-comment-like-id="${item.id}"><span>${liked ? '❤️' : '🤍'}</span><span>${item.likesCount || 0}</span></button></div></div>`;
+      return `<div class="comment-item"><div class="meta">${escapeHtml(item.author || '-')} · ${formatDate(item.createdAt)}</div><div>${renderRichText(item.content || '')}</div><div class="comment-like-row"><div class="comment-actions"><div class="meta">좋아요 ${item.likesCount || 0}</div><button type="button" class="comment-action-btn" data-comment-edit-id="${item.id}">수정</button><button type="button" class="comment-action-btn comment-delete-btn" data-comment-delete-id="${item.id}">삭제</button></div><button type="button" class="comment-like-btn ${liked ? 'liked' : ''} ${shouldPop ? 'pop' : ''}" data-comment-like-id="${item.id}"><span>${liked ? '❤️' : '🤍'}</span><span>${item.likesCount || 0}</span></button></div></div>`;
     }).join('');
 
     list.querySelectorAll('[data-comment-like-id]').forEach(btn => {
       btn.addEventListener('click', async () => {
         await toggleCommentLike(btn.dataset.commentLikeId);
+      });
+    });
+
+    list.querySelectorAll('[data-comment-edit-id]').forEach(btn => {
+      btn.addEventListener('click', async () => {
+        await editComment(btn.dataset.commentEditId);
+      });
+    });
+
+    list.querySelectorAll('[data-comment-delete-id]').forEach(btn => {
+      btn.addEventListener('click', async () => {
+        await deleteComment(btn.dataset.commentDeleteId);
       });
     });
 
@@ -866,6 +881,50 @@
     }
 
     lastLikedCommentId = commentId;
+    await loadComments(currentDetail.type || 'research', currentDetail.id);
+  }
+
+  async function editComment(commentId){
+    const user = getUser();
+    if(!user){
+      alert('먼저 로그인해주세요.');
+      return;
+    }
+
+    const snap = await getDoc(doc(db,'comments',commentId));
+    if(!snap.exists()){
+      alert('댓글을 찾을 수 없습니다.');
+      return;
+    }
+
+    const data = snap.data();
+    const nextContent = prompt('수정할 댓글 내용을 입력하세요.', data.content || '');
+    if(nextContent === null) return;
+    const trimmed = nextContent.trim();
+    if(!trimmed){
+      alert('댓글 내용을 입력해주세요.');
+      return;
+    }
+
+    await updateDoc(doc(db,'comments',commentId), {
+      content: trimmed,
+      updatedAt: new Date().toISOString()
+    });
+
+    await loadComments(currentDetail.type || 'research', currentDetail.id);
+  }
+
+  async function deleteComment(commentId){
+    const user = getUser();
+    if(!user){
+      alert('먼저 로그인해주세요.');
+      return;
+    }
+
+    const ok = confirm('이 댓글을 삭제할까요?');
+    if(!ok) return;
+
+    await deleteDoc(doc(db,'comments',commentId));
     await loadComments(currentDetail.type || 'research', currentDetail.id);
   }
 
