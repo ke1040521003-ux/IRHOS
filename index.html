@@ -280,6 +280,14 @@
           <option value="project">장기 프로젝트</option>
         </select>
         <div id="noticeForm">
+          <label>공지 대상</label>
+          <select id="noticeTargetClub">
+            <option value="전체">전체 동아리</option>
+            <option value="융합과학탐구1">융합과학탐구1</option>
+            <option value="융합과학탐구2">융합과학탐구2</option>
+            <option value="생명과학">생명과학</option>
+            <option value="지구과학">지구과학</option>
+          </select>
           <div class="tool-row"><label style="display:flex;align-items:center;gap:8px;"><input type="checkbox" id="noticeAllowComments" style="width:auto;" checked> 댓글 작성 허용</label></div>
           <label>공지 제목</label><input id="noticeTitleWrite">
           <label>공지 내용</label><textarea id="noticeContentWrite"></textarea>
@@ -631,7 +639,15 @@
     list.innerHTML=''; preview.innerHTML='';
     const snap=await getDocs(collection(db,'notice'));
     const items=[];
-    snap.forEach(docu => items.push({ id:docu.id, ...docu.data() }));
+    const user = getUser();
+
+    snap.forEach(docu => {
+      const data = docu.data();
+      const targetClub = data.targetClub || '전체';
+      const canSee = targetClub === '전체' || (user && (user.club === targetClub || user.role === '부장'));
+      if(canSee) items.push({ id:docu.id, ...data, targetClub });
+    });
+
     items.sort((a,b)=> (Number(!!b.pinned)-Number(!!a.pinned)) || (new Date(b.date)-new Date(a.date)));
 
     if(!items.length){
@@ -645,6 +661,7 @@
         <div class="post" data-notice-id="${item.id}" style="cursor:pointer;">
           <div>
             <span class="notice-badge">공지</span>
+            <span class="type-badge">${escapeHtml(item.targetClub || '전체')}</span>
             ${item.pinned ? `<span class="pinned-badge">상단 고정</span>` : ''}
           </div>
           <h3>${escapeHtml(item.title)}</h3>
@@ -780,6 +797,7 @@
 
     $('detailBadges').innerHTML = `
       <span class="notice-badge">공지</span>
+      <span class="type-badge">${escapeHtml(data.targetClub || '전체')}</span>
       ${data.pinned ? `<span class="pinned-badge">상단 고정</span>` : ''}
     `;
 
@@ -1016,7 +1034,7 @@
   function saveWriteDraft(){
     const draft = {
       writeType:$('writeType')?.value || 'notice', authorDisplay:$('authorDisplay')?.value || '',
-      noticeTitleWrite:$('noticeTitleWrite')?.value || '', noticeContentWrite:$('noticeContentWrite')?.value || '', noticePinned:$('noticePinned')?.checked || false, noticeAllowComments:$('noticeAllowComments')?.checked ?? true,
+      noticeTitleWrite:$('noticeTitleWrite')?.value || '', noticeContentWrite:$('noticeContentWrite')?.value || '', noticePinned:$('noticePinned')?.checked || false, noticeAllowComments:$('noticeAllowComments')?.checked ?? true, noticeTargetClub:$('noticeTargetClub')?.value || '전체',
       researchClub:$('researchClub')?.value || '전체', researchAllowComments:$('researchAllowComments')?.checked ?? true, archiveYear:$('archiveYear')?.value || '2026', title:$('title')?.value || '', tags:$('tags')?.value || '',
       experimentSections: collectExperimentSections(),
       projectStatus:$('projectStatus')?.value || '진행중', projectPurpose:$('projectPurpose')?.value || '', projectSummary:$('projectSummary')?.value || '', projectSections: collectProjectSections(), linkInput:$('linkInput')?.value || ''
@@ -1056,7 +1074,7 @@
     try{
       const draft = JSON.parse(raw);
       $('writeType').value = draft.writeType || 'notice'; $('authorDisplay').value = draft.authorDisplay || ''; changeWriteForm();
-      $('noticeTitleWrite').value = draft.noticeTitleWrite || ''; $('noticeContentWrite').value = draft.noticeContentWrite || ''; $('noticePinned').checked = !!draft.noticePinned; $('noticeAllowComments').checked = draft.noticeAllowComments !== false;
+      $('noticeTitleWrite').value = draft.noticeTitleWrite || ''; $('noticeContentWrite').value = draft.noticeContentWrite || ''; $('noticePinned').checked = !!draft.noticePinned; $('noticeAllowComments').checked = draft.noticeAllowComments !== false; $('noticeTargetClub').value = draft.noticeTargetClub || '전체';
       $('researchClub').value = draft.researchClub || '전체'; $('researchAllowComments').checked = draft.researchAllowComments !== false; $('archiveYear').value = draft.archiveYear || '2026'; $('title').value = draft.title || ''; $('tags').value = draft.tags || '';
       $('experimentSections').innerHTML='';
       (draft.experimentSections || []).forEach(section => addExperimentSection(section.title || '', section.content || ''));
@@ -1121,7 +1139,7 @@
     const user = getUser();
     $('writeTitleText').textContent='글 작성'; $('editModeInfo').textContent='공지나 탐구 글을 작성할 수 있습니다.'; $('submitBtn').textContent='저장'; $('cancelEditBtn').classList.add('hidden');
     $('writeType').disabled=false; $('writeType').value='notice'; $('authorDisplay').value=user?.name || '';
-    $('noticeTitleWrite').value=''; $('noticeContentWrite').value=''; $('noticePinned').checked=false; $('noticeAllowComments').checked=true;
+    $('noticeTitleWrite').value=''; $('noticeContentWrite').value=''; $('noticePinned').checked=false; $('noticeAllowComments').checked=true; $('noticeTargetClub').value='전체';
     $('researchClub').value='전체'; $('researchAllowComments').checked=true; $('archiveYear').value='2026'; $('title').value=''; $('tags').value=''; $('experimentSections').innerHTML='';
     $('projectStatus').value='진행중'; $('projectPurpose').value=''; $('projectSummary').value=''; $('projectSections').innerHTML='';
     $('imageInput').value=''; $('fileInput').value=''; $('linkInput').value=''; $('existingAttachmentsBox').classList.add('hidden'); $('existingAttachmentsList').innerHTML=''; $('existingLinksBox').classList.add('hidden'); $('existingLinksList').innerHTML='';
@@ -1178,6 +1196,7 @@
         const noticeData = {
           type:'notice',
           allowComments: $('noticeAllowComments').checked,
+          targetClub: $('noticeTargetClub').value,
           title,
           content,
           pinned:$('noticePinned').checked,
@@ -1246,7 +1265,7 @@
     keptAttachments = [...(data.attachments || [])]; keptLinks = [...(data.links || [])];
     $('writeTitleText').textContent='글 수정'; $('editModeInfo').textContent='수정 모드입니다.'; $('submitBtn').textContent='수정 저장'; $('cancelEditBtn').classList.remove('hidden'); $('authorDisplay').value=data.author || '';
     if(category === 'notice'){
-      $('writeType').value='notice'; $('writeType').disabled=true; $('noticeTitleWrite').value=data.title || ''; $('noticeContentWrite').value=data.content || ''; $('noticePinned').checked=!!data.pinned; $('noticeAllowComments').checked=data.allowComments !== false;
+      $('writeType').value='notice'; $('writeType').disabled=true; $('noticeTitleWrite').value=data.title || ''; $('noticeContentWrite').value=data.content || ''; $('noticePinned').checked=!!data.pinned; $('noticeAllowComments').checked=data.allowComments !== false; $('noticeTargetClub').value=data.targetClub || '전체';
     } else {
       $('writeType').value=data.type || 'experiment'; $('writeType').disabled=true; $('researchClub').value=data.club || '전체'; $('researchAllowComments').checked=data.allowComments !== false; $('archiveYear').value=data.archiveYear || '2026'; $('title').value=data.title || ''; $('tags').value=(data.tags||[]).join(' ');
       if(data.type === 'experiment'){
