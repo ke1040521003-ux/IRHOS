@@ -121,6 +121,8 @@
     .comment-like-btn.liked{background:#fee4e2;color:#b42318;box-shadow:0 4px 12px rgba(180,35,24,.15);}
     .comment-like-btn.pop{animation:commentHeartPop .28s ease;}
     .comment-sort-select{max-width:180px;}
+    .comment-locked-box{background:#fff8e6;border:1px solid #f0d38a;color:#7a5b00;padding:12px 14px;border-radius:12px;margin-top:10px;}
+    .comment-top-badge{display:inline-block;background:#fff3cd;color:#7a5b00;padding:4px 8px;border-radius:999px;font-size:11px;font-weight:700;margin-bottom:8px;}
     @keyframes commentHeartPop{0%{transform:scale(1);}50%{transform:scale(1.14);}100%{transform:scale(1);}}
     .photo-limit-note{font-size:13px;color:#667085;margin:8px 0 12px 0;}
     .member-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
@@ -278,11 +280,13 @@
           <option value="project">장기 프로젝트</option>
         </select>
         <div id="noticeForm">
+          <div class="tool-row"><label style="display:flex;align-items:center;gap:8px;"><input type="checkbox" id="noticeAllowComments" style="width:auto;" checked> 댓글 작성 허용</label></div>
           <label>공지 제목</label><input id="noticeTitleWrite">
           <label>공지 내용</label><textarea id="noticeContentWrite"></textarea>
           <div class="tool-row"><label style="display:flex;align-items:center;gap:8px;"><input type="checkbox" id="noticePinned" style="width:auto;"> 상단 고정 공지</label></div>
         </div>
         <div id="researchForm" class="hidden">
+          <div class="tool-row"><label style="display:flex;align-items:center;gap:8px;"><input type="checkbox" id="researchAllowComments" style="width:auto;" checked> 댓글 작성 허용</label></div>
           <label>공개 범위 / 동아리</label>
           <select id="researchClub"><option value="전체">전체</option><option value="융합과학탐구1">융합과학탐구1</option><option value="융합과학탐구2">융합과학탐구2</option><option value="생명과학">생명과학</option><option value="지구과학">지구과학</option></select>
           <label>작성 년도</label><select id="archiveYear"></select>
@@ -355,7 +359,7 @@
           <div class="detail-actions"><button type="button" class="secondary-btn" id="backArchiveBtn">아카이브로</button><button type="button" class="secondary-btn" id="printBtn">PDF 저장 / 인쇄</button></div>
         </div>
         <div id="detailBody"></div>
-        <div class="comment-box"><div class="tool-row" style="justify-content:space-between;align-items:center;"><h3 style="margin:0;">댓글</h3><select id="commentSortSelect" class="comment-sort-select"><option value="latest">최신순</option><option value="oldest">오래된순</option><option value="likes">인기순</option></select></div><div id="commentList"></div><textarea id="commentInput" placeholder="댓글을 입력하세요"></textarea><div class="tool-row"><button type="button" class="primary-btn" id="submitCommentBtn">댓글 등록</button></div></div>
+        <div class="comment-box"><div class="tool-row" style="justify-content:space-between;align-items:center;"><h3 style="margin:0;">댓글</h3><select id="commentSortSelect" class="comment-sort-select"><option value="latest">최신순</option><option value="oldest">오래된순</option><option value="likes">인기순</option></select></div><div id="commentList"></div><div id="commentWriteArea"><textarea id="commentInput" placeholder="댓글을 입력하세요"></textarea><div class="tool-row"><button type="button" class="primary-btn" id="submitCommentBtn">댓글 등록</button></div></div><div id="commentLockedBox" class="comment-locked-box hidden">이 글은 댓글 작성을 허용하지 않습니다.</div></div>
       </div>
     </section>
   </main>
@@ -694,7 +698,7 @@
     }
 
     const data={ id:snap.id, ...snap.data() };
-    currentDetail = { ...data, type: data.type || 'research' };
+    currentDetail = { ...data, type: data.type || 'research', allowComments: data.allowComments !== false };
 
     const currentViews = data.views || 0;
     await updateDoc(doc(db,'research',id), { views: currentViews + 1 });
@@ -759,6 +763,7 @@
     }
 
     $('detailBody').innerHTML = bodyHtml;
+    updateCommentWriteUI();
     await loadComments(data.type || 'research', id);
     await showPage('detail');
   }
@@ -770,7 +775,7 @@
       return;
     }
 
-    const data = { id:snap.id, ...snap.data(), type:'notice' };
+    const data = { id:snap.id, ...snap.data(), type:'notice', allowComments: snap.data().allowComments !== false };
     currentDetail = data;
 
     $('detailBadges').innerHTML = `
@@ -793,6 +798,7 @@
       ${renderAttachments(data.attachments || [])}
     `;
 
+    updateCommentWriteUI();
     await loadComments('notice', id);
     await showPage('detail');
   }
@@ -817,16 +823,29 @@
     else if(sortType === 'likes') items.sort((a,b)=>((b.likesCount||0)-(a.likesCount||0)) || (new Date(b.createdAt)-new Date(a.createdAt)));
     else items.sort((a,b)=>new Date(b.createdAt)-new Date(a.createdAt));
 
+    if(sortType !== 'likes'){
+      const pinnedPopular = items.filter(item => (item.likesCount || 0) >= 5)
+        .sort((a,b)=>((b.likesCount||0)-(a.likesCount||0)) || (new Date(b.createdAt)-new Date(a.createdAt)))
+        .slice(0,3);
+      const pinnedIds = new Set(pinnedPopular.map(item => item.id));
+      const rest = items.filter(item => !pinnedIds.has(item.id));
+      items.length = 0;
+      items.push(...pinnedPopular.map(item => ({ ...item, isPopularTop:true })), ...rest);
+    }
+
     if(!items.length){
       list.innerHTML = '<p>아직 댓글이 없습니다.</p>';
       return;
     }
 
     const user = getUser();
+    const isAdminUser = !!user && user.role === '부장';
     list.innerHTML = items.map(item => {
       const liked = !!user && (item.likedUsers || []).includes(user.id);
       const shouldPop = lastLikedCommentId === item.id;
-      return `<div class="comment-item"><div class="meta">${escapeHtml(item.author || '-')} · ${formatDate(item.createdAt)}</div><div>${renderRichText(item.content || '')}</div><div class="comment-like-row"><div class="comment-actions"><div class="meta">좋아요 ${item.likesCount || 0}</div><button type="button" class="comment-action-btn" data-comment-edit-id="${item.id}">수정</button><button type="button" class="comment-action-btn comment-delete-btn" data-comment-delete-id="${item.id}">삭제</button></div><button type="button" class="comment-like-btn ${liked ? 'liked' : ''} ${shouldPop ? 'pop' : ''}" data-comment-like-id="${item.id}"><span>${liked ? '❤️' : '🤍'}</span><span>${item.likesCount || 0}</span></button></div></div>`;
+      const canEdit = !!user && item.authorId === user.id;
+      const canDelete = !!user && (item.authorId === user.id || isAdminUser);
+      return `<div class="comment-item">${item.isPopularTop ? '<div class="comment-top-badge">인기 댓글</div>' : ''}<div class="meta">${escapeHtml(item.author || '-')} · ${formatDate(item.createdAt)}${item.updatedAt ? ' · 수정됨' : ''}</div><div>${renderRichText(item.content || '')}</div><div class="comment-like-row"><div class="comment-actions"><div class="meta">좋아요 ${item.likesCount || 0}</div>${canEdit ? `<button type="button" class="comment-action-btn" data-comment-edit-id="${item.id}">수정</button>` : ''}${canDelete ? `<button type="button" class="comment-action-btn comment-delete-btn" data-comment-delete-id="${item.id}">삭제</button>` : ''}</div><button type="button" class="comment-like-btn ${liked ? 'liked' : ''} ${shouldPop ? 'pop' : ''}" data-comment-like-id="${item.id}"><span>${liked ? '❤️' : '🤍'}</span><span>${item.likesCount || 0}</span></button></div></div>`;
     }).join('');
 
     list.querySelectorAll('[data-comment-like-id]').forEach(btn => {
@@ -898,6 +917,11 @@
     }
 
     const data = snap.data();
+    if(data.authorId !== user.id){
+      alert('본인의 댓글만 수정할 수 있습니다.');
+      return;
+    }
+
     const nextContent = prompt('수정할 댓글 내용을 입력하세요.', data.content || '');
     if(nextContent === null) return;
     const trimmed = nextContent.trim();
@@ -921,11 +945,30 @@
       return;
     }
 
+    const snap = await getDoc(doc(db,'comments',commentId));
+    if(!snap.exists()){
+      alert('댓글을 찾을 수 없습니다.');
+      return;
+    }
+
+    const data = snap.data();
+    const isAdminUser = user.role === '부장';
+    if(data.authorId !== user.id && !isAdminUser){
+      alert('본인 댓글만 삭제할 수 있으며, 부장은 전체 삭제가 가능합니다.');
+      return;
+    }
+
     const ok = confirm('이 댓글을 삭제할까요?');
     if(!ok) return;
 
     await deleteDoc(doc(db,'comments',commentId));
     await loadComments(currentDetail.type || 'research', currentDetail.id);
+  }
+
+  function updateCommentWriteUI(){
+    const allow = currentDetail?.allowComments !== false;
+    $('commentWriteArea').classList.toggle('hidden', !allow);
+    $('commentLockedBox').classList.toggle('hidden', allow);
   }
 
   async function submitComment(){
@@ -936,6 +979,10 @@
     }
     if(!currentDetail){
       alert('글을 먼저 열어주세요.');
+      return;
+    }
+    if(currentDetail.allowComments === false){
+      alert('이 글은 댓글 작성이 허용되지 않습니다.');
       return;
     }
 
@@ -969,8 +1016,8 @@
   function saveWriteDraft(){
     const draft = {
       writeType:$('writeType')?.value || 'notice', authorDisplay:$('authorDisplay')?.value || '',
-      noticeTitleWrite:$('noticeTitleWrite')?.value || '', noticeContentWrite:$('noticeContentWrite')?.value || '', noticePinned:$('noticePinned')?.checked || false,
-      researchClub:$('researchClub')?.value || '전체', archiveYear:$('archiveYear')?.value || '2026', title:$('title')?.value || '', tags:$('tags')?.value || '',
+      noticeTitleWrite:$('noticeTitleWrite')?.value || '', noticeContentWrite:$('noticeContentWrite')?.value || '', noticePinned:$('noticePinned')?.checked || false, noticeAllowComments:$('noticeAllowComments')?.checked ?? true,
+      researchClub:$('researchClub')?.value || '전체', researchAllowComments:$('researchAllowComments')?.checked ?? true, archiveYear:$('archiveYear')?.value || '2026', title:$('title')?.value || '', tags:$('tags')?.value || '',
       experimentSections: collectExperimentSections(),
       projectStatus:$('projectStatus')?.value || '진행중', projectPurpose:$('projectPurpose')?.value || '', projectSummary:$('projectSummary')?.value || '', projectSections: collectProjectSections(), linkInput:$('linkInput')?.value || ''
     };
@@ -1009,8 +1056,8 @@
     try{
       const draft = JSON.parse(raw);
       $('writeType').value = draft.writeType || 'notice'; $('authorDisplay').value = draft.authorDisplay || ''; changeWriteForm();
-      $('noticeTitleWrite').value = draft.noticeTitleWrite || ''; $('noticeContentWrite').value = draft.noticeContentWrite || ''; $('noticePinned').checked = !!draft.noticePinned;
-      $('researchClub').value = draft.researchClub || '전체'; $('archiveYear').value = draft.archiveYear || '2026'; $('title').value = draft.title || ''; $('tags').value = draft.tags || '';
+      $('noticeTitleWrite').value = draft.noticeTitleWrite || ''; $('noticeContentWrite').value = draft.noticeContentWrite || ''; $('noticePinned').checked = !!draft.noticePinned; $('noticeAllowComments').checked = draft.noticeAllowComments !== false;
+      $('researchClub').value = draft.researchClub || '전체'; $('researchAllowComments').checked = draft.researchAllowComments !== false; $('archiveYear').value = draft.archiveYear || '2026'; $('title').value = draft.title || ''; $('tags').value = draft.tags || '';
       $('experimentSections').innerHTML='';
       (draft.experimentSections || []).forEach(section => addExperimentSection(section.title || '', section.content || ''));
       $('projectStatus').value = draft.projectStatus || '진행중'; $('projectPurpose').value = draft.projectPurpose || ''; $('projectSummary').value = draft.projectSummary || ''; $('linkInput').value = draft.linkInput || '';
@@ -1074,8 +1121,8 @@
     const user = getUser();
     $('writeTitleText').textContent='글 작성'; $('editModeInfo').textContent='공지나 탐구 글을 작성할 수 있습니다.'; $('submitBtn').textContent='저장'; $('cancelEditBtn').classList.add('hidden');
     $('writeType').disabled=false; $('writeType').value='notice'; $('authorDisplay').value=user?.name || '';
-    $('noticeTitleWrite').value=''; $('noticeContentWrite').value=''; $('noticePinned').checked=false;
-    $('researchClub').value='전체'; $('archiveYear').value='2026'; $('title').value=''; $('tags').value=''; $('experimentSections').innerHTML='';
+    $('noticeTitleWrite').value=''; $('noticeContentWrite').value=''; $('noticePinned').checked=false; $('noticeAllowComments').checked=true;
+    $('researchClub').value='전체'; $('researchAllowComments').checked=true; $('archiveYear').value='2026'; $('title').value=''; $('tags').value=''; $('experimentSections').innerHTML='';
     $('projectStatus').value='진행중'; $('projectPurpose').value=''; $('projectSummary').value=''; $('projectSections').innerHTML='';
     $('imageInput').value=''; $('fileInput').value=''; $('linkInput').value=''; $('existingAttachmentsBox').classList.add('hidden'); $('existingAttachmentsList').innerHTML=''; $('existingLinksBox').classList.add('hidden'); $('existingLinksList').innerHTML='';
     changeWriteForm();
@@ -1130,6 +1177,7 @@
         const [uploadedImages, uploadedFiles] = await Promise.all([uploadFiles(imageFiles,'irhos-images'), uploadFiles(normalFiles,'irhos-files')]);
         const noticeData = {
           type:'notice',
+          allowComments: $('noticeAllowComments').checked,
           title,
           content,
           pinned:$('noticePinned').checked,
@@ -1160,7 +1208,7 @@
         if(!title){ alert('제목을 입력해주세요.'); return; }
         const [uploadedImages, uploadedFiles] = await Promise.all([uploadFiles(imageFiles,'irhos-images'), uploadFiles(normalFiles,'irhos-files')]);
         const experimentSections = collectExperimentSections();
-        const researchData = { title, tags:parseTags($('tags').value), club:$('researchClub').value, archiveYear:$('archiveYear').value, type:'experiment', sections:experimentSections, reason:'', prediction:'', method:'', result:'', author:authorName, authorId:user.id, originalWriterName:authorName, savedBy:user.name, savedById:user.id, views:0, createdAt:new Date().toISOString(), attachments:[...keptAttachments, ...uploadedImages, ...uploadedFiles], links };
+        const researchData = { title, tags:parseTags($('tags').value), club:$('researchClub').value, archiveYear:$('archiveYear').value, type:'experiment', allowComments:$('researchAllowComments').checked, sections:experimentSections, reason:'', prediction:'', method:'', result:'', author:authorName, authorId:user.id, originalWriterName:authorName, savedBy:user.name, savedById:user.id, views:0, createdAt:new Date().toISOString(), attachments:[...keptAttachments, ...uploadedImages, ...uploadedFiles], links };
         if(editState.isEditing && editState.category === 'research'){
           const oldSnap=await getDoc(doc(db,'research',editState.id)); const oldData=oldSnap.exists()?oldSnap.data():{}; researchData.views=oldData.views||0; researchData.createdAt=oldData.createdAt||new Date().toISOString();
           await updateDoc(doc(db,'research',editState.id), researchData); alert('실험 보고서 수정 완료');
@@ -1170,7 +1218,7 @@
       if(type === 'project'){
         const title = $('title').value.trim(); if(!title){ alert('제목을 입력해주세요.'); return; }
         const [uploadedImages, uploadedFiles] = await Promise.all([uploadFiles(imageFiles,'irhos-images'), uploadFiles(normalFiles,'irhos-files')]);
-        const projectData = { title, tags:parseTags($('tags').value), club:$('researchClub').value, archiveYear:$('archiveYear').value, type:'project', purpose:$('projectPurpose').value.trim(), summary:$('projectSummary').value.trim(), status:$('projectStatus').value, sections:collectProjectSections(), author:authorName, authorId:user.id, originalWriterName:authorName, savedBy:user.name, savedById:user.id, views:0, createdAt:new Date().toISOString(), attachments:[...keptAttachments, ...uploadedImages, ...uploadedFiles], links };
+        const projectData = { title, tags:parseTags($('tags').value), club:$('researchClub').value, archiveYear:$('archiveYear').value, type:'project', allowComments:$('researchAllowComments').checked, purpose:$('projectPurpose').value.trim(), summary:$('projectSummary').value.trim(), status:$('projectStatus').value, sections:collectProjectSections(), author:authorName, authorId:user.id, originalWriterName:authorName, savedBy:user.name, savedById:user.id, views:0, createdAt:new Date().toISOString(), attachments:[...keptAttachments, ...uploadedImages, ...uploadedFiles], links };
         if(editState.isEditing && editState.category === 'research'){
           const oldSnap=await getDoc(doc(db,'research',editState.id)); const oldData=oldSnap.exists()?oldSnap.data():{}; projectData.views=oldData.views||0; projectData.createdAt=oldData.createdAt||new Date().toISOString();
           await updateDoc(doc(db,'research',editState.id), projectData); alert('장기 프로젝트 수정 완료');
@@ -1198,9 +1246,9 @@
     keptAttachments = [...(data.attachments || [])]; keptLinks = [...(data.links || [])];
     $('writeTitleText').textContent='글 수정'; $('editModeInfo').textContent='수정 모드입니다.'; $('submitBtn').textContent='수정 저장'; $('cancelEditBtn').classList.remove('hidden'); $('authorDisplay').value=data.author || '';
     if(category === 'notice'){
-      $('writeType').value='notice'; $('writeType').disabled=true; $('noticeTitleWrite').value=data.title || ''; $('noticeContentWrite').value=data.content || ''; $('noticePinned').checked=!!data.pinned;
+      $('writeType').value='notice'; $('writeType').disabled=true; $('noticeTitleWrite').value=data.title || ''; $('noticeContentWrite').value=data.content || ''; $('noticePinned').checked=!!data.pinned; $('noticeAllowComments').checked=data.allowComments !== false;
     } else {
-      $('writeType').value=data.type || 'experiment'; $('writeType').disabled=true; $('researchClub').value=data.club || '전체'; $('archiveYear').value=data.archiveYear || '2026'; $('title').value=data.title || ''; $('tags').value=(data.tags||[]).join(' ');
+      $('writeType').value=data.type || 'experiment'; $('writeType').disabled=true; $('researchClub').value=data.club || '전체'; $('researchAllowComments').checked=data.allowComments !== false; $('archiveYear').value=data.archiveYear || '2026'; $('title').value=data.title || ''; $('tags').value=(data.tags||[]).join(' ');
       if(data.type === 'experiment'){
         $('experimentSections').innerHTML='';
         const expSections = (data.sections && data.sections.length)
